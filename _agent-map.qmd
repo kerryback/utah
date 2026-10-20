@@ -1,0 +1,41 @@
+```{=html}
+<svg viewBox="0 0 1040 470" role="img" aria-label="The agent loop: user, messages, LLM, and tools, inside a harness."
+     style="display:block;margin:0 auto;width:900px;max-width:100%"
+     font-family="'Avenir Next LT Pro','Avenir Next','Nunito Sans',system-ui,sans-serif">
+  <g class="part m-harness">
+    <rect x="10" y="10" width="1020" height="450" fill="none" stroke="#6b6e71" stroke-width="2" stroke-dasharray="10 7"/>
+    <text x="34" y="44" font-size="15" font-weight="700" letter-spacing="1.5" fill="#6b6e71">HARNESS · Claude, ChatGPT, Claude Code, or a custom agent you build</text>
+  </g>
+  <g fill="#6b6e71">
+    <line x1="244" y1="195" x2="306" y2="195" stroke="#6b6e71" stroke-width="3"/>
+    <polygon points="232,195 244,189 244,201"/><polygon points="318,195 306,189 306,201"/>
+    <line x1="734" y1="195" x2="796" y2="195" stroke="#6b6e71" stroke-width="3"/>
+    <polygon points="722,195 734,189 734,201"/><polygon points="808,195 796,189 796,201"/>
+    <line x1="520" y1="269" x2="520" y2="306" stroke="#6b6e71" stroke-width="3"/>
+    <polygon points="520,257 514,269 526,269"/><polygon points="520,318 514,306 526,306"/>
+  </g>
+  <g class="part m-user">
+    <rect x="60" y="150" width="170" height="90" fill="#36393B"/>
+    <text x="145" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">User</text>
+    <text x="145" y="274" text-anchor="middle" font-size="16" fill="#36393B">checking · judgment</text>
+  </g>
+  <g class="part m-msgs">
+    <text x="520" y="118" text-anchor="middle" font-size="16" fill="#36393B">prompting · skills · RAG · cost</text>
+    <rect x="320" y="135" width="400" height="120" fill="#f4f3f4"/>
+    <rect x="320" y="135" width="6" height="120" fill="#3AEFCC"/>
+    <text x="520" y="185" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#36393B" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">messages[]</text>
+    <text x="520" y="218" text-anchor="middle" font-size="14" fill="#36393B">system prompt + skills + history + tool results</text>
+  </g>
+  <g class="part m-llm">
+    <rect x="810" y="150" width="170" height="90" fill="#36393B"/>
+    <text x="895" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">LLM</text>
+    <text x="895" y="274" text-anchor="middle" font-size="16" fill="#36393B">tokens · model choice · cost</text>
+  </g>
+  <g class="part m-tools">
+    <rect x="320" y="320" width="400" height="90" fill="#36393B"/>
+    <text x="520" y="360" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#3AEFCC">Tools</text>
+    <text x="520" y="390" text-anchor="middle" font-size="15" fill="#ffffff">run code · connectors · web search and fetch</text>
+    <text x="520" y="440" text-anchor="middle" font-size="16" fill="#36393B">doing work · connectors · security</text>
+  </g>
+</svg>
+```

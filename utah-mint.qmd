@@ -118,7 +118,7 @@ format:
 Caution: Many things that seem important today may be obsolete tomorrow.
 :::
 
-# Tokens and parameters {.photo-left .circle-top background-image="utah-abs-little-cottonwood-mint.jpg" background-size="40.625% 100%" background-position="left"}
+# How AI works {.circle-top background-image="utah-abs-little-cottonwood-mint.jpg" background-size="40.625% 100%" background-position="right"}
 
 ## Tokenization
 
@@ -186,7 +186,633 @@ Same idea with perhaps trillions of parameters, arranged as a transformer --- th
 :::
 ::::
 
-# Security and compliance {.photo-left .circle-top background-image="utah-abs-snowbird-gray.jpg" background-size="40.625% 100%" background-position="left"}
+::: {.note}
+Training sets the parameters: the model reads a huge amount of text (the training data), and the parameters are adjusted until it predicts the next token well. The trained network is a large language model (LLM).
+:::
+
+## Anatomy of an agent
+
+```{=html}
+<svg viewBox="0 0 1040 580" role="img" aria-label="The agent loop: the same circuit as a chatbot, with a tool call branching down to the tools the harness executes."
+     style="display:block;margin:0 auto;width:900px;max-width:100%"
+     font-family="'Avenir Next LT Pro','Avenir Next','Nunito Sans',system-ui,sans-serif">
+  <defs>
+    <marker id="ag-out" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="9" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 4 L0 8 Z" fill="#6b6e71"/>
+    </marker>
+    <marker id="ag-back" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="9" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 4 L0 8 Z" fill="#36393B"/>
+    </marker>
+    <marker id="ag-tool" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="9" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 4 L0 8 Z" fill="#12a88b"/>
+    </marker>
+  </defs>
+
+  <path d="M145 210 V100 H895 V200" fill="none" stroke="#6b6e71" stroke-width="3" marker-end="url(#ag-out)"/>
+  <path d="M895 300 V400 H145 V310" fill="none" stroke="#36393B" stroke-width="3" marker-end="url(#ag-back)"/>
+
+  <rect x="60" y="210" width="170" height="90" fill="#36393B"/>
+  <text x="145" y="263" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">User</text>
+  <rect x="810" y="210" width="170" height="90" fill="#36393B"/>
+  <text x="895" y="263" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">LLM</text>
+
+  <rect x="320" y="195" width="400" height="120" fill="#f4f3f4"/>
+  <rect x="320" y="195" width="6" height="120" fill="#3AEFCC"/>
+  <text x="520" y="235" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#36393B" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">messages[]</text>
+  <text x="520" y="265" text-anchor="middle" font-size="14" fill="#36393B">system + tools + user + assistant + tool_result + …</text>
+  <text x="520" y="291" text-anchor="middle" font-size="14" font-style="italic" fill="#6b6e71">grows each turn; includes tool calls and results</text>
+
+  <g font-size="17" font-weight="700" fill="#36393B" text-anchor="middle">
+    <text x="235" y="62">User types prompt</text>
+    <text x="560" y="50">Send system prompt</text>
+    <text x="800" y="436">LLM returns</text>
+    <text x="520" y="436">If tool call → execute tool</text>
+    <text x="235" y="436">If final answer → display to user</text>
+  </g>
+  <g font-size="15" fill="#6b6e71" text-anchor="middle">
+    <text x="560" y="70">+ tool definitions + history</text>
+    <text x="800" y="456">text OR tool call</text>
+    <text x="520" y="456">send result back, loop to step 2</text>
+  </g>
+
+  <g text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">
+    <circle cx="235" cy="100" r="17" fill="#6b6e71"/><text x="235" y="107">1</text>
+    <circle cx="560" cy="100" r="17" fill="#6b6e71"/><text x="560" y="107">2</text>
+    <circle cx="800" cy="400" r="17" fill="#36393B"/><text x="800" y="407">3</text>
+    <circle cx="520" cy="400" r="17" fill="#36393B"/><text x="520" y="407">4</text>
+    <circle cx="235" cy="400" r="17" fill="#36393B"/><text x="235" y="407">5</text>
+  </g>
+
+  <!-- the branch out of the loop: the harness, not the model, runs these -->
+  <path d="M960 300 V470" fill="none" stroke="#12a88b" stroke-width="3" stroke-dasharray="9 7" marker-end="url(#ag-tool)"/>
+  <text x="948" y="385" text-anchor="middle" font-size="15" font-weight="700" fill="#12a88b" transform="rotate(-90 948 385)">tool call</text>
+
+  <rect x="60" y="480" width="920" height="90" fill="#36393B"/>
+  <text x="520" y="508" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="1" fill="#3AEFCC">Tools (defined as JSON, executed by the harness)</text>
+  <g font-size="16" font-weight="700" fill="#36393B" text-anchor="middle" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">
+    <rect x="100" y="522" width="190" height="34" fill="#f4f3f4"/><text x="195" y="545">run_sql</text>
+    <rect x="310" y="522" width="190" height="34" fill="#f4f3f4"/><text x="405" y="545">list_tables</text>
+    <rect x="520" y="522" width="200" height="34" fill="#f4f3f4"/><text x="620" y="545">describe_table</text>
+    <rect x="740" y="522" width="200" height="34" fill="#f4f3f4"/><text x="840" y="545">run_python</text>
+  </g>
+</svg>
+```
+
+## One loop holds the whole talk
+
+::: {.agent-map .hl-all}
+{{< include _agent-map.qmd >}}
+:::
+
+::: {.note}
+The harness is the software that runs the loop: it sends messages[] to the LLM and runs the tools the LLM calls. The system prompt is the harness's standing instructions at the top of messages[].
+:::
+
+# Effective prompting {.photo-left .circle-top background-image="utah-abs-snowbird-gray.jpg" background-size="40.625% 100%" background-position="left"}
+
+## Prompting: what you put in messages[]
+
+::: {.agent-map .hl-user .hl-msgs}
+{{< include _agent-map.qmd >}}
+:::
+
+## Prompting today
+
+::: {.cards .cards-3}
+::: {.card}
+[Drop old techniques]{.card-title}
+
+Most ‘prompt engineering’ techniques from a few years ago are now either useless or actually counterproductive. Don’t tell it “you are an expert data scientist” or “think step by step.”
+:::
+
+::: {.card .card-blue}
+[Say what you want]{.card-title}
+
+Tell it what you want, not what not to do.
+:::
+
+::: {.card}
+[Ask for the best way first]{.card-title}
+
+Ask it to do something, and it does what it has seen most often in its training data.
+
+Ask for the best way, and it repeats evaluations of methods it has seen. Then ask it to proceed: it reads "the best way is ..." in the conversation and follows that.
+:::
+:::
+
+## Three habits
+
+::: {.cards .cards-3}
+::: {.card}
+[Beware of tunnel vision]{.card-title}
+
+Once AI starts down a path, continuing is the likeliest next step. At a roadblock it tries one workaround after another and rarely asks whether a [different path]{.accent} is better.
+
+Periodically ask: are there other approaches that might work better for reaching the end goal?
+:::
+
+::: {.card .card-blue}
+[Steelman]{.card-title}
+
+Training on human feedback rewards agreement. Ask "is my plan sound?" and AI finds reasons it is.
+
+Instead ask: "What is the strongest argument against this?" Have it play a skeptical board member, a regulator, a competitor.
+:::
+
+::: {.card}
+[Numbers need code]{.card-title}
+
+Numbers reach the model as unrelated tokens. If no code produced a number, the number was predicted. AI predicts `sum([83, 16, 104])` better than what follows `83 + 16 + 104 =`.
+
+Prompt: "Compute this in Python. Do not report a number you did not compute with code."
+:::
+:::
+
+# Doing work<br>with AI {#doing-work-with-ai .circle-top background-image="utah-abs-big-cottonwood-mint.jpg" background-size="40.625% 100%" background-position="right"}
+
+## Doing work: the LLM writes code, the tools run it
+
+::: {.agent-map .hl-msgs .hl-llm .hl-tools}
+{{< include _agent-map.qmd >}}
+:::
+
+## What AI can make with code
+
+::: {.cards .cards-3}
+::: {.card}
+[Excel workbooks]{.card-title}
+
+Fully functioning with formulas and formatting
+:::
+
+::: {.card .card-dark}
+[PowerPoint decks]{.card-title}
+
+Editable, following whatever template
+:::
+
+::: {.card}
+[Word docs]{.card-title}
+
+Formatted, with images and tables
+:::
+
+::: {.card .card-dark}
+[Charts]{.card-title}
+
+All types, fully customizable, annotations, interactive
+:::
+
+::: {.card}
+[Data analysis]{.card-title}
+
+Merge, filter, aggregate, transform, statistics
+:::
+
+::: {.card .card-dark}
+[Advanced data analysis]{.card-title}
+
+Optimization, prediction (machine learning)
+:::
+:::
+
+::: {.note .note-dark style="margin-top: 1.2em; font-weight: 700;"}
+All from code or code + text.
+:::
+
+## Why is AI so good at coding tasks? {#three-reasons}
+
+```{=html}
+<div style="display:flex;justify-content:center;align-items:center;gap:48px;height:480px;">
+  <div style="width:300px;height:300px;border-radius:50%;background:#3AEFCC;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;box-sizing:border-box;font-size:1.25em;line-height:1.3;color:#36393B;">Code is predictable</div>
+  <div style="width:300px;height:300px;border-radius:50%;background:#36393B;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;box-sizing:border-box;font-size:1.25em;line-height:1.3;color:#ffffff;">Lots of public code (GitHub)</div>
+  <div style="width:300px;height:300px;border-radius:50%;background:#3AEFCC;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;box-sizing:border-box;font-size:1.25em;line-height:1.3;color:#36393B;">AI checks its work</div>
+</div>
+```
+
+## How Claude checks Office documents {.compare}
+
+:::: {.columns}
+::: {.column width="50%"}
+### PowerPoint and Word
+
+Uses LibreOffice to export to PDF, then converts each PDF page to a PNG and looks at it for overflowing text, overlaps, and cut-off tables.
+:::
+
+::: {.column width="50%"}
+### Excel
+
+Uses LibreOffice to recalculate every formula, then lists cells with errors such as #REF! or #DIV/0! and fixes them.
+:::
+::::
+
+## Quality increased recently
+
+::: {.cards .cards-3}
+::: {.card}
+[October 2025]{.card-title}
+
+"They just don't work. They don't have enough intelligence, they're not multimodal enough, they can't do computer use and all this stuff. They don't have continual learning. You can't just tell them something and they'll remember it."
+
+"I feel like the industry is making too big of a jump and is trying to pretend like this is amazing, and it's not. It's slop."
+:::
+
+::: {.card .card-blue .fragment}
+[December 2025]{.card-title}
+
+"I really am mostly programming in English now, a bit sheepishly telling the LLM what code to write... in words. Biggest change to my basic coding workflow in ~2 decades."
+:::
+
+::: {.card .fragment}
+[February 2026]{.card-title}
+
+"It is hard to communicate how much programming has changed due to AI in the last 2 months: not gradually and over time in the 'progress as usual' way, but specifically this last December. Coding agents basically didn't work before December."
+
+"I don't think I've typed like a line of code probably since December."
+:::
+:::
+
+[Andrej Karpathy: OpenAI co-founder, former Tesla AI chief, now at Anthropic]{.eyebrow}
+
+## Better coding harnesses became ubiquitous
+
+::: {.cards .cards-3}
+::: {.card}
+[Claude Code · February 2025]{.card-title}
+
+Harness + tools. Originally ran in the terminal.
+:::
+
+::: {.card .card-blue}
+[Cowork · January 2026]{.card-title}
+
+The Claude Code agent, running in a sandbox: an isolated computer that limits what the agent can reach.
+:::
+
+::: {.card}
+[Chat · September 2026]{.card-title}
+
+Chat gains the Claude Code agent.
+:::
+:::
+
+# Checking AI work {.photo-left .circle-top background-image="utah-abs-little-cottonwood-gray.jpg" background-size="40.625% 100%" background-position="left"}
+
+## Checking: you are the last step in the loop
+
+::: {.agent-map .hl-user}
+{{< include _agent-map.qmd >}}
+:::
+
+## How to check AI work
+
+::: {.cards .cards-2}
+::: {.card .card-blue}
+[Have AI explain its work]{.card-title}
+
+"Explain what you did step by step. Did you make any decisions that we have not discussed?"
+:::
+
+::: {.card}
+[Use another AI agent to check the work]{.card-title}
+
+A fresh conversation or a subagent (a second agent that the first agent starts), given your goals and the first agent's explanation.
+:::
+
+::: {.card}
+[Have AI build a spreadsheet when possible]{.card-title}
+
+Then check the formulas. Every number traces back to its inputs.
+:::
+
+::: {.card .card-blue}
+[Run the same code on small examples]{.card-title}
+
+Ask AI to run its code on a few rows you can check by hand.
+:::
+:::
+
+::: {.note}
+Most AI coding errors arise from misunderstandings and unstated assumptions --- and from errors that people also make, for example, merging and filtering in the wrong order.
+:::
+
+## Poor reasoning with confidence {.no-strip}
+
+![](carwash-haiku-crop.png){height=440 fig-align="center"}
+
+[Claude Haiku 4.5, an older version of Anthropic's smallest model, October 17, 2026]{.eyebrow style="text-align: center;"}
+
+## Newer models are better {.no-strip}
+
+![](carwash-haiku55.png){height=360 fig-align="center"}
+
+[Claude Haiku 5.5, October 17, 2026]{.eyebrow style="text-align: center;"}
+
+## Web search reduces hallucinations {.pull}
+
+> Anthropic system prompt: "If not certain something it recalls is true and on-point, it says so and suggests enabling web search for newer information."" 
+
+[Anthropic, [Claude Opus 4.8 system prompt](https://platform.claude.com/docs/en/release-notes/system-prompts/claude-opus-4-8), May 28, 2026]{.eyebrow}
+
+## Why AI performs worse on judgment calls
+
+::: {style="font-size: 0.9em;"}
+> The gulf between LLM performance on verifiable tasks vs. unverifiable tasks that require judgment is larger than most people realize. Verifiable tasks, like coding or solving math problems, have a right answer that can be checked automatically. Judgment tasks don't have unambiguous, ground-truth, correct answers. But they do have better and worse answers.
+>
+> ::: {style="background: #dafbf4; padding: 0.4em 0.6em 0.05em 0.6em; margin-left: -0.6em;"}
+> We have much better techniques for training AI systems to do well on verifiable tasks. As a result, progress on performing such tasks has been much faster than for judgment tasks.
+> :::
+:::
+
+[Andrew Ng, co-founder and former head of Google Brain, co-founder of Coursera and DeepLearning.AI · The Batch, October 16, 2026]{.eyebrow}
+
+# Automating work with AI {.circle-top background-image="utah-abs-snowbird-mint.jpg" background-size="40.625% 100%" background-position="right"}
+
+## Eliminating repetitive work {.compare}
+
+:::: {.columns}
+::: {.column width="50%"}
+> [Alfred] removed about 90% of the manual effort that once went into preparing our weekly financial review. We used to spend hundreds of hours preparing 100+ slides for a Monday meeting.
+
+[Marie Myers, CFO, Hewlett Packard Enterprise, [Fortune](https://fortune.com/2026/02/12/hpe-cfo-used-ai-transform-100-slide-monday-meeting/), February 12, 2026]{.eyebrow}
+:::
+
+::: {.column width="50%"}
+> The goal is to remove the repetitive, administrative work so our people can focus on what they do best—we're not replacing critical thinking and judgment, we're removing the tedious, time-consuming work that gets in the way of it.
+
+[Customers Bank CEO Sam Sidhu, statement to [Fortune](https://fortune.com/2026/04/28/ceo-of-customers-bank-sam-sidhu-ai-clone-lead-earnings-call-mark-zuckerberg-building-digital-twin/), April 28, 2026]{.eyebrow}
+:::
+::::
+
+## Ways to automate
+
+::: {.cards .cards-4}
+::: {.card .card-blue}
+[1. Software]{.card-title}
+
+Apps that AI writes: dashboards, spreadsheet replacements, apps that call AI.
+:::
+
+::: {.card}
+[2. Skills]{.card-title}
+
+Instructions and scripts that a general agent (Claude, ChatGPT, ...) follows.
+:::
+
+::: {.card .card-blue}
+[3. Connectors and RAG]{.card-title}
+
+Give the agent your data and documents.
+:::
+
+::: {.card}
+[4. Custom agents]{.card-title}
+
+Your interface, system prompt, and tools, for people who do not use Claude.
+:::
+:::
+
+::: {.note}
+Each is also a student deliverable, alongside spreadsheets and reports crafted by AI and checked by students.
+:::
+
+# Vibe-coding software {.photo-left .circle-top background-image="utah-abs-big-cottonwood-gray.jpg" background-size="40.625% 100%" background-position="left"}
+
+## Artifacts
+
+Vibe coding: you describe the software in plain English, and AI writes all the code.
+
+Claude calls a single-page HTML app an artifact. The whole app is one file that runs in your browser.
+
+1. In Claude Desktop, choose Artifact in the left pane.
+2. Choose New. Prompt Claude to create the app.
+3. You should get options to deploy the app online or to download it.
+
+::: {.note}
+You can also just prompt Claude "Create a single-page HTML app ..."
+:::
+
+## More complex software has two parts
+
+::: {.cards .cards-2}
+::: {.card .card-blue}
+[Backend]{.card-title}
+
+A service running somewhere. It listens for input and does the actual work.
+:::
+
+::: {.card}
+[Frontend]{.card-title}
+
+Your browser. It sends instructions to the backend:
+
+- GET: get a page
+- POST: send information and get a response
+:::
+:::
+
+::: {.note}
+Your own computer can be both the frontend and the backend: it serves the app, and you interact with it in your browser.
+:::
+
+## Demos
+
+::: {.cards .cards-2}
+::: {.card .card-blue}
+[Refinery blending]{.card-title}
+
+[kerryback.com/refinery.html](https://kerryback.com/refinery.html)
+
+An artifact. Classic linear programming problem.  App shows the optimal blend, which constraints bind, and what relaxing each one is worth. Every input can be edited.
+:::
+
+::: {.card}
+[Tangency portfolio]{.card-title}
+
+[tangency.kerryback.com](https://tangency.kerryback.com)
+
+Backend to pull data.  Calculate sample statistics.  Compute tangency portfolio by matrix algebra.  Put everything in an Excel workbook.
+:::
+:::
+
+# Skills {.circle-top background-image="utah-abs-little-cottonwood-mint.jpg" background-size="40.625% 100%" background-position="right"}
+
+## Skills: instructions loaded into messages[] when needed
+
+::: {.agent-map .hl-msgs}
+{{< include _agent-map.qmd >}}
+:::
+
+## Skills
+
+::: {.cards .cards-2}
+::: {.card .card-blue}
+[What a skill is]{.card-title}
+
+A folder with a `SKILL.md` file in it --- the instructions for one task, plus any scripts, templates or reference files those instructions call for
+:::
+
+::: {.card}
+[What is read, and when]{.card-title}
+
+The name and description at the start of every conversation, about 100 tokens each. The rest of the file only when a task matches the description
+:::
+:::
+
+::: {.note}
+An alternative is "custom instructions" (`CLAUDE.md` or `AGENTS.md` in Claude Code and similar coding agents). Put rules you want AI to follow in every conversation there (e.g., avoid boldface, bulleted lists, and undue emphasis).
+:::
+
+## Some Anthropic skills
+
+Published at [github.com/anthropics/skills](https://github.com/anthropics/skills) and available on paid plans in Claude.ai.
+
+::: {.cards .cards-3}
+::: {.card .card-blue}
+[Office documents]{.card-title}
+
+- xlsx --- Excel workbooks
+- docx --- Word documents
+- pptx --- PowerPoint decks
+- pdf --- PDF files
+:::
+
+::: {.card}
+[Building things]{.card-title}
+
+- skill-creator --- write and improve skills
+- frontend-design --- polished web pages and apps
+- web-artifacts-builder --- larger artifacts
+- mcp-builder --- connectors to data (next section)
+:::
+
+::: {.card .card-blue}
+[Other]{.card-title}
+
+- doc-coauthoring --- co-write a document
+- webapp-testing --- test a web app in a browser
+- canvas-design --- posters and visual art
+- brand-guidelines --- Anthropic's colors and type; a model for your own
+:::
+:::
+
+## Creating skills
+
+::: {.cards .cards-3}
+::: {.card .card-blue}
+[1]{.card-title}
+
+The usual process: you work on something, iterating until you get what you want.
+:::
+
+::: {.card}
+[2]{.card-title}
+
+You realize you may want the same thing again, and you don't want to go through the iteration again.
+:::
+
+::: {.card .card-blue}
+[3]{.card-title}
+
+Solution: tell AI to package the final version as a skill.
+:::
+:::
+
+## Demo
+
+In a Claude Code session on my laptop, I enter the prompt `/mydcf {ticker}`. Claude should:
+
+1. Pull 10-Ks for the ticker from SEC EDGAR.
+2. Get earnings call transcripts from The Motley Fool.
+3. Build a two-stage DCF valuation.
+4. Lay out its assumptions and their grounding in its sources.
+5. Create an editable HTML document and an Excel workbook.
+6. Post the document at {ticker}.kerryback.com.
+
+# Connecting AI to your data {.photo-left .circle-top background-image="utah-abs-snowbird-gray.jpg" background-size="40.625% 100%" background-position="left"}
+
+## Connectors are tools; RAG puts passages in messages[]
+
+::: {.agent-map .hl-msgs .hl-tools}
+{{< include _agent-map.qmd >}}
+:::
+
+## Connectors (MCP servers)
+
+An MCP server is a bridge between an AI agent and a data source or service. Thousands exist already.
+
+::: {.cards .cards-3}
+::: {.card .card-blue}
+[What you add]{.card-title}
+
+A URL, in the agent's settings
+:::
+
+::: {.card}
+[What the agent gets]{.card-title}
+
+A name, a description and an input schema for each tool the server offers
+:::
+
+::: {.card .card-blue}
+[What stays on the server]{.card-title}
+
+The code, and the credentials it uses to reach the data
+:::
+:::
+
+::: {.note}
+Examples: Snowflake, Databricks, BigQuery, Salesforce, HubSpot, Workday, SAP, Slack, Gmail, Microsoft 365 (SharePoint, Outlook, Teams), Notion, GitHub, Stripe, Shopify
+:::
+
+## Retrieval augmented generation
+
+RAG is for documents: contracts, mail, board papers, policies, reports. They were not in the training data, and they are too large to paste into every prompt.
+
+::: {.cards .cards-4}
+::: {.card .card-blue}
+[1. Chunk]{.card-title}
+
+Split the documents into passages of a few hundred words.
+:::
+
+::: {.card}
+[2. Embed]{.card-title}
+
+Turn each passage into a vector: a list of numbers that puts passages with similar meaning close together.
+:::
+
+::: {.card .card-blue}
+[3. Retrieve]{.card-title}
+
+Embed the question and find the passages closest to it.
+:::
+
+::: {.card}
+[4. Paste]{.card-title}
+
+Put those passages in the prompt, with the question.
+:::
+:::
+
+::: {.note}
+The model never reads your whole document store. It reads the excerpts that a similarity search chooses. Demo: [rag.kerryback.com](https://rag.kerryback.com)
+:::
+
+# Security and compliance {.circle-top background-image="utah-abs-big-cottonwood-mint.jpg" background-size="40.625% 100%" background-position="right"}
+
+## Security: what the loop reads and where it can send data
+
+::: {.agent-map .hl-msgs .hl-tools}
+{{< include _agent-map.qmd >}}
+:::
+
+## API billing
+
+An API (application programming interface) lets software, not a person in a chat window, send messages to the model. API billing is usage-based: you pay per token, through an API key, instead of a flat subscription.
+
+- Data Processing Agreements (a contractual guarantee of zero data retention and "do not train") are available only with API billing.
+- Custom AI agents and AI-enabled software also require API billing.
 
 ## Basic requirements
 
@@ -268,7 +894,7 @@ Written policies "reasonably designed to require oversight, including through du
 
 [IBM Institute for Business Value with Oxford Economics, [2026 Tech Leader Study: Building the IT foundation for agentic AI at scale](https://newsroom.ibm.com/2026-06-08-new-ibm-study-finds-cios-and-ctos-face-growing-ai-control-gap-as-enterprise-deployment-scales), June 8, 2026. Survey of 2,000 senior executives responsible for IT, technology, or AI decisions; 33 geographies, 19 industries; January to April 2026. Large organizations: average revenue $14.4 billion, average workforce 33,500.]{.eyebrow}
 
-## Sandboxes: limiting egress
+## Sandboxes: limiting where data can go
 
 ::: {.cards .cards-2}
 ::: {.card .card-blue}
@@ -280,7 +906,7 @@ Claude, ChatGPT, and other chat apps run code and terminal commands in a sandbox
 ::: {.card}
 [Still have WebFetch]{.card-title}
 
-The model can fetch web pages. WebFetch runs on the provider's servers, outside the sandbox, so it is still an egress path: a fetched URL can carry your data to the attacker's server.
+The model can fetch web pages. WebFetch runs on the provider's servers, outside the sandbox, so it is still a path out: a fetched URL can carry your data to the attacker's server.
 :::
 :::
 
@@ -288,14 +914,13 @@ The model can fetch web pages. WebFetch runs on the provider's servers, outside 
 Claude Code runs code and terminal commands on your machine --- they can see your files and reach any domain your machine can reach.
 :::
 
-# Cost-effective AI {.photo-left .circle-top background-image="utah-abs-big-cottonwood-mint.jpg" background-size="40.625% 100%" background-position="left"}
+# Cost-effective AI {.photo-left .circle-top background-image="utah-abs-little-cottonwood-gray.jpg" background-size="40.625% 100%" background-position="left"}
 
-## API billing
+## Cost: messages[] is re-sent to the LLM every turn
 
-API billing is usage-based: you pay per token, through an API key, instead of a flat subscription.
-
-- Data Processing Agreements (a contractual guarantee of zero data retention and "do not train") are available only with API billing.
-- Custom AI agents and AI-enabled software also require API billing.
+::: {.agent-map .hl-msgs .hl-llm}
+{{< include _agent-map.qmd >}}
+:::
 
 ## Cost
 
@@ -308,7 +933,7 @@ API billing is usage-based: you pay per token, through an API key, instead of a 
 
 [[Forbes](https://www.forbes.com/sites/janakirammsv/2026/05/17/uber-burns-its-2026-ai-budget-in-four-months-on-claude-code/), May 17, 2026, citing The Information · [The Next Web](https://thenextweb.com/news/microsoft-claude-code-retreat-ai-cost), May 25, 2026, citing Windows Central and The Verge]{.eyebrow}
 
-## Input cost is quadratic in conversation length
+## Input cost is quadratic in conversation length {.smaller}
 
 Each turn re-sends the whole conversation: every standing instruction, memory note, tool definition, tool call, tool response, and the AI's reasoning output. If each of *n* turns adds one unit of text, input cost is 0.5*n* + 0.5*n*^2^ with no caching and 1.2*n* + 0.05*n*^2^ with caching. Output is generated once per turn, so output cost grows linearly.
 
@@ -326,7 +951,7 @@ Each turn re-sends the whole conversation: every standing instruction, memory no
 
 :::
 
-Caching: new text costs 1.25, re-sent text 0.1.
+Caching: the provider stores text it has already processed. New text costs 1.25, re-sent text 0.1.
 :::
 
 ::: {.card}
@@ -379,512 +1004,13 @@ Models that anyone can install and run on their own hardware, if the hardware is
 Playground for my class: [lab-mimo.kerryback.com](https://lab-mimo.kerryback.com)
 :::
 
-# Doing work<br>with AI {#doing-work-with-ai .circle-top background-image="utah-abs-little-cottonwood-gray.jpg" background-size="40.625% 100%" background-position="right"}
+# Custom agents {.circle-top background-image="utah-abs-snowbird-mint.jpg" background-size="40.625% 100%" background-position="right"}
 
-## What AI can make with code
+## Custom agents: you build the whole loop
 
-::: {.cards .cards-3}
-::: {.card}
-[Excel workbooks]{.card-title}
-
-Fully functioning with formulas and formatting
+::: {.agent-map .hl-all}
+{{< include _agent-map.qmd >}}
 :::
-
-::: {.card .card-dark}
-[PowerPoint decks]{.card-title}
-
-Editable, following whatever template
-:::
-
-::: {.card}
-[Word docs]{.card-title}
-
-Formatted, with images and tables
-:::
-
-::: {.card .card-dark}
-[Charts]{.card-title}
-
-All types, fully customizable, annotations, interactive
-:::
-
-::: {.card}
-[Data analysis]{.card-title}
-
-Merge, filter, aggregate, transform, statistics
-:::
-
-::: {.card .card-dark}
-[Advanced data analysis]{.card-title}
-
-Optimization, prediction (machine learning)
-:::
-:::
-
-::: {.note .note-dark style="margin-top: 1.2em; font-weight: 700;"}
-All from code or code + text.
-:::
-
-## Student deliverables
-
-::: {.comparison-table}
-
-| Deliverable | What it is |
-|---|---|
-| Spreadsheets and reports | Crafted by AI, checked by students |
-| Software | Dashboards, spreadsheet replacements |
-| AI skills | Instructions and files for creating spreadsheets and reports |
-| AI-enabled software | Software that adds text descriptions from AI |
-| AI agents | A custom interface, a system prompt, and tools |
-
-:::
-
-# Why is AI so good at coding tasks? {.photo-left .circle-top background-image="utah-abs-snowbird-mint.jpg" background-size="40.625% 100%" background-position="left"}
-
-## {#three-reasons .no-title}
-
-```{=html}
-<div style="display:flex;justify-content:center;align-items:center;gap:48px;height:600px;">
-  <div style="width:300px;height:300px;border-radius:50%;background:#3AEFCC;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;box-sizing:border-box;font-size:1.25em;line-height:1.3;color:#36393B;">Code is predictable</div>
-  <div style="width:300px;height:300px;border-radius:50%;background:#36393B;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;box-sizing:border-box;font-size:1.25em;line-height:1.3;color:#ffffff;">Lots of public code (GitHub)</div>
-  <div style="width:300px;height:300px;border-radius:50%;background:#3AEFCC;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;box-sizing:border-box;font-size:1.25em;line-height:1.3;color:#36393B;">AI checks its work</div>
-</div>
-```
-
-## Anatomy of an agent
-
-```{=html}
-<svg viewBox="0 0 1040 580" role="img" aria-label="The agent loop: the same circuit as a chatbot, with a tool call branching down to the tools the harness executes."
-     style="display:block;margin:0 auto;width:900px;max-width:100%"
-     font-family="'Avenir Next LT Pro','Avenir Next','Nunito Sans',system-ui,sans-serif">
-  <defs>
-    <marker id="ag-out" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="9" markerHeight="7" orient="auto">
-      <path d="M0 0 L10 4 L0 8 Z" fill="#6b6e71"/>
-    </marker>
-    <marker id="ag-back" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="9" markerHeight="7" orient="auto">
-      <path d="M0 0 L10 4 L0 8 Z" fill="#36393B"/>
-    </marker>
-    <marker id="ag-tool" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="9" markerHeight="7" orient="auto">
-      <path d="M0 0 L10 4 L0 8 Z" fill="#12a88b"/>
-    </marker>
-  </defs>
-
-  <path d="M145 210 V100 H895 V200" fill="none" stroke="#6b6e71" stroke-width="3" marker-end="url(#ag-out)"/>
-  <path d="M895 300 V400 H145 V310" fill="none" stroke="#36393B" stroke-width="3" marker-end="url(#ag-back)"/>
-
-  <rect x="60" y="210" width="170" height="90" fill="#36393B"/>
-  <text x="145" y="263" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">User</text>
-  <rect x="810" y="210" width="170" height="90" fill="#36393B"/>
-  <text x="895" y="263" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">LLM</text>
-
-  <rect x="320" y="195" width="400" height="120" fill="#f4f3f4"/>
-  <rect x="320" y="195" width="6" height="120" fill="#3AEFCC"/>
-  <text x="520" y="235" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#36393B" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">messages[]</text>
-  <text x="520" y="265" text-anchor="middle" font-size="14" fill="#36393B">system + tools + user + assistant + tool_result + …</text>
-  <text x="520" y="291" text-anchor="middle" font-size="14" font-style="italic" fill="#6b6e71">grows each turn; includes tool calls and results</text>
-
-  <g font-size="17" font-weight="700" fill="#36393B" text-anchor="middle">
-    <text x="235" y="62">User types prompt</text>
-    <text x="560" y="50">Send system prompt</text>
-    <text x="800" y="436">LLM returns</text>
-    <text x="520" y="436">If tool call → execute tool</text>
-    <text x="235" y="436">If final answer → display to user</text>
-  </g>
-  <g font-size="15" fill="#6b6e71" text-anchor="middle">
-    <text x="560" y="70">+ tool definitions + history</text>
-    <text x="800" y="456">text OR tool call</text>
-    <text x="520" y="456">send result back, loop to step 2</text>
-  </g>
-
-  <g text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">
-    <circle cx="235" cy="100" r="17" fill="#6b6e71"/><text x="235" y="107">1</text>
-    <circle cx="560" cy="100" r="17" fill="#6b6e71"/><text x="560" y="107">2</text>
-    <circle cx="800" cy="400" r="17" fill="#36393B"/><text x="800" y="407">3</text>
-    <circle cx="520" cy="400" r="17" fill="#36393B"/><text x="520" y="407">4</text>
-    <circle cx="235" cy="400" r="17" fill="#36393B"/><text x="235" y="407">5</text>
-  </g>
-
-  <!-- the branch out of the loop: the harness, not the model, runs these -->
-  <path d="M960 300 V470" fill="none" stroke="#12a88b" stroke-width="3" stroke-dasharray="9 7" marker-end="url(#ag-tool)"/>
-  <text x="948" y="385" text-anchor="middle" font-size="15" font-weight="700" fill="#12a88b" transform="rotate(-90 948 385)">tool call</text>
-
-  <rect x="60" y="480" width="920" height="90" fill="#36393B"/>
-  <text x="520" y="508" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="1" fill="#3AEFCC">Tools (defined as JSON, executed by the harness)</text>
-  <g font-size="16" font-weight="700" fill="#36393B" text-anchor="middle" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">
-    <rect x="100" y="522" width="190" height="34" fill="#f4f3f4"/><text x="195" y="545">run_sql</text>
-    <rect x="310" y="522" width="190" height="34" fill="#f4f3f4"/><text x="405" y="545">list_tables</text>
-    <rect x="520" y="522" width="200" height="34" fill="#f4f3f4"/><text x="620" y="545">describe_table</text>
-    <rect x="740" y="522" width="200" height="34" fill="#f4f3f4"/><text x="840" y="545">run_python</text>
-  </g>
-</svg>
-```
-
-## How Claude checks Office documents {.compare}
-
-:::: {.columns}
-::: {.column width="50%"}
-### PowerPoint and Word
-
-Uses LibreOffice to export to PDF, then converts each PDF page to a PNG and looks at it for overflowing text, overlaps, and cut-off tables.
-:::
-
-::: {.column width="50%"}
-### Excel
-
-Uses LibreOffice to recalculate every formula, then lists cells with errors such as #REF! or #DIV/0! and fixes them.
-:::
-::::
-
-## Quality increased recently
-
-::: {.cards .cards-3}
-::: {.card}
-[October 2025]{.card-title}
-
-"They just don't work. They don't have enough intelligence, they're not multimodal enough, they can't do computer use and all this stuff. They don't have continual learning. You can't just tell them something and they'll remember it."
-
-"I feel like the industry is making too big of a jump and is trying to pretend like this is amazing, and it's not. It's slop."
-:::
-
-::: {.card .card-blue .fragment}
-[December 2025]{.card-title}
-
-"I really am mostly programming in English now, a bit sheepishly telling the LLM what code to write... in words. Biggest change to my basic coding workflow in ~2 decades."
-:::
-
-::: {.card .fragment}
-[February 2026]{.card-title}
-
-"It is hard to communicate how much programming has changed due to AI in the last 2 months: not gradually and over time in the 'progress as usual' way, but specifically this last December. Coding agents basically didn't work before December."
-
-"I don't think I've typed like a line of code probably since December."
-:::
-:::
-
-[Andrej Karpathy: OpenAI co-founder, former Tesla AI chief, now at Anthropic]{.eyebrow}
-
-## Better coding harnesses became ubiquitous
-
-::: {.cards .cards-3}
-::: {.card}
-[Claude Code · February 2025]{.card-title}
-
-Harness + tools. Originally ran in the terminal.
-:::
-
-::: {.card .card-blue}
-[Cowork · January 2026]{.card-title}
-
-The Claude Code agent, running in a sandbox.
-:::
-
-::: {.card}
-[Chat · September 2026]{.card-title}
-
-Chat gains the Claude Code agent.
-:::
-:::
-
-# Checking AI work {.circle-top background-image="utah-abs-big-cottonwood-gray.jpg" background-size="40.625% 100%" background-position="right"}
-
-## How to check AI work
-
-::: {.cards .cards-2}
-::: {.card .card-blue}
-[Have AI explain its work]{.card-title}
-
-"Explain what you did step by step. Did you make any decisions that we have not discussed?"
-:::
-
-::: {.card}
-[Use another AI agent to check the work]{.card-title}
-
-A fresh conversation or a subagent, given your goals and the first agent's explanation.
-:::
-
-::: {.card}
-[Have AI build a spreadsheet when possible]{.card-title}
-
-Then check the formulas. Every number traces back to its inputs.
-:::
-
-::: {.card .card-blue}
-[Run the same code on small examples]{.card-title}
-
-Ask AI to run its code on a few rows you can check by hand.
-:::
-:::
-
-::: {.note}
-Most AI coding errors arise from misunderstandings and unstated assumptions --- and from errors that people also make, for example, merging and filtering in the wrong order.
-:::
-
-## Poor reasoning with confidence {.no-strip}
-
-![](carwash-haiku-crop.png){height=440 fig-align="center"}
-
-[Claude Haiku 4.5, October 17, 2026]{.eyebrow style="text-align: center;"}
-
-## Newer models are better {.no-strip}
-
-![](carwash-haiku55.png){height=360 fig-align="center"}
-
-[Claude Haiku 5.5, October 17, 2026]{.eyebrow style="text-align: center;"}
-
-## Web search reduces hallucinations {.pull}
-
-> Anthropic system prompt: "If not certain something it recalls is true and on-point, it says so and suggests enabling web search for newer information."" 
-
-[Anthropic, [Claude Opus 4.8 system prompt](https://platform.claude.com/docs/en/release-notes/system-prompts/claude-opus-4-8), May 28, 2026]{.eyebrow}
-
-## Why AI performs worse on judgment calls
-
-::: {style="font-size: 0.9em;"}
-> The gulf between LLM performance on verifiable tasks vs. unverifiable tasks that require judgment is larger than most people realize. Verifiable tasks, like coding or solving math problems, have a right answer that can be checked automatically. Judgment tasks don't have unambiguous, ground-truth, correct answers. But they do have better and worse answers.
->
-> ::: {style="background: #dafbf4; padding: 0.4em 0.6em 0.05em 0.6em; margin-left: -0.6em;"}
-> We have much better techniques for training AI systems to do well on verifiable tasks. As a result, progress on performing such tasks has been much faster than for judgment tasks.
-> :::
-:::
-
-[Andrew Ng, co-founder and former head of Google Brain, co-founder of Coursera and DeepLearning.AI · The Batch, October 16, 2026]{.eyebrow}
-
-# Automating work with AI {.photo-left .circle-top background-image="utah-abs-little-cottonwood-mint.jpg" background-size="40.625% 100%" background-position="left"}
-
-## Eliminating repetitive work {.compare}
-
-:::: {.columns}
-::: {.column width="50%"}
-> [Alfred] removed about 90% of the manual effort that once went into preparing our weekly financial review. We used to spend hundreds of hours preparing 100+ slides for a Monday meeting.
-
-[Marie Myers, CFO, Hewlett Packard Enterprise, [Fortune](https://fortune.com/2026/02/12/hpe-cfo-used-ai-transform-100-slide-monday-meeting/), February 12, 2026]{.eyebrow}
-:::
-
-::: {.column width="50%"}
-> The goal is to remove the repetitive, administrative work so our people can focus on what they do best—we're not replacing critical thinking and judgment, we're removing the tedious, time-consuming work that gets in the way of it.
-
-[Customers Bank CEO Sam Sidhu, statement to [Fortune](https://fortune.com/2026/04/28/ceo-of-customers-bank-sam-sidhu-ai-clone-lead-earnings-call-mark-zuckerberg-building-digital-twin/), April 28, 2026]{.eyebrow}
-:::
-::::
-
-## Different routes
-
-::: {style="font-size: 1.45em; margin-top: 0.6em; line-height: 1.8;"}
-- Software apps built by AI
-- Instructions and scripts for general agents (Claude, ChatGPT, ...)
-- Custom agents
-:::
-
-# Vibe-coding software {.circle-top background-image="utah-abs-snowbird-gray.jpg" background-size="40.625% 100%" background-position="right"}
-
-## Artifacts
-
-Claude calls a single-page HTML app (no separate backend) an artifact.
-
-1. In Claude Desktop, choose Artifact in the left pane.
-2. Choose New. Prompt Claude to create the app.
-3. You should get options to deploy the app online or to download it.
-
-::: {.note}
-You can also just prompt Claude "Create a single-page HTML app ..."
-:::
-
-## More complex software has two parts
-
-::: {.cards .cards-2}
-::: {.card .card-blue}
-[Backend]{.card-title}
-
-A service running somewhere. It listens for input and does the actual work.
-:::
-
-::: {.card}
-[Frontend]{.card-title}
-
-Your browser. It sends instructions to the backend:
-
-- GET: get a page
-- POST: send information and get a response
-:::
-:::
-
-::: {.note}
-Your own computer can be both the frontend and the backend: it serves the app, and you interact with it in your browser.
-:::
-
-## Demos
-
-::: {.cards .cards-2}
-::: {.card .card-blue}
-[Refinery blending]{.card-title}
-
-[kerryback.com/refinery.html](https://kerryback.com/refinery.html)
-
-An artifact. Classic linear programming problem.  App shows the optimal blend, which constraints bind, and what relaxing each one is worth. Every input can be edited.
-:::
-
-::: {.card}
-[Tangency portfolio]{.card-title}
-
-[tangency.kerryback.com](https://tangency.kerryback.com)
-
-Backend to pull data.  Calculate sample statistics.  Compute tangency portfolio by matrix algebra.  Put everything in an Excel workbook.
-:::
-:::
-
-# Skills {.photo-left .circle-top background-image="utah-abs-little-cottonwood-gray.jpg" background-size="40.625% 100%" background-position="left"}
-
-## Skills
-
-::: {.cards .cards-2}
-::: {.card .card-blue}
-[What a skill is]{.card-title}
-
-A folder with a `SKILL.md` file in it --- the instructions for one task, plus any scripts, templates or reference files those instructions call for
-:::
-
-::: {.card}
-[What is read, and when]{.card-title}
-
-The name and description at the start of every conversation, about 100 tokens each. The rest of the file only when a task matches the description
-:::
-:::
-
-::: {.note}
-An alternative is "custom instructions" (`CLAUDE.md` or `AGENTS.md` on CLI tools). Put rules you want AI to follow in every conversation there (e.g., avoid boldface, bulleted lists, and undue emphasis).
-:::
-
-## Some Anthropic skills
-
-Published at [github.com/anthropics/skills](https://github.com/anthropics/skills) and available on paid plans in Claude.ai.
-
-::: {.cards .cards-3}
-::: {.card .card-blue}
-[Office documents]{.card-title}
-
-- xlsx --- Excel workbooks
-- docx --- Word documents
-- pptx --- PowerPoint decks
-- pdf --- PDF files
-:::
-
-::: {.card}
-[Building things]{.card-title}
-
-- skill-creator --- write and improve skills
-- frontend-design --- polished web pages and apps
-- web-artifacts-builder --- larger artifacts
-- mcp-builder --- MCP servers (connectors)
-:::
-
-::: {.card .card-blue}
-[Other]{.card-title}
-
-- doc-coauthoring --- co-write a document
-- webapp-testing --- test a web app in a browser
-- canvas-design --- posters and visual art
-- brand-guidelines --- Anthropic's colors and type; a model for your own
-:::
-:::
-
-## Creating skills
-
-::: {.cards .cards-3}
-::: {.card .card-blue}
-[1]{.card-title}
-
-The usual process: you work on something, iterating until you get what you want.
-:::
-
-::: {.card}
-[2]{.card-title}
-
-You realize you may want the same thing again, and you don't want to go through the iteration again.
-:::
-
-::: {.card .card-blue}
-[3]{.card-title}
-
-Solution: tell AI to package the final version as a skill.
-:::
-:::
-
-## Demo
-
-In a Claude Code session on my laptop, I enter the prompt `/mydcf {ticker}`. Claude should:
-
-1. Pull 10-Ks for the ticker from SEC EDGAR.
-2. Get earnings call transcripts from The Motley Fool.
-3. Build a two-stage DCF valuation.
-4. Lay out its assumptions and their grounding in its sources.
-5. Create an editable HTML document and an Excel workbook.
-6. Post the document at {ticker}.kerryback.com.
-
-# Connecting AI to your data {.circle-top background-image="utah-abs-big-cottonwood-mint.jpg" background-size="40.625% 100%" background-position="right"}
-
-## Connectors (MCP servers)
-
-An MCP server is a bridge between an AI agent and a data source or service. Thousands exist already.
-
-::: {.cards .cards-3}
-::: {.card .card-blue}
-[What you add]{.card-title}
-
-A URL, in the agent's settings
-:::
-
-::: {.card}
-[What the agent gets]{.card-title}
-
-A name, a description and an input schema for each tool the server offers
-:::
-
-::: {.card .card-blue}
-[What stays on the server]{.card-title}
-
-The code, and the credentials it uses to reach the data
-:::
-:::
-
-::: {.note}
-Examples: Snowflake, Databricks, BigQuery, Salesforce, HubSpot, Workday, SAP, Slack, Gmail, Microsoft 365 (SharePoint, Outlook, Teams), Notion, GitHub, Stripe, Shopify
-:::
-
-## Retrieval augmented generation
-
-RAG is for documents: contracts, mail, board papers, policies, reports. They were not in the training data, and they are too large to paste into every prompt.
-
-::: {.cards .cards-4}
-::: {.card .card-blue}
-[1. Chunk]{.card-title}
-
-Split the documents into passages of a few hundred words.
-:::
-
-::: {.card}
-[2. Embed]{.card-title}
-
-Turn each passage into a vector.
-:::
-
-::: {.card .card-blue}
-[3. Retrieve]{.card-title}
-
-Embed the question and find the passages closest to it.
-:::
-
-::: {.card}
-[4. Paste]{.card-title}
-
-Put those passages in the prompt, with the question.
-:::
-:::
-
-::: {.note}
-The model never reads your whole document store. It reads the excerpts that a similarity search chooses. Demo: [rag.kerryback.com](https://rag.kerryback.com)
-:::
-
-# Custom agents {.photo-left .circle-top background-image="utah-abs-little-cottonwood-gray.jpg" background-size="40.625% 100%" background-position="left"}
 
 ## Customer service agent {.compare}
 
@@ -984,7 +1110,7 @@ Three agents. The orchestrator, the one you chat with, splits a question into tw
 ::: {.column width="50%"}
 [Why a custom agent]{.eyebrow}
 
-Each agent reads only its own material, and each job can use a smaller model. The web agent reads untrusted pages and never touches company data, so an instruction hidden in a web page cannot reach that data.
+Each agent reads only its own material, and each job can use a smaller model. The web agent reads untrusted pages and never touches company data, so an instruction hidden in a web page cannot reach that data, as it did in the Copilot case.
 :::
 
 ::: {.column width="50%"}
@@ -1038,61 +1164,6 @@ A fixed system prompt, the model you choose for each job, a spending limit, and 
 Agent SDKs (Claude Agent SDK, OpenAI Agents SDK) supply the harness and the built-in tools. The Claude Agent SDK gives you the Claude Code harness.
 :::
 
-
-# Effective prompting {.circle-top background-image="utah-abs-snowbird-mint.jpg" background-size="40.625% 100%" background-position="right"}
-
-## Prompting today
-
-::: {.cards .cards-3}
-::: {.card}
-[Drop old techniques]{.card-title}
-
-Most ‘prompt engineering’ techniques from a few years ago are now either useless or actually counterproductive. Don’t tell it “you are an expert data scientist” or “think step by step.”
-:::
-
-::: {.card .card-blue}
-[Say what you want]{.card-title}
-
-Tell it what you want, not what not to do.
-:::
-
-::: {.card}
-[Ask for the best way first]{.card-title}
-
-Ask it to do something, and it does what it has seen most often in its training data.
-
-Ask for the best way, and it repeats evaluations of methods it has seen. Then ask it to proceed: it reads "the best way is ..." in the conversation and follows that.
-:::
-:::
-
-## Three habits
-
-::: {.cards .cards-3}
-::: {.card}
-[Beware of tunnel vision]{.card-title}
-
-Once AI starts down a path, continuing is the likeliest next step. At a roadblock it tries one workaround after another and rarely asks whether a [different path]{.accent} is better.
-
-Periodically ask: are there other approaches that might work better for reaching the end goal?
-:::
-
-::: {.card .card-blue}
-[Steelman]{.card-title}
-
-Training on human feedback rewards agreement. Ask "is my plan sound?" and AI finds reasons it is.
-
-Instead ask: "What is the strongest argument against this?" Have it play a skeptical board member, a regulator, a competitor.
-:::
-
-::: {.card}
-[Numbers need code]{.card-title}
-
-If no code produced a number, the number was predicted. AI predicts `sum([83, 16, 104])` better than what follows `83 + 16 + 104 =`.
-
-Prompt: "Compute this in Python. Do not report a number you did not compute with code."
-:::
-:::
-
 # Why has the impact been muted so far? {.photo-left .circle-top background-image="utah-abs-big-cottonwood-gray.jpg" background-size="40.625% 100%" background-position="left"}
 
 ## Predicted job losses are not showing up yet {.compare}
@@ -1114,6 +1185,28 @@ Prompt: "Compute this in Python. Do not report a number you did not compute with
 ::::
 
 [Yale Budget Lab, [Tracking the Impact of AI on the Labor Market](https://budgetlab.yale.edu/research/tracking-impact-ai-labor-market), updated October 14, 2026 · [AI Is Probably Not (Yet) the Reason for Labor Market Weakening](https://budgetlab.yale.edu/research/ai-probably-not-yet-reason-labor-market-weakening), May 7, 2026]{.eyebrow}
+
+## Three brakes on adoption
+
+::: {.cards .cards-3}
+::: {.card .card-blue}
+[Security]{.card-title}
+
+59% of tech leaders cite security and compliance as a top barrier to scaling AI agents.
+:::
+
+::: {.card}
+[Cost]{.card-title}
+
+Uber used up its 2026 AI budget by April.
+:::
+
+::: {.card .card-blue}
+[Fluency]{.card-title}
+
+50% of finance HR professionals say the share of underqualified candidates they interview has increased over the past year.
+:::
+:::
 
 ## {.no-title}
 
@@ -1178,6 +1271,23 @@ Students will manage AI agents that do the work, as checkers more than makers.
 :::
 ::::
 
+## What's left for people
+
+```{=html}
+<svg viewBox="0 0 1080 410" style="width:953px; max-width:100%; display:block; margin:0 auto; font-family:inherit;" xmlns="http://www.w3.org/2000/svg">
+<rect x="120" y="10" width="420" height="130" fill="#36393B"/>
+<text x="330" y="87" font-size="34" font-weight="700" fill="#ffffff" text-anchor="middle">Manage AI</text>
+<rect x="540" y="10" width="420" height="130" fill="#dafbf4"/>
+<text x="750" y="87" font-size="34" font-weight="700" fill="#36393B" text-anchor="middle">Choose the problems</text>
+<rect x="120" y="140" width="420" height="130" fill="#3AEFCC"/>
+<text x="330" y="217" font-size="34" font-weight="700" fill="#36393B" text-anchor="middle">Manage people</text>
+<rect x="540" y="140" width="420" height="130" fill="#E7E4E6"/>
+<text x="750" y="217" font-size="34" font-weight="700" fill="#36393B" text-anchor="middle">Make judgment calls</text>
+<rect x="120" y="270" width="840" height="130" fill="#36393B"/>
+<text x="540" y="347" font-size="34" font-weight="700" fill="#ffffff" text-anchor="middle">Client/customer relationships</text>
+</svg>
+```
+
 ## VisiCalc on Apple II, 1979 {.no-strip}
 
 ![](visicalc.png){.pixelated height=560 fig-align="center"}
@@ -1214,24 +1324,7 @@ Students will manage AI agents that do the work, as checkers more than makers.
 
 [Customers Bank CEO Sam Sidhu, statement to [Fortune](https://fortune.com/2026/04/28/ceo-of-customers-bank-sam-sidhu-ai-clone-lead-earnings-call-mark-zuckerberg-building-digital-twin/), April 28, 2026]{.eyebrow}
 
-## What's left for people
-
-```{=html}
-<svg viewBox="0 0 1080 410" style="width:953px; max-width:100%; display:block; margin:0 auto; font-family:inherit;" xmlns="http://www.w3.org/2000/svg">
-<rect x="120" y="10" width="420" height="130" fill="#36393B"/>
-<text x="330" y="87" font-size="34" font-weight="700" fill="#ffffff" text-anchor="middle">Manage AI</text>
-<rect x="540" y="10" width="420" height="130" fill="#dafbf4"/>
-<text x="750" y="87" font-size="34" font-weight="700" fill="#36393B" text-anchor="middle">Choose the problems</text>
-<rect x="120" y="140" width="420" height="130" fill="#3AEFCC"/>
-<text x="330" y="217" font-size="34" font-weight="700" fill="#36393B" text-anchor="middle">Manage people</text>
-<rect x="540" y="140" width="420" height="130" fill="#E7E4E6"/>
-<text x="750" y="217" font-size="34" font-weight="700" fill="#36393B" text-anchor="middle">Make judgment calls</text>
-<rect x="120" y="270" width="840" height="130" fill="#36393B"/>
-<text x="540" y="347" font-size="34" font-weight="700" fill="#ffffff" text-anchor="middle">Client/customer relationships</text>
-</svg>
-```
-
-# A tool for Claude Code CLI {.photo-left .circle-top background-image="utah-abs-snowbird-gray.jpg" background-size="40.625% 100%" background-position="left"}
+# A tool for Claude Code CLI {.circle-top background-image="utah-abs-big-cottonwood-mint.jpg" background-size="40.625% 100%" background-position="right"}
 
 ## Academic Studio
 

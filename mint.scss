@@ -1235,3 +1235,24 @@ $divider-inset: 56px;
 .reveal code {
   font-variant-ligatures: none;
 }
+
+// ── Agent map ───────────────────────────────────────────────────────────
+// The agent loop as a recurring map. Wrap the include in a div and name the
+// parts to highlight; the other parts fade.
+//
+//   ::: {.agent-map .hl-tools .hl-msgs}
+//   {{< include _agent-map.qmd >}}
+//   :::
+
+.reveal .agent-map {
+  margin-top: 0.6em;
+
+  .part { opacity: 0.15; }
+
+  &.hl-all .part,
+  &.hl-harness .m-harness,
+  &.hl-user .m-user,
+  &.hl-msgs .m-msgs,
+  &.hl-llm .m-llm,
+  &.hl-tools .m-tools { opacity: 1; }
+}

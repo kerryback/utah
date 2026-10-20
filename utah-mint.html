@@ -33,7 +33,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="utah-mint_files/libs/revealjs/dist/theme/quarto-ceef426b916d6e01796003f4a723b544.css">
+  <link rel="stylesheet" href="utah-mint_files/libs/revealjs/dist/theme/quarto-621f853dfcb169de61ad21619a54de88.css">
   <link href="utah-mint_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="utah-mint_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="utah-mint_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -242,8 +242,8 @@ Kerry Back, Rice University
 </div>
 </section></section>
 <section>
-<section id="tokens-and-parameters" class="title-slide slide level1 photo-left circle-top center" data-background-image="utah-abs-little-cottonwood-mint.jpg" data-background-size="40.625% 100%" data-background-position="left">
-<h1>Tokens and parameters</h1>
+<section id="how-ai-works" class="title-slide slide level1 circle-top center" data-background-image="utah-abs-little-cottonwood-mint.jpg" data-background-size="40.625% 100%" data-background-position="right">
+<h1>How AI works</h1>
 
 </section>
 <section id="tokenization" class="slide level2">
@@ -292,11 +292,816 @@ Kerry Back, Rice University
 <p><span class="eyebrow">The scale</span></p>
 <p>Same idea with perhaps trillions of parameters, arranged as a transformer — the architecture published by Google researchers in 2017.</p>
 </div></div>
+<div class="note">
+<p>Training sets the parameters: the model reads a huge amount of text (the training data), and the parameters are adjusted until it predicts the next token well. The trained network is a large language model (LLM).</p>
+</div>
+</section>
+<section id="anatomy-of-an-agent" class="slide level2">
+<h2>Anatomy of an agent</h2>
+<svg viewbox="0 0 1040 580" role="img" aria-label="The agent loop: the same circuit as a chatbot, with a tool call branching down to the tools the harness executes." style="display:block;margin:0 auto;width:900px;max-width:100%" font-family="'Avenir Next LT Pro','Avenir Next','Nunito Sans',system-ui,sans-serif">
+  <defs>
+    <marker id="ag-out" viewbox="0 0 10 8" refx="9" refy="4" markerwidth="9" markerheight="7" orient="auto">
+      <path d="M0 0 L10 4 L0 8 Z" fill="#6b6e71"></path>
+    </marker>
+    <marker id="ag-back" viewbox="0 0 10 8" refx="9" refy="4" markerwidth="9" markerheight="7" orient="auto">
+      <path d="M0 0 L10 4 L0 8 Z" fill="#36393B"></path>
+    </marker>
+    <marker id="ag-tool" viewbox="0 0 10 8" refx="9" refy="4" markerwidth="9" markerheight="7" orient="auto">
+      <path d="M0 0 L10 4 L0 8 Z" fill="#12a88b"></path>
+    </marker>
+  </defs>
+
+  <path d="M145 210 V100 H895 V200" fill="none" stroke="#6b6e71" stroke-width="3" marker-end="url(#ag-out)"></path>
+  <path d="M895 300 V400 H145 V310" fill="none" stroke="#36393B" stroke-width="3" marker-end="url(#ag-back)"></path>
+
+  <rect x="60" y="210" width="170" height="90" fill="#36393B"></rect>
+  <text x="145" y="263" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">User</text>
+  <rect x="810" y="210" width="170" height="90" fill="#36393B"></rect>
+  <text x="895" y="263" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">LLM</text>
+
+  <rect x="320" y="195" width="400" height="120" fill="#f4f3f4"></rect>
+  <rect x="320" y="195" width="6" height="120" fill="#3AEFCC"></rect>
+  <text x="520" y="235" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#36393B" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">messages[]</text>
+  <text x="520" y="265" text-anchor="middle" font-size="14" fill="#36393B">system + tools + user + assistant + tool_result + …</text>
+  <text x="520" y="291" text-anchor="middle" font-size="14" font-style="italic" fill="#6b6e71">grows each turn; includes tool calls and results</text>
+
+  <g font-size="17" font-weight="700" fill="#36393B" text-anchor="middle">
+    <text x="235" y="62">User types prompt</text>
+    <text x="560" y="50">Send system prompt</text>
+    <text x="800" y="436">LLM returns</text>
+    <text x="520" y="436">If tool call → execute tool</text>
+    <text x="235" y="436">If final answer → display to user</text>
+  </g>
+  <g font-size="15" fill="#6b6e71" text-anchor="middle">
+    <text x="560" y="70">+ tool definitions + history</text>
+    <text x="800" y="456">text OR tool call</text>
+    <text x="520" y="456">send result back, loop to step 2</text>
+  </g>
+
+  <g text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">
+    <circle cx="235" cy="100" r="17" fill="#6b6e71"></circle><text x="235" y="107">1</text>
+    <circle cx="560" cy="100" r="17" fill="#6b6e71"></circle><text x="560" y="107">2</text>
+    <circle cx="800" cy="400" r="17" fill="#36393B"></circle><text x="800" y="407">3</text>
+    <circle cx="520" cy="400" r="17" fill="#36393B"></circle><text x="520" y="407">4</text>
+    <circle cx="235" cy="400" r="17" fill="#36393B"></circle><text x="235" y="407">5</text>
+  </g>
+
+  <!-- the branch out of the loop: the harness, not the model, runs these -->
+  <path d="M960 300 V470" fill="none" stroke="#12a88b" stroke-width="3" stroke-dasharray="9 7" marker-end="url(#ag-tool)"></path>
+  <text x="948" y="385" text-anchor="middle" font-size="15" font-weight="700" fill="#12a88b" transform="rotate(-90 948 385)">tool call</text>
+
+  <rect x="60" y="480" width="920" height="90" fill="#36393B"></rect>
+  <text x="520" y="508" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="1" fill="#3AEFCC">Tools (defined as JSON, executed by the harness)</text>
+  <g font-size="16" font-weight="700" fill="#36393B" text-anchor="middle" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">
+    <rect x="100" y="522" width="190" height="34" fill="#f4f3f4"></rect><text x="195" y="545">run_sql</text>
+    <rect x="310" y="522" width="190" height="34" fill="#f4f3f4"></rect><text x="405" y="545">list_tables</text>
+    <rect x="520" y="522" width="200" height="34" fill="#f4f3f4"></rect><text x="620" y="545">describe_table</text>
+    <rect x="740" y="522" width="200" height="34" fill="#f4f3f4"></rect><text x="840" y="545">run_python</text>
+  </g>
+</svg>
+</section>
+<section id="one-loop-holds-the-whole-talk" class="slide level2">
+<h2>One loop holds the whole talk</h2>
+<div class="agent-map hl-all">
+<svg viewbox="0 0 1040 470" role="img" aria-label="The agent loop: user, messages, LLM, and tools, inside a harness." style="display:block;margin:0 auto;width:900px;max-width:100%" font-family="'Avenir Next LT Pro','Avenir Next','Nunito Sans',system-ui,sans-serif">
+  <g class="part m-harness">
+    <rect x="10" y="10" width="1020" height="450" fill="none" stroke="#6b6e71" stroke-width="2" stroke-dasharray="10 7"></rect>
+    <text x="34" y="44" font-size="15" font-weight="700" letter-spacing="1.5" fill="#6b6e71">HARNESS · Claude, ChatGPT, Claude Code, or a custom agent you build</text>
+  </g>
+  <g fill="#6b6e71">
+    <line x1="244" y1="195" x2="306" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="232,195 244,189 244,201"></polygon><polygon points="318,195 306,189 306,201"></polygon>
+    <line x1="734" y1="195" x2="796" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="722,195 734,189 734,201"></polygon><polygon points="808,195 796,189 796,201"></polygon>
+    <line x1="520" y1="269" x2="520" y2="306" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="520,257 514,269 526,269"></polygon><polygon points="520,318 514,306 526,306"></polygon>
+  </g>
+  <g class="part m-user">
+    <rect x="60" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="145" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">User</text>
+    <text x="145" y="274" text-anchor="middle" font-size="16" fill="#36393B">checking · judgment</text>
+  </g>
+  <g class="part m-msgs">
+    <text x="520" y="118" text-anchor="middle" font-size="16" fill="#36393B">prompting · skills · RAG · cost</text>
+    <rect x="320" y="135" width="400" height="120" fill="#f4f3f4"></rect>
+    <rect x="320" y="135" width="6" height="120" fill="#3AEFCC"></rect>
+    <text x="520" y="185" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#36393B" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">messages[]</text>
+    <text x="520" y="218" text-anchor="middle" font-size="14" fill="#36393B">system prompt + skills + history + tool results</text>
+  </g>
+  <g class="part m-llm">
+    <rect x="810" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="895" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">LLM</text>
+    <text x="895" y="274" text-anchor="middle" font-size="16" fill="#36393B">tokens · model choice · cost</text>
+  </g>
+  <g class="part m-tools">
+    <rect x="320" y="320" width="400" height="90" fill="#36393B"></rect>
+    <text x="520" y="360" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#3AEFCC">Tools</text>
+    <text x="520" y="390" text-anchor="middle" font-size="15" fill="#ffffff">run code · connectors · web search and fetch</text>
+    <text x="520" y="440" text-anchor="middle" font-size="16" fill="#36393B">doing work · connectors · security</text>
+  </g>
+</svg>
+</div>
+<div class="note">
+<p>The harness is the software that runs the loop: it sends messages[] to the LLM and runs the tools the LLM calls. The system prompt is the harness’s standing instructions at the top of messages[].</p>
+</div>
 </section></section>
 <section>
-<section id="security-and-compliance" class="title-slide slide level1 photo-left circle-top center" data-background-image="utah-abs-snowbird-gray.jpg" data-background-size="40.625% 100%" data-background-position="left">
+<section id="effective-prompting" class="title-slide slide level1 photo-left circle-top center" data-background-image="utah-abs-snowbird-gray.jpg" data-background-size="40.625% 100%" data-background-position="left">
+<h1>Effective prompting</h1>
+
+</section>
+<section id="prompting-what-you-put-in-messages" class="slide level2">
+<h2>Prompting: what you put in messages[]</h2>
+<div class="agent-map hl-user hl-msgs">
+<svg viewbox="0 0 1040 470" role="img" aria-label="The agent loop: user, messages, LLM, and tools, inside a harness." style="display:block;margin:0 auto;width:900px;max-width:100%" font-family="'Avenir Next LT Pro','Avenir Next','Nunito Sans',system-ui,sans-serif">
+  <g class="part m-harness">
+    <rect x="10" y="10" width="1020" height="450" fill="none" stroke="#6b6e71" stroke-width="2" stroke-dasharray="10 7"></rect>
+    <text x="34" y="44" font-size="15" font-weight="700" letter-spacing="1.5" fill="#6b6e71">HARNESS · Claude, ChatGPT, Claude Code, or a custom agent you build</text>
+  </g>
+  <g fill="#6b6e71">
+    <line x1="244" y1="195" x2="306" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="232,195 244,189 244,201"></polygon><polygon points="318,195 306,189 306,201"></polygon>
+    <line x1="734" y1="195" x2="796" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="722,195 734,189 734,201"></polygon><polygon points="808,195 796,189 796,201"></polygon>
+    <line x1="520" y1="269" x2="520" y2="306" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="520,257 514,269 526,269"></polygon><polygon points="520,318 514,306 526,306"></polygon>
+  </g>
+  <g class="part m-user">
+    <rect x="60" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="145" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">User</text>
+    <text x="145" y="274" text-anchor="middle" font-size="16" fill="#36393B">checking · judgment</text>
+  </g>
+  <g class="part m-msgs">
+    <text x="520" y="118" text-anchor="middle" font-size="16" fill="#36393B">prompting · skills · RAG · cost</text>
+    <rect x="320" y="135" width="400" height="120" fill="#f4f3f4"></rect>
+    <rect x="320" y="135" width="6" height="120" fill="#3AEFCC"></rect>
+    <text x="520" y="185" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#36393B" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">messages[]</text>
+    <text x="520" y="218" text-anchor="middle" font-size="14" fill="#36393B">system prompt + skills + history + tool results</text>
+  </g>
+  <g class="part m-llm">
+    <rect x="810" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="895" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">LLM</text>
+    <text x="895" y="274" text-anchor="middle" font-size="16" fill="#36393B">tokens · model choice · cost</text>
+  </g>
+  <g class="part m-tools">
+    <rect x="320" y="320" width="400" height="90" fill="#36393B"></rect>
+    <text x="520" y="360" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#3AEFCC">Tools</text>
+    <text x="520" y="390" text-anchor="middle" font-size="15" fill="#ffffff">run code · connectors · web search and fetch</text>
+    <text x="520" y="440" text-anchor="middle" font-size="16" fill="#36393B">doing work · connectors · security</text>
+  </g>
+</svg>
+</div>
+</section>
+<section id="prompting-today" class="slide level2">
+<h2>Prompting today</h2>
+<div class="cards cards-3">
+<div class="card">
+<p><span class="card-title">Drop old techniques</span></p>
+<p>Most ‘prompt engineering’ techniques from a few years ago are now either useless or actually counterproductive. Don’t tell it “you are an expert data scientist” or “think step by step.”</p>
+</div>
+<div class="card card-blue">
+<p><span class="card-title">Say what you want</span></p>
+<p>Tell it what you want, not what not to do.</p>
+</div>
+<div class="card">
+<p><span class="card-title">Ask for the best way first</span></p>
+<p>Ask it to do something, and it does what it has seen most often in its training data.</p>
+<p>Ask for the best way, and it repeats evaluations of methods it has seen. Then ask it to proceed: it reads “the best way is …” in the conversation and follows that.</p>
+</div>
+</div>
+</section>
+<section id="three-habits" class="slide level2">
+<h2>Three habits</h2>
+<div class="cards cards-3">
+<div class="card">
+<p><span class="card-title">Beware of tunnel vision</span></p>
+<p>Once AI starts down a path, continuing is the likeliest next step. At a roadblock it tries one workaround after another and rarely asks whether a <span class="accent">different path</span> is better.</p>
+<p>Periodically ask: are there other approaches that might work better for reaching the end goal?</p>
+</div>
+<div class="card card-blue">
+<p><span class="card-title">Steelman</span></p>
+<p>Training on human feedback rewards agreement. Ask “is my plan sound?” and AI finds reasons it is.</p>
+<p>Instead ask: “What is the strongest argument against this?” Have it play a skeptical board member, a regulator, a competitor.</p>
+</div>
+<div class="card">
+<p><span class="card-title">Numbers need code</span></p>
+<p>Numbers reach the model as unrelated tokens. If no code produced a number, the number was predicted. AI predicts <code>sum([83, 16, 104])</code> better than what follows <code>83 + 16 + 104 =</code>.</p>
+<p>Prompt: “Compute this in Python. Do not report a number you did not compute with code.”</p>
+</div>
+</div>
+</section></section>
+<section>
+<section id="doing-work-with-ai" class="title-slide slide level1 circle-top center" data-background-image="utah-abs-big-cottonwood-mint.jpg" data-background-size="40.625% 100%" data-background-position="right">
+<h1>Doing work<br>with AI</h1>
+
+</section>
+<section id="doing-work-the-llm-writes-code-the-tools-run-it" class="slide level2">
+<h2>Doing work: the LLM writes code, the tools run it</h2>
+<div class="agent-map hl-msgs hl-llm hl-tools">
+<svg viewbox="0 0 1040 470" role="img" aria-label="The agent loop: user, messages, LLM, and tools, inside a harness." style="display:block;margin:0 auto;width:900px;max-width:100%" font-family="'Avenir Next LT Pro','Avenir Next','Nunito Sans',system-ui,sans-serif">
+  <g class="part m-harness">
+    <rect x="10" y="10" width="1020" height="450" fill="none" stroke="#6b6e71" stroke-width="2" stroke-dasharray="10 7"></rect>
+    <text x="34" y="44" font-size="15" font-weight="700" letter-spacing="1.5" fill="#6b6e71">HARNESS · Claude, ChatGPT, Claude Code, or a custom agent you build</text>
+  </g>
+  <g fill="#6b6e71">
+    <line x1="244" y1="195" x2="306" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="232,195 244,189 244,201"></polygon><polygon points="318,195 306,189 306,201"></polygon>
+    <line x1="734" y1="195" x2="796" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="722,195 734,189 734,201"></polygon><polygon points="808,195 796,189 796,201"></polygon>
+    <line x1="520" y1="269" x2="520" y2="306" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="520,257 514,269 526,269"></polygon><polygon points="520,318 514,306 526,306"></polygon>
+  </g>
+  <g class="part m-user">
+    <rect x="60" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="145" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">User</text>
+    <text x="145" y="274" text-anchor="middle" font-size="16" fill="#36393B">checking · judgment</text>
+  </g>
+  <g class="part m-msgs">
+    <text x="520" y="118" text-anchor="middle" font-size="16" fill="#36393B">prompting · skills · RAG · cost</text>
+    <rect x="320" y="135" width="400" height="120" fill="#f4f3f4"></rect>
+    <rect x="320" y="135" width="6" height="120" fill="#3AEFCC"></rect>
+    <text x="520" y="185" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#36393B" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">messages[]</text>
+    <text x="520" y="218" text-anchor="middle" font-size="14" fill="#36393B">system prompt + skills + history + tool results</text>
+  </g>
+  <g class="part m-llm">
+    <rect x="810" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="895" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">LLM</text>
+    <text x="895" y="274" text-anchor="middle" font-size="16" fill="#36393B">tokens · model choice · cost</text>
+  </g>
+  <g class="part m-tools">
+    <rect x="320" y="320" width="400" height="90" fill="#36393B"></rect>
+    <text x="520" y="360" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#3AEFCC">Tools</text>
+    <text x="520" y="390" text-anchor="middle" font-size="15" fill="#ffffff">run code · connectors · web search and fetch</text>
+    <text x="520" y="440" text-anchor="middle" font-size="16" fill="#36393B">doing work · connectors · security</text>
+  </g>
+</svg>
+</div>
+</section>
+<section id="what-ai-can-make-with-code" class="slide level2">
+<h2>What AI can make with code</h2>
+<div class="cards cards-3">
+<div class="card">
+<p><span class="card-title">Excel workbooks</span></p>
+<p>Fully functioning with formulas and formatting</p>
+</div>
+<div class="card card-dark">
+<p><span class="card-title">PowerPoint decks</span></p>
+<p>Editable, following whatever template</p>
+</div>
+<div class="card">
+<p><span class="card-title">Word docs</span></p>
+<p>Formatted, with images and tables</p>
+</div>
+<div class="card card-dark">
+<p><span class="card-title">Charts</span></p>
+<p>All types, fully customizable, annotations, interactive</p>
+</div>
+<div class="card">
+<p><span class="card-title">Data analysis</span></p>
+<p>Merge, filter, aggregate, transform, statistics</p>
+</div>
+<div class="card card-dark">
+<p><span class="card-title">Advanced data analysis</span></p>
+<p>Optimization, prediction (machine learning)</p>
+</div>
+</div>
+<div class="note note-dark" style="margin-top: 1.2em; font-weight: 700;">
+<p>All from code or code + text.</p>
+</div>
+</section>
+<section id="three-reasons" class="slide level2">
+<h2>Why is AI so good at coding tasks?</h2>
+<div style="display:flex;justify-content:center;align-items:center;gap:48px;height:480px;">
+  <div style="width:300px;height:300px;border-radius:50%;background:#3AEFCC;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;box-sizing:border-box;font-size:1.25em;line-height:1.3;color:#36393B;">Code is predictable</div>
+  <div style="width:300px;height:300px;border-radius:50%;background:#36393B;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;box-sizing:border-box;font-size:1.25em;line-height:1.3;color:#ffffff;">Lots of public code (GitHub)</div>
+  <div style="width:300px;height:300px;border-radius:50%;background:#3AEFCC;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;box-sizing:border-box;font-size:1.25em;line-height:1.3;color:#36393B;">AI checks its work</div>
+</div>
+</section>
+<section id="how-claude-checks-office-documents" class="slide level2 compare">
+<h2>How Claude checks Office documents</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="powerpoint-and-word">PowerPoint and Word</h3>
+<p>Uses LibreOffice to export to PDF, then converts each PDF page to a PNG and looks at it for overflowing text, overlaps, and cut-off tables.</p>
+</div><div class="column" style="width:50%;">
+<h3 id="excel">Excel</h3>
+<p>Uses LibreOffice to recalculate every formula, then lists cells with errors such as #REF! or #DIV/0! and fixes them.</p>
+</div></div>
+</section>
+<section id="quality-increased-recently" class="slide level2">
+<h2>Quality increased recently</h2>
+<div class="cards cards-3">
+<div class="card">
+<p><span class="card-title">October 2025</span></p>
+<p>“They just don’t work. They don’t have enough intelligence, they’re not multimodal enough, they can’t do computer use and all this stuff. They don’t have continual learning. You can’t just tell them something and they’ll remember it.”</p>
+<p>“I feel like the industry is making too big of a jump and is trying to pretend like this is amazing, and it’s not. It’s slop.”</p>
+</div>
+<div class="card card-blue fragment">
+<p><span class="card-title">December 2025</span></p>
+<p>“I really am mostly programming in English now, a bit sheepishly telling the LLM what code to write… in words. Biggest change to my basic coding workflow in ~2 decades.”</p>
+</div>
+<div class="card fragment">
+<p><span class="card-title">February 2026</span></p>
+<p>“It is hard to communicate how much programming has changed due to AI in the last 2 months: not gradually and over time in the ‘progress as usual’ way, but specifically this last December. Coding agents basically didn’t work before December.”</p>
+<p>“I don’t think I’ve typed like a line of code probably since December.”</p>
+</div>
+</div>
+<p><span class="eyebrow">Andrej Karpathy: OpenAI co-founder, former Tesla AI chief, now at Anthropic</span></p>
+</section>
+<section id="better-coding-harnesses-became-ubiquitous" class="slide level2">
+<h2>Better coding harnesses became ubiquitous</h2>
+<div class="cards cards-3">
+<div class="card">
+<p><span class="card-title">Claude Code · February 2025</span></p>
+<p>Harness + tools. Originally ran in the terminal.</p>
+</div>
+<div class="card card-blue">
+<p><span class="card-title">Cowork · January 2026</span></p>
+<p>The Claude Code agent, running in a sandbox: an isolated computer that limits what the agent can reach.</p>
+</div>
+<div class="card">
+<p><span class="card-title">Chat · September 2026</span></p>
+<p>Chat gains the Claude Code agent.</p>
+</div>
+</div>
+</section></section>
+<section>
+<section id="checking-ai-work" class="title-slide slide level1 photo-left circle-top center" data-background-image="utah-abs-little-cottonwood-gray.jpg" data-background-size="40.625% 100%" data-background-position="left">
+<h1>Checking AI work</h1>
+
+</section>
+<section id="checking-you-are-the-last-step-in-the-loop" class="slide level2">
+<h2>Checking: you are the last step in the loop</h2>
+<div class="agent-map hl-user">
+<svg viewbox="0 0 1040 470" role="img" aria-label="The agent loop: user, messages, LLM, and tools, inside a harness." style="display:block;margin:0 auto;width:900px;max-width:100%" font-family="'Avenir Next LT Pro','Avenir Next','Nunito Sans',system-ui,sans-serif">
+  <g class="part m-harness">
+    <rect x="10" y="10" width="1020" height="450" fill="none" stroke="#6b6e71" stroke-width="2" stroke-dasharray="10 7"></rect>
+    <text x="34" y="44" font-size="15" font-weight="700" letter-spacing="1.5" fill="#6b6e71">HARNESS · Claude, ChatGPT, Claude Code, or a custom agent you build</text>
+  </g>
+  <g fill="#6b6e71">
+    <line x1="244" y1="195" x2="306" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="232,195 244,189 244,201"></polygon><polygon points="318,195 306,189 306,201"></polygon>
+    <line x1="734" y1="195" x2="796" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="722,195 734,189 734,201"></polygon><polygon points="808,195 796,189 796,201"></polygon>
+    <line x1="520" y1="269" x2="520" y2="306" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="520,257 514,269 526,269"></polygon><polygon points="520,318 514,306 526,306"></polygon>
+  </g>
+  <g class="part m-user">
+    <rect x="60" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="145" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">User</text>
+    <text x="145" y="274" text-anchor="middle" font-size="16" fill="#36393B">checking · judgment</text>
+  </g>
+  <g class="part m-msgs">
+    <text x="520" y="118" text-anchor="middle" font-size="16" fill="#36393B">prompting · skills · RAG · cost</text>
+    <rect x="320" y="135" width="400" height="120" fill="#f4f3f4"></rect>
+    <rect x="320" y="135" width="6" height="120" fill="#3AEFCC"></rect>
+    <text x="520" y="185" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#36393B" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">messages[]</text>
+    <text x="520" y="218" text-anchor="middle" font-size="14" fill="#36393B">system prompt + skills + history + tool results</text>
+  </g>
+  <g class="part m-llm">
+    <rect x="810" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="895" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">LLM</text>
+    <text x="895" y="274" text-anchor="middle" font-size="16" fill="#36393B">tokens · model choice · cost</text>
+  </g>
+  <g class="part m-tools">
+    <rect x="320" y="320" width="400" height="90" fill="#36393B"></rect>
+    <text x="520" y="360" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#3AEFCC">Tools</text>
+    <text x="520" y="390" text-anchor="middle" font-size="15" fill="#ffffff">run code · connectors · web search and fetch</text>
+    <text x="520" y="440" text-anchor="middle" font-size="16" fill="#36393B">doing work · connectors · security</text>
+  </g>
+</svg>
+</div>
+</section>
+<section id="how-to-check-ai-work" class="slide level2">
+<h2>How to check AI work</h2>
+<div class="cards cards-2">
+<div class="card card-blue">
+<p><span class="card-title">Have AI explain its work</span></p>
+<p>“Explain what you did step by step. Did you make any decisions that we have not discussed?”</p>
+</div>
+<div class="card">
+<p><span class="card-title">Use another AI agent to check the work</span></p>
+<p>A fresh conversation or a subagent (a second agent that the first agent starts), given your goals and the first agent’s explanation.</p>
+</div>
+<div class="card">
+<p><span class="card-title">Have AI build a spreadsheet when possible</span></p>
+<p>Then check the formulas. Every number traces back to its inputs.</p>
+</div>
+<div class="card card-blue">
+<p><span class="card-title">Run the same code on small examples</span></p>
+<p>Ask AI to run its code on a few rows you can check by hand.</p>
+</div>
+</div>
+<div class="note">
+<p>Most AI coding errors arise from misunderstandings and unstated assumptions — and from errors that people also make, for example, merging and filtering in the wrong order.</p>
+</div>
+</section>
+<section id="poor-reasoning-with-confidence" class="slide level2 no-strip">
+<h2>Poor reasoning with confidence</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="carwash-haiku-crop.png" class="quarto-figure quarto-figure-center" height="440"></p>
+</figure>
+</div>
+<p><span class="eyebrow" style="text-align: center;">Claude Haiku 4.5, an older version of Anthropic’s smallest model, October 17, 2026</span></p>
+</section>
+<section id="newer-models-are-better" class="slide level2 no-strip">
+<h2>Newer models are better</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="carwash-haiku55.png" class="quarto-figure quarto-figure-center" height="360"></p>
+</figure>
+</div>
+<p><span class="eyebrow" style="text-align: center;">Claude Haiku 5.5, October 17, 2026</span></p>
+</section>
+<section id="web-search-reduces-hallucinations" class="slide level2 pull">
+<h2>Web search reduces hallucinations</h2>
+<blockquote>
+<p>Anthropic system prompt: “If not certain something it recalls is true and on-point, it says so and suggests enabling web search for newer information.””</p>
+</blockquote>
+<p><span class="eyebrow">Anthropic, <a href="https://platform.claude.com/docs/en/release-notes/system-prompts/claude-opus-4-8">Claude Opus 4.8 system prompt</a>, May 28, 2026</span></p>
+</section>
+<section id="why-ai-performs-worse-on-judgment-calls" class="slide level2">
+<h2>Why AI performs worse on judgment calls</h2>
+<div style="font-size: 0.9em;">
+<blockquote>
+<p>The gulf between LLM performance on verifiable tasks vs.&nbsp;unverifiable tasks that require judgment is larger than most people realize. Verifiable tasks, like coding or solving math problems, have a right answer that can be checked automatically. Judgment tasks don’t have unambiguous, ground-truth, correct answers. But they do have better and worse answers.</p>
+<div style="background: #dafbf4; padding: 0.4em 0.6em 0.05em 0.6em; margin-left: -0.6em;">
+<p>We have much better techniques for training AI systems to do well on verifiable tasks. As a result, progress on performing such tasks has been much faster than for judgment tasks.</p>
+</div>
+</blockquote>
+</div>
+<p><span class="eyebrow">Andrew Ng, co-founder and former head of Google Brain, co-founder of Coursera and DeepLearning.AI · The Batch, October 16, 2026</span></p>
+</section></section>
+<section>
+<section id="automating-work-with-ai" class="title-slide slide level1 circle-top center" data-background-image="utah-abs-snowbird-mint.jpg" data-background-size="40.625% 100%" data-background-position="right">
+<h1>Automating work with AI</h1>
+
+</section>
+<section id="eliminating-repetitive-work" class="slide level2 compare">
+<h2>Eliminating repetitive work</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<blockquote>
+<p>[Alfred] removed about 90% of the manual effort that once went into preparing our weekly financial review. We used to spend hundreds of hours preparing 100+ slides for a Monday meeting.</p>
+</blockquote>
+<p><span class="eyebrow">Marie Myers, CFO, Hewlett Packard Enterprise, <a href="https://fortune.com/2026/02/12/hpe-cfo-used-ai-transform-100-slide-monday-meeting/">Fortune</a>, February 12, 2026</span></p>
+</div><div class="column" style="width:50%;">
+<blockquote>
+<p>The goal is to remove the repetitive, administrative work so our people can focus on what they do best—we’re not replacing critical thinking and judgment, we’re removing the tedious, time-consuming work that gets in the way of it.</p>
+</blockquote>
+<p><span class="eyebrow">Customers Bank CEO Sam Sidhu, statement to <a href="https://fortune.com/2026/04/28/ceo-of-customers-bank-sam-sidhu-ai-clone-lead-earnings-call-mark-zuckerberg-building-digital-twin/">Fortune</a>, April 28, 2026</span></p>
+</div></div>
+</section>
+<section id="ways-to-automate" class="slide level2">
+<h2>Ways to automate</h2>
+<div class="cards cards-4">
+<div class="card card-blue">
+<p><span class="card-title">1. Software</span></p>
+<p>Apps that AI writes: dashboards, spreadsheet replacements, apps that call AI.</p>
+</div>
+<div class="card">
+<p><span class="card-title">2. Skills</span></p>
+<p>Instructions and scripts that a general agent (Claude, ChatGPT, …) follows.</p>
+</div>
+<div class="card card-blue">
+<p><span class="card-title">3. Connectors and RAG</span></p>
+<p>Give the agent your data and documents.</p>
+</div>
+<div class="card">
+<p><span class="card-title">4. Custom agents</span></p>
+<p>Your interface, system prompt, and tools, for people who do not use Claude.</p>
+</div>
+</div>
+<div class="note">
+<p>Each is also a student deliverable, alongside spreadsheets and reports crafted by AI and checked by students.</p>
+</div>
+</section></section>
+<section>
+<section id="vibe-coding-software" class="title-slide slide level1 photo-left circle-top center" data-background-image="utah-abs-big-cottonwood-gray.jpg" data-background-size="40.625% 100%" data-background-position="left">
+<h1>Vibe-coding software</h1>
+
+</section>
+<section id="artifacts" class="slide level2">
+<h2>Artifacts</h2>
+<p>Vibe coding: you describe the software in plain English, and AI writes all the code.</p>
+<p>Claude calls a single-page HTML app an artifact. The whole app is one file that runs in your browser.</p>
+<ol type="1">
+<li>In Claude Desktop, choose Artifact in the left pane.</li>
+<li>Choose New. Prompt Claude to create the app.</li>
+<li>You should get options to deploy the app online or to download it.</li>
+</ol>
+<div class="note">
+<p>You can also just prompt Claude “Create a single-page HTML app …”</p>
+</div>
+</section>
+<section id="more-complex-software-has-two-parts" class="slide level2">
+<h2>More complex software has two parts</h2>
+<div class="cards cards-2">
+<div class="card card-blue">
+<p><span class="card-title">Backend</span></p>
+<p>A service running somewhere. It listens for input and does the actual work.</p>
+</div>
+<div class="card">
+<p><span class="card-title">Frontend</span></p>
+<p>Your browser. It sends instructions to the backend:</p>
+<ul>
+<li>GET: get a page</li>
+<li>POST: send information and get a response</li>
+</ul>
+</div>
+</div>
+<div class="note">
+<p>Your own computer can be both the frontend and the backend: it serves the app, and you interact with it in your browser.</p>
+</div>
+</section>
+<section id="demos" class="slide level2">
+<h2>Demos</h2>
+<div class="cards cards-2">
+<div class="card card-blue">
+<p><span class="card-title">Refinery blending</span></p>
+<p><a href="https://kerryback.com/refinery.html">kerryback.com/refinery.html</a></p>
+<p>An artifact. Classic linear programming problem. App shows the optimal blend, which constraints bind, and what relaxing each one is worth. Every input can be edited.</p>
+</div>
+<div class="card">
+<p><span class="card-title">Tangency portfolio</span></p>
+<p><a href="https://tangency.kerryback.com">tangency.kerryback.com</a></p>
+<p>Backend to pull data. Calculate sample statistics. Compute tangency portfolio by matrix algebra. Put everything in an Excel workbook.</p>
+</div>
+</div>
+</section></section>
+<section>
+<section id="skills" class="title-slide slide level1 circle-top center" data-background-image="utah-abs-little-cottonwood-mint.jpg" data-background-size="40.625% 100%" data-background-position="right">
+<h1>Skills</h1>
+
+</section>
+<section id="skills-instructions-loaded-into-messages-when-needed" class="slide level2">
+<h2>Skills: instructions loaded into messages[] when needed</h2>
+<div class="agent-map hl-msgs">
+<svg viewbox="0 0 1040 470" role="img" aria-label="The agent loop: user, messages, LLM, and tools, inside a harness." style="display:block;margin:0 auto;width:900px;max-width:100%" font-family="'Avenir Next LT Pro','Avenir Next','Nunito Sans',system-ui,sans-serif">
+  <g class="part m-harness">
+    <rect x="10" y="10" width="1020" height="450" fill="none" stroke="#6b6e71" stroke-width="2" stroke-dasharray="10 7"></rect>
+    <text x="34" y="44" font-size="15" font-weight="700" letter-spacing="1.5" fill="#6b6e71">HARNESS · Claude, ChatGPT, Claude Code, or a custom agent you build</text>
+  </g>
+  <g fill="#6b6e71">
+    <line x1="244" y1="195" x2="306" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="232,195 244,189 244,201"></polygon><polygon points="318,195 306,189 306,201"></polygon>
+    <line x1="734" y1="195" x2="796" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="722,195 734,189 734,201"></polygon><polygon points="808,195 796,189 796,201"></polygon>
+    <line x1="520" y1="269" x2="520" y2="306" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="520,257 514,269 526,269"></polygon><polygon points="520,318 514,306 526,306"></polygon>
+  </g>
+  <g class="part m-user">
+    <rect x="60" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="145" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">User</text>
+    <text x="145" y="274" text-anchor="middle" font-size="16" fill="#36393B">checking · judgment</text>
+  </g>
+  <g class="part m-msgs">
+    <text x="520" y="118" text-anchor="middle" font-size="16" fill="#36393B">prompting · skills · RAG · cost</text>
+    <rect x="320" y="135" width="400" height="120" fill="#f4f3f4"></rect>
+    <rect x="320" y="135" width="6" height="120" fill="#3AEFCC"></rect>
+    <text x="520" y="185" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#36393B" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">messages[]</text>
+    <text x="520" y="218" text-anchor="middle" font-size="14" fill="#36393B">system prompt + skills + history + tool results</text>
+  </g>
+  <g class="part m-llm">
+    <rect x="810" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="895" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">LLM</text>
+    <text x="895" y="274" text-anchor="middle" font-size="16" fill="#36393B">tokens · model choice · cost</text>
+  </g>
+  <g class="part m-tools">
+    <rect x="320" y="320" width="400" height="90" fill="#36393B"></rect>
+    <text x="520" y="360" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#3AEFCC">Tools</text>
+    <text x="520" y="390" text-anchor="middle" font-size="15" fill="#ffffff">run code · connectors · web search and fetch</text>
+    <text x="520" y="440" text-anchor="middle" font-size="16" fill="#36393B">doing work · connectors · security</text>
+  </g>
+</svg>
+</div>
+</section>
+<section id="skills-1" class="slide level2">
+<h2>Skills</h2>
+<div class="cards cards-2">
+<div class="card card-blue">
+<p><span class="card-title">What a skill is</span></p>
+<p>A folder with a <code>SKILL.md</code> file in it — the instructions for one task, plus any scripts, templates or reference files those instructions call for</p>
+</div>
+<div class="card">
+<p><span class="card-title">What is read, and when</span></p>
+<p>The name and description at the start of every conversation, about 100 tokens each. The rest of the file only when a task matches the description</p>
+</div>
+</div>
+<div class="note">
+<p>An alternative is “custom instructions” (<code>CLAUDE.md</code> or <code>AGENTS.md</code> in Claude Code and similar coding agents). Put rules you want AI to follow in every conversation there (e.g., avoid boldface, bulleted lists, and undue emphasis).</p>
+</div>
+</section>
+<section id="some-anthropic-skills" class="slide level2">
+<h2>Some Anthropic skills</h2>
+<p>Published at <a href="https://github.com/anthropics/skills">github.com/anthropics/skills</a> and available on paid plans in Claude.ai.</p>
+<div class="cards cards-3">
+<div class="card card-blue">
+<p><span class="card-title">Office documents</span></p>
+<ul>
+<li>xlsx — Excel workbooks</li>
+<li>docx — Word documents</li>
+<li>pptx — PowerPoint decks</li>
+<li>pdf — PDF files</li>
+</ul>
+</div>
+<div class="card">
+<p><span class="card-title">Building things</span></p>
+<ul>
+<li>skill-creator — write and improve skills</li>
+<li>frontend-design — polished web pages and apps</li>
+<li>web-artifacts-builder — larger artifacts</li>
+<li>mcp-builder — connectors to data (next section)</li>
+</ul>
+</div>
+<div class="card card-blue">
+<p><span class="card-title">Other</span></p>
+<ul>
+<li>doc-coauthoring — co-write a document</li>
+<li>webapp-testing — test a web app in a browser</li>
+<li>canvas-design — posters and visual art</li>
+<li>brand-guidelines — Anthropic’s colors and type; a model for your own</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="creating-skills" class="slide level2">
+<h2>Creating skills</h2>
+<div class="cards cards-3">
+<div class="card card-blue">
+<p><span class="card-title">1</span></p>
+<p>The usual process: you work on something, iterating until you get what you want.</p>
+</div>
+<div class="card">
+<p><span class="card-title">2</span></p>
+<p>You realize you may want the same thing again, and you don’t want to go through the iteration again.</p>
+</div>
+<div class="card card-blue">
+<p><span class="card-title">3</span></p>
+<p>Solution: tell AI to package the final version as a skill.</p>
+</div>
+</div>
+</section>
+<section id="demo" class="slide level2">
+<h2>Demo</h2>
+<p>In a Claude Code session on my laptop, I enter the prompt <code>/mydcf {ticker}</code>. Claude should:</p>
+<ol type="1">
+<li>Pull 10-Ks for the ticker from SEC EDGAR.</li>
+<li>Get earnings call transcripts from The Motley Fool.</li>
+<li>Build a two-stage DCF valuation.</li>
+<li>Lay out its assumptions and their grounding in its sources.</li>
+<li>Create an editable HTML document and an Excel workbook.</li>
+<li>Post the document at {ticker}.kerryback.com.</li>
+</ol>
+</section></section>
+<section>
+<section id="connecting-ai-to-your-data" class="title-slide slide level1 photo-left circle-top center" data-background-image="utah-abs-snowbird-gray.jpg" data-background-size="40.625% 100%" data-background-position="left">
+<h1>Connecting AI to your data</h1>
+
+</section>
+<section id="connectors-are-tools-rag-puts-passages-in-messages" class="slide level2">
+<h2>Connectors are tools; RAG puts passages in messages[]</h2>
+<div class="agent-map hl-msgs hl-tools">
+<svg viewbox="0 0 1040 470" role="img" aria-label="The agent loop: user, messages, LLM, and tools, inside a harness." style="display:block;margin:0 auto;width:900px;max-width:100%" font-family="'Avenir Next LT Pro','Avenir Next','Nunito Sans',system-ui,sans-serif">
+  <g class="part m-harness">
+    <rect x="10" y="10" width="1020" height="450" fill="none" stroke="#6b6e71" stroke-width="2" stroke-dasharray="10 7"></rect>
+    <text x="34" y="44" font-size="15" font-weight="700" letter-spacing="1.5" fill="#6b6e71">HARNESS · Claude, ChatGPT, Claude Code, or a custom agent you build</text>
+  </g>
+  <g fill="#6b6e71">
+    <line x1="244" y1="195" x2="306" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="232,195 244,189 244,201"></polygon><polygon points="318,195 306,189 306,201"></polygon>
+    <line x1="734" y1="195" x2="796" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="722,195 734,189 734,201"></polygon><polygon points="808,195 796,189 796,201"></polygon>
+    <line x1="520" y1="269" x2="520" y2="306" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="520,257 514,269 526,269"></polygon><polygon points="520,318 514,306 526,306"></polygon>
+  </g>
+  <g class="part m-user">
+    <rect x="60" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="145" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">User</text>
+    <text x="145" y="274" text-anchor="middle" font-size="16" fill="#36393B">checking · judgment</text>
+  </g>
+  <g class="part m-msgs">
+    <text x="520" y="118" text-anchor="middle" font-size="16" fill="#36393B">prompting · skills · RAG · cost</text>
+    <rect x="320" y="135" width="400" height="120" fill="#f4f3f4"></rect>
+    <rect x="320" y="135" width="6" height="120" fill="#3AEFCC"></rect>
+    <text x="520" y="185" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#36393B" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">messages[]</text>
+    <text x="520" y="218" text-anchor="middle" font-size="14" fill="#36393B">system prompt + skills + history + tool results</text>
+  </g>
+  <g class="part m-llm">
+    <rect x="810" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="895" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">LLM</text>
+    <text x="895" y="274" text-anchor="middle" font-size="16" fill="#36393B">tokens · model choice · cost</text>
+  </g>
+  <g class="part m-tools">
+    <rect x="320" y="320" width="400" height="90" fill="#36393B"></rect>
+    <text x="520" y="360" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#3AEFCC">Tools</text>
+    <text x="520" y="390" text-anchor="middle" font-size="15" fill="#ffffff">run code · connectors · web search and fetch</text>
+    <text x="520" y="440" text-anchor="middle" font-size="16" fill="#36393B">doing work · connectors · security</text>
+  </g>
+</svg>
+</div>
+</section>
+<section id="connectors-mcp-servers" class="slide level2">
+<h2>Connectors (MCP servers)</h2>
+<p>An MCP server is a bridge between an AI agent and a data source or service. Thousands exist already.</p>
+<div class="cards cards-3">
+<div class="card card-blue">
+<p><span class="card-title">What you add</span></p>
+<p>A URL, in the agent’s settings</p>
+</div>
+<div class="card">
+<p><span class="card-title">What the agent gets</span></p>
+<p>A name, a description and an input schema for each tool the server offers</p>
+</div>
+<div class="card card-blue">
+<p><span class="card-title">What stays on the server</span></p>
+<p>The code, and the credentials it uses to reach the data</p>
+</div>
+</div>
+<div class="note">
+<p>Examples: Snowflake, Databricks, BigQuery, Salesforce, HubSpot, Workday, SAP, Slack, Gmail, Microsoft 365 (SharePoint, Outlook, Teams), Notion, GitHub, Stripe, Shopify</p>
+</div>
+</section>
+<section id="retrieval-augmented-generation" class="slide level2">
+<h2>Retrieval augmented generation</h2>
+<p>RAG is for documents: contracts, mail, board papers, policies, reports. They were not in the training data, and they are too large to paste into every prompt.</p>
+<div class="cards cards-4">
+<div class="card card-blue">
+<p><span class="card-title">1. Chunk</span></p>
+<p>Split the documents into passages of a few hundred words.</p>
+</div>
+<div class="card">
+<p><span class="card-title">2. Embed</span></p>
+<p>Turn each passage into a vector: a list of numbers that puts passages with similar meaning close together.</p>
+</div>
+<div class="card card-blue">
+<p><span class="card-title">3. Retrieve</span></p>
+<p>Embed the question and find the passages closest to it.</p>
+</div>
+<div class="card">
+<p><span class="card-title">4. Paste</span></p>
+<p>Put those passages in the prompt, with the question.</p>
+</div>
+</div>
+<div class="note">
+<p>The model never reads your whole document store. It reads the excerpts that a similarity search chooses. Demo: <a href="https://rag.kerryback.com">rag.kerryback.com</a></p>
+</div>
+</section></section>
+<section>
+<section id="security-and-compliance" class="title-slide slide level1 circle-top center" data-background-image="utah-abs-big-cottonwood-mint.jpg" data-background-size="40.625% 100%" data-background-position="right">
 <h1>Security and compliance</h1>
 
+</section>
+<section id="security-what-the-loop-reads-and-where-it-can-send-data" class="slide level2">
+<h2>Security: what the loop reads and where it can send data</h2>
+<div class="agent-map hl-msgs hl-tools">
+<svg viewbox="0 0 1040 470" role="img" aria-label="The agent loop: user, messages, LLM, and tools, inside a harness." style="display:block;margin:0 auto;width:900px;max-width:100%" font-family="'Avenir Next LT Pro','Avenir Next','Nunito Sans',system-ui,sans-serif">
+  <g class="part m-harness">
+    <rect x="10" y="10" width="1020" height="450" fill="none" stroke="#6b6e71" stroke-width="2" stroke-dasharray="10 7"></rect>
+    <text x="34" y="44" font-size="15" font-weight="700" letter-spacing="1.5" fill="#6b6e71">HARNESS · Claude, ChatGPT, Claude Code, or a custom agent you build</text>
+  </g>
+  <g fill="#6b6e71">
+    <line x1="244" y1="195" x2="306" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="232,195 244,189 244,201"></polygon><polygon points="318,195 306,189 306,201"></polygon>
+    <line x1="734" y1="195" x2="796" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="722,195 734,189 734,201"></polygon><polygon points="808,195 796,189 796,201"></polygon>
+    <line x1="520" y1="269" x2="520" y2="306" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="520,257 514,269 526,269"></polygon><polygon points="520,318 514,306 526,306"></polygon>
+  </g>
+  <g class="part m-user">
+    <rect x="60" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="145" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">User</text>
+    <text x="145" y="274" text-anchor="middle" font-size="16" fill="#36393B">checking · judgment</text>
+  </g>
+  <g class="part m-msgs">
+    <text x="520" y="118" text-anchor="middle" font-size="16" fill="#36393B">prompting · skills · RAG · cost</text>
+    <rect x="320" y="135" width="400" height="120" fill="#f4f3f4"></rect>
+    <rect x="320" y="135" width="6" height="120" fill="#3AEFCC"></rect>
+    <text x="520" y="185" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#36393B" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">messages[]</text>
+    <text x="520" y="218" text-anchor="middle" font-size="14" fill="#36393B">system prompt + skills + history + tool results</text>
+  </g>
+  <g class="part m-llm">
+    <rect x="810" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="895" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">LLM</text>
+    <text x="895" y="274" text-anchor="middle" font-size="16" fill="#36393B">tokens · model choice · cost</text>
+  </g>
+  <g class="part m-tools">
+    <rect x="320" y="320" width="400" height="90" fill="#36393B"></rect>
+    <text x="520" y="360" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#3AEFCC">Tools</text>
+    <text x="520" y="390" text-anchor="middle" font-size="15" fill="#ffffff">run code · connectors · web search and fetch</text>
+    <text x="520" y="440" text-anchor="middle" font-size="16" fill="#36393B">doing work · connectors · security</text>
+  </g>
+</svg>
+</div>
+</section>
+<section id="api-billing" class="slide level2">
+<h2>API billing</h2>
+<p>An API (application programming interface) lets software, not a person in a chat window, send messages to the model. API billing is usage-based: you pay per token, through an API key, instead of a flat subscription.</p>
+<ul>
+<li>Data Processing Agreements (a contractual guarantee of zero data retention and “do not train”) are available only with API billing.</li>
+<li>Custom AI agents and AI-enabled software also require API billing.</li>
+</ul>
 </section>
 <section id="basic-requirements" class="slide level2">
 <h2>Basic requirements</h2>
@@ -364,8 +1169,8 @@ Kerry Back, Rice University
 </ul>
 <p><span class="eyebrow">IBM Institute for Business Value with Oxford Economics, <a href="https://newsroom.ibm.com/2026-06-08-new-ibm-study-finds-cios-and-ctos-face-growing-ai-control-gap-as-enterprise-deployment-scales">2026 Tech Leader Study: Building the IT foundation for agentic AI at scale</a>, June 8, 2026. Survey of 2,000 senior executives responsible for IT, technology, or AI decisions; 33 geographies, 19 industries; January to April 2026. Large organizations: average revenue $14.4 billion, average workforce 33,500.</span></p>
 </section>
-<section id="sandboxes-limiting-egress" class="slide level2">
-<h2>Sandboxes: limiting egress</h2>
+<section id="sandboxes-limiting-where-data-can-go" class="slide level2">
+<h2>Sandboxes: limiting where data can go</h2>
 <div class="cards cards-2">
 <div class="card card-blue">
 <p><span class="card-title">Code execution is usually sandboxed</span></p>
@@ -373,7 +1178,7 @@ Kerry Back, Rice University
 </div>
 <div class="card">
 <p><span class="card-title">Still have WebFetch</span></p>
-<p>The model can fetch web pages. WebFetch runs on the provider’s servers, outside the sandbox, so it is still an egress path: a fetched URL can carry your data to the attacker’s server.</p>
+<p>The model can fetch web pages. WebFetch runs on the provider’s servers, outside the sandbox, so it is still a path out: a fetched URL can carry your data to the attacker’s server.</p>
 </div>
 </div>
 <div class="note">
@@ -381,17 +1186,51 @@ Kerry Back, Rice University
 </div>
 </section></section>
 <section>
-<section id="cost-effective-ai" class="title-slide slide level1 photo-left circle-top center" data-background-image="utah-abs-big-cottonwood-mint.jpg" data-background-size="40.625% 100%" data-background-position="left">
+<section id="cost-effective-ai" class="title-slide slide level1 photo-left circle-top center" data-background-image="utah-abs-little-cottonwood-gray.jpg" data-background-size="40.625% 100%" data-background-position="left">
 <h1>Cost-effective AI</h1>
 
 </section>
-<section id="api-billing" class="slide level2">
-<h2>API billing</h2>
-<p>API billing is usage-based: you pay per token, through an API key, instead of a flat subscription.</p>
-<ul>
-<li>Data Processing Agreements (a contractual guarantee of zero data retention and “do not train”) are available only with API billing.</li>
-<li>Custom AI agents and AI-enabled software also require API billing.</li>
-</ul>
+<section id="cost-messages-is-re-sent-to-the-llm-every-turn" class="slide level2">
+<h2>Cost: messages[] is re-sent to the LLM every turn</h2>
+<div class="agent-map hl-msgs hl-llm">
+<svg viewbox="0 0 1040 470" role="img" aria-label="The agent loop: user, messages, LLM, and tools, inside a harness." style="display:block;margin:0 auto;width:900px;max-width:100%" font-family="'Avenir Next LT Pro','Avenir Next','Nunito Sans',system-ui,sans-serif">
+  <g class="part m-harness">
+    <rect x="10" y="10" width="1020" height="450" fill="none" stroke="#6b6e71" stroke-width="2" stroke-dasharray="10 7"></rect>
+    <text x="34" y="44" font-size="15" font-weight="700" letter-spacing="1.5" fill="#6b6e71">HARNESS · Claude, ChatGPT, Claude Code, or a custom agent you build</text>
+  </g>
+  <g fill="#6b6e71">
+    <line x1="244" y1="195" x2="306" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="232,195 244,189 244,201"></polygon><polygon points="318,195 306,189 306,201"></polygon>
+    <line x1="734" y1="195" x2="796" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="722,195 734,189 734,201"></polygon><polygon points="808,195 796,189 796,201"></polygon>
+    <line x1="520" y1="269" x2="520" y2="306" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="520,257 514,269 526,269"></polygon><polygon points="520,318 514,306 526,306"></polygon>
+  </g>
+  <g class="part m-user">
+    <rect x="60" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="145" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">User</text>
+    <text x="145" y="274" text-anchor="middle" font-size="16" fill="#36393B">checking · judgment</text>
+  </g>
+  <g class="part m-msgs">
+    <text x="520" y="118" text-anchor="middle" font-size="16" fill="#36393B">prompting · skills · RAG · cost</text>
+    <rect x="320" y="135" width="400" height="120" fill="#f4f3f4"></rect>
+    <rect x="320" y="135" width="6" height="120" fill="#3AEFCC"></rect>
+    <text x="520" y="185" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#36393B" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">messages[]</text>
+    <text x="520" y="218" text-anchor="middle" font-size="14" fill="#36393B">system prompt + skills + history + tool results</text>
+  </g>
+  <g class="part m-llm">
+    <rect x="810" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="895" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">LLM</text>
+    <text x="895" y="274" text-anchor="middle" font-size="16" fill="#36393B">tokens · model choice · cost</text>
+  </g>
+  <g class="part m-tools">
+    <rect x="320" y="320" width="400" height="90" fill="#36393B"></rect>
+    <text x="520" y="360" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#3AEFCC">Tools</text>
+    <text x="520" y="390" text-anchor="middle" font-size="15" fill="#ffffff">run code · connectors · web search and fetch</text>
+    <text x="520" y="440" text-anchor="middle" font-size="16" fill="#36393B">doing work · connectors · security</text>
+  </g>
+</svg>
+</div>
 </section>
 <section id="cost" class="slide level2">
 <h2>Cost</h2>
@@ -405,7 +1244,7 @@ Kerry Back, Rice University
 </ul>
 <p><span class="eyebrow"><a href="https://www.forbes.com/sites/janakirammsv/2026/05/17/uber-burns-its-2026-ai-budget-in-four-months-on-claude-code/">Forbes</a>, May 17, 2026, citing The Information · <a href="https://thenextweb.com/news/microsoft-claude-code-retreat-ai-cost">The Next Web</a>, May 25, 2026, citing Windows Central and The Verge</span></p>
 </section>
-<section id="input-cost-is-quadratic-in-conversation-length" class="slide level2">
+<section id="input-cost-is-quadratic-in-conversation-length" class="slide level2 smaller">
 <h2>Input cost is quadratic in conversation length</h2>
 <p>Each turn re-sends the whole conversation: every standing instruction, memory note, tool definition, tool call, tool response, and the AI’s reasoning output. If each of <em>n</em> turns adds one unit of text, input cost is 0.5<em>n</em> + 0.5<em>n</em><sup>2</sup> with no caching and 1.2<em>n</em> + 0.05<em>n</em><sup>2</sup> with caching. Output is generated once per turn, so output cost grows linearly.</p>
 <div class="cards cards-2">
@@ -439,7 +1278,7 @@ Kerry Back, Rice University
 </tbody>
 </table>
 </div>
-<p>Caching: new text costs 1.25, re-sent text 0.1.</p>
+<p>Caching: the provider stores text it has already processed. New text costs 1.25, re-sent text 0.1.</p>
 </div>
 <div class="card">
 <p><span class="card-title">What saves money</span></p>
@@ -486,492 +1325,51 @@ Kerry Back, Rice University
 </div>
 </section></section>
 <section>
-<section id="doing-work-with-ai" class="title-slide slide level1 circle-top center" data-background-image="utah-abs-little-cottonwood-gray.jpg" data-background-size="40.625% 100%" data-background-position="right">
-<h1>Doing work<br>with AI</h1>
-
-</section>
-<section id="what-ai-can-make-with-code" class="slide level2">
-<h2>What AI can make with code</h2>
-<div class="cards cards-3">
-<div class="card">
-<p><span class="card-title">Excel workbooks</span></p>
-<p>Fully functioning with formulas and formatting</p>
-</div>
-<div class="card card-dark">
-<p><span class="card-title">PowerPoint decks</span></p>
-<p>Editable, following whatever template</p>
-</div>
-<div class="card">
-<p><span class="card-title">Word docs</span></p>
-<p>Formatted, with images and tables</p>
-</div>
-<div class="card card-dark">
-<p><span class="card-title">Charts</span></p>
-<p>All types, fully customizable, annotations, interactive</p>
-</div>
-<div class="card">
-<p><span class="card-title">Data analysis</span></p>
-<p>Merge, filter, aggregate, transform, statistics</p>
-</div>
-<div class="card card-dark">
-<p><span class="card-title">Advanced data analysis</span></p>
-<p>Optimization, prediction (machine learning)</p>
-</div>
-</div>
-<div class="note note-dark" style="margin-top: 1.2em; font-weight: 700;">
-<p>All from code or code + text.</p>
-</div>
-</section>
-<section id="student-deliverables" class="slide level2">
-<h2>Student deliverables</h2>
-<div class="comparison-table">
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Deliverable</th>
-<th>What it is</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Spreadsheets and reports</td>
-<td>Crafted by AI, checked by students</td>
-</tr>
-<tr class="even">
-<td>Software</td>
-<td>Dashboards, spreadsheet replacements</td>
-</tr>
-<tr class="odd">
-<td>AI skills</td>
-<td>Instructions and files for creating spreadsheets and reports</td>
-</tr>
-<tr class="even">
-<td>AI-enabled software</td>
-<td>Software that adds text descriptions from AI</td>
-</tr>
-<tr class="odd">
-<td>AI agents</td>
-<td>A custom interface, a system prompt, and tools</td>
-</tr>
-</tbody>
-</table>
-</div>
-</section></section>
-<section>
-<section id="why-is-ai-so-good-at-coding-tasks" class="title-slide slide level1 photo-left circle-top center" data-background-image="utah-abs-snowbird-mint.jpg" data-background-size="40.625% 100%" data-background-position="left">
-<h1>Why is AI so good at coding tasks?</h1>
-
-</section>
-<section id="three-reasons" class="slide level2 no-title">
-<h2></h2>
-<div style="display:flex;justify-content:center;align-items:center;gap:48px;height:600px;">
-  <div style="width:300px;height:300px;border-radius:50%;background:#3AEFCC;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;box-sizing:border-box;font-size:1.25em;line-height:1.3;color:#36393B;">Code is predictable</div>
-  <div style="width:300px;height:300px;border-radius:50%;background:#36393B;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;box-sizing:border-box;font-size:1.25em;line-height:1.3;color:#ffffff;">Lots of public code (GitHub)</div>
-  <div style="width:300px;height:300px;border-radius:50%;background:#3AEFCC;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;box-sizing:border-box;font-size:1.25em;line-height:1.3;color:#36393B;">AI checks its work</div>
-</div>
-</section>
-<section id="anatomy-of-an-agent" class="slide level2">
-<h2>Anatomy of an agent</h2>
-<svg viewbox="0 0 1040 580" role="img" aria-label="The agent loop: the same circuit as a chatbot, with a tool call branching down to the tools the harness executes." style="display:block;margin:0 auto;width:900px;max-width:100%" font-family="'Avenir Next LT Pro','Avenir Next','Nunito Sans',system-ui,sans-serif">
-  <defs>
-    <marker id="ag-out" viewbox="0 0 10 8" refx="9" refy="4" markerwidth="9" markerheight="7" orient="auto">
-      <path d="M0 0 L10 4 L0 8 Z" fill="#6b6e71"></path>
-    </marker>
-    <marker id="ag-back" viewbox="0 0 10 8" refx="9" refy="4" markerwidth="9" markerheight="7" orient="auto">
-      <path d="M0 0 L10 4 L0 8 Z" fill="#36393B"></path>
-    </marker>
-    <marker id="ag-tool" viewbox="0 0 10 8" refx="9" refy="4" markerwidth="9" markerheight="7" orient="auto">
-      <path d="M0 0 L10 4 L0 8 Z" fill="#12a88b"></path>
-    </marker>
-  </defs>
-
-  <path d="M145 210 V100 H895 V200" fill="none" stroke="#6b6e71" stroke-width="3" marker-end="url(#ag-out)"></path>
-  <path d="M895 300 V400 H145 V310" fill="none" stroke="#36393B" stroke-width="3" marker-end="url(#ag-back)"></path>
-
-  <rect x="60" y="210" width="170" height="90" fill="#36393B"></rect>
-  <text x="145" y="263" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">User</text>
-  <rect x="810" y="210" width="170" height="90" fill="#36393B"></rect>
-  <text x="895" y="263" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">LLM</text>
-
-  <rect x="320" y="195" width="400" height="120" fill="#f4f3f4"></rect>
-  <rect x="320" y="195" width="6" height="120" fill="#3AEFCC"></rect>
-  <text x="520" y="235" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#36393B" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">messages[]</text>
-  <text x="520" y="265" text-anchor="middle" font-size="14" fill="#36393B">system + tools + user + assistant + tool_result + …</text>
-  <text x="520" y="291" text-anchor="middle" font-size="14" font-style="italic" fill="#6b6e71">grows each turn; includes tool calls and results</text>
-
-  <g font-size="17" font-weight="700" fill="#36393B" text-anchor="middle">
-    <text x="235" y="62">User types prompt</text>
-    <text x="560" y="50">Send system prompt</text>
-    <text x="800" y="436">LLM returns</text>
-    <text x="520" y="436">If tool call → execute tool</text>
-    <text x="235" y="436">If final answer → display to user</text>
-  </g>
-  <g font-size="15" fill="#6b6e71" text-anchor="middle">
-    <text x="560" y="70">+ tool definitions + history</text>
-    <text x="800" y="456">text OR tool call</text>
-    <text x="520" y="456">send result back, loop to step 2</text>
-  </g>
-
-  <g text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">
-    <circle cx="235" cy="100" r="17" fill="#6b6e71"></circle><text x="235" y="107">1</text>
-    <circle cx="560" cy="100" r="17" fill="#6b6e71"></circle><text x="560" y="107">2</text>
-    <circle cx="800" cy="400" r="17" fill="#36393B"></circle><text x="800" y="407">3</text>
-    <circle cx="520" cy="400" r="17" fill="#36393B"></circle><text x="520" y="407">4</text>
-    <circle cx="235" cy="400" r="17" fill="#36393B"></circle><text x="235" y="407">5</text>
-  </g>
-
-  <!-- the branch out of the loop: the harness, not the model, runs these -->
-  <path d="M960 300 V470" fill="none" stroke="#12a88b" stroke-width="3" stroke-dasharray="9 7" marker-end="url(#ag-tool)"></path>
-  <text x="948" y="385" text-anchor="middle" font-size="15" font-weight="700" fill="#12a88b" transform="rotate(-90 948 385)">tool call</text>
-
-  <rect x="60" y="480" width="920" height="90" fill="#36393B"></rect>
-  <text x="520" y="508" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="1" fill="#3AEFCC">Tools (defined as JSON, executed by the harness)</text>
-  <g font-size="16" font-weight="700" fill="#36393B" text-anchor="middle" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">
-    <rect x="100" y="522" width="190" height="34" fill="#f4f3f4"></rect><text x="195" y="545">run_sql</text>
-    <rect x="310" y="522" width="190" height="34" fill="#f4f3f4"></rect><text x="405" y="545">list_tables</text>
-    <rect x="520" y="522" width="200" height="34" fill="#f4f3f4"></rect><text x="620" y="545">describe_table</text>
-    <rect x="740" y="522" width="200" height="34" fill="#f4f3f4"></rect><text x="840" y="545">run_python</text>
-  </g>
-</svg>
-</section>
-<section id="how-claude-checks-office-documents" class="slide level2 compare">
-<h2>How Claude checks Office documents</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<h3 id="powerpoint-and-word">PowerPoint and Word</h3>
-<p>Uses LibreOffice to export to PDF, then converts each PDF page to a PNG and looks at it for overflowing text, overlaps, and cut-off tables.</p>
-</div><div class="column" style="width:50%;">
-<h3 id="excel">Excel</h3>
-<p>Uses LibreOffice to recalculate every formula, then lists cells with errors such as #REF! or #DIV/0! and fixes them.</p>
-</div></div>
-</section>
-<section id="quality-increased-recently" class="slide level2">
-<h2>Quality increased recently</h2>
-<div class="cards cards-3">
-<div class="card">
-<p><span class="card-title">October 2025</span></p>
-<p>“They just don’t work. They don’t have enough intelligence, they’re not multimodal enough, they can’t do computer use and all this stuff. They don’t have continual learning. You can’t just tell them something and they’ll remember it.”</p>
-<p>“I feel like the industry is making too big of a jump and is trying to pretend like this is amazing, and it’s not. It’s slop.”</p>
-</div>
-<div class="card card-blue fragment">
-<p><span class="card-title">December 2025</span></p>
-<p>“I really am mostly programming in English now, a bit sheepishly telling the LLM what code to write… in words. Biggest change to my basic coding workflow in ~2 decades.”</p>
-</div>
-<div class="card fragment">
-<p><span class="card-title">February 2026</span></p>
-<p>“It is hard to communicate how much programming has changed due to AI in the last 2 months: not gradually and over time in the ‘progress as usual’ way, but specifically this last December. Coding agents basically didn’t work before December.”</p>
-<p>“I don’t think I’ve typed like a line of code probably since December.”</p>
-</div>
-</div>
-<p><span class="eyebrow">Andrej Karpathy: OpenAI co-founder, former Tesla AI chief, now at Anthropic</span></p>
-</section>
-<section id="better-coding-harnesses-became-ubiquitous" class="slide level2">
-<h2>Better coding harnesses became ubiquitous</h2>
-<div class="cards cards-3">
-<div class="card">
-<p><span class="card-title">Claude Code · February 2025</span></p>
-<p>Harness + tools. Originally ran in the terminal.</p>
-</div>
-<div class="card card-blue">
-<p><span class="card-title">Cowork · January 2026</span></p>
-<p>The Claude Code agent, running in a sandbox.</p>
-</div>
-<div class="card">
-<p><span class="card-title">Chat · September 2026</span></p>
-<p>Chat gains the Claude Code agent.</p>
-</div>
-</div>
-</section></section>
-<section>
-<section id="checking-ai-work" class="title-slide slide level1 circle-top center" data-background-image="utah-abs-big-cottonwood-gray.jpg" data-background-size="40.625% 100%" data-background-position="right">
-<h1>Checking AI work</h1>
-
-</section>
-<section id="how-to-check-ai-work" class="slide level2">
-<h2>How to check AI work</h2>
-<div class="cards cards-2">
-<div class="card card-blue">
-<p><span class="card-title">Have AI explain its work</span></p>
-<p>“Explain what you did step by step. Did you make any decisions that we have not discussed?”</p>
-</div>
-<div class="card">
-<p><span class="card-title">Use another AI agent to check the work</span></p>
-<p>A fresh conversation or a subagent, given your goals and the first agent’s explanation.</p>
-</div>
-<div class="card">
-<p><span class="card-title">Have AI build a spreadsheet when possible</span></p>
-<p>Then check the formulas. Every number traces back to its inputs.</p>
-</div>
-<div class="card card-blue">
-<p><span class="card-title">Run the same code on small examples</span></p>
-<p>Ask AI to run its code on a few rows you can check by hand.</p>
-</div>
-</div>
-<div class="note">
-<p>Most AI coding errors arise from misunderstandings and unstated assumptions — and from errors that people also make, for example, merging and filtering in the wrong order.</p>
-</div>
-</section>
-<section id="poor-reasoning-with-confidence" class="slide level2 no-strip">
-<h2>Poor reasoning with confidence</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="carwash-haiku-crop.png" class="quarto-figure quarto-figure-center" height="440"></p>
-</figure>
-</div>
-<p><span class="eyebrow" style="text-align: center;">Claude Haiku 4.5, October 17, 2026</span></p>
-</section>
-<section id="newer-models-are-better" class="slide level2 no-strip">
-<h2>Newer models are better</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="carwash-haiku55.png" class="quarto-figure quarto-figure-center" height="360"></p>
-</figure>
-</div>
-<p><span class="eyebrow" style="text-align: center;">Claude Haiku 5.5, October 17, 2026</span></p>
-</section>
-<section id="web-search-reduces-hallucinations" class="slide level2 pull">
-<h2>Web search reduces hallucinations</h2>
-<blockquote>
-<p>Anthropic system prompt: “If not certain something it recalls is true and on-point, it says so and suggests enabling web search for newer information.””</p>
-</blockquote>
-<p><span class="eyebrow">Anthropic, <a href="https://platform.claude.com/docs/en/release-notes/system-prompts/claude-opus-4-8">Claude Opus 4.8 system prompt</a>, May 28, 2026</span></p>
-</section>
-<section id="why-ai-performs-worse-on-judgment-calls" class="slide level2">
-<h2>Why AI performs worse on judgment calls</h2>
-<div style="font-size: 0.9em;">
-<blockquote>
-<p>The gulf between LLM performance on verifiable tasks vs.&nbsp;unverifiable tasks that require judgment is larger than most people realize. Verifiable tasks, like coding or solving math problems, have a right answer that can be checked automatically. Judgment tasks don’t have unambiguous, ground-truth, correct answers. But they do have better and worse answers.</p>
-<div style="background: #dafbf4; padding: 0.4em 0.6em 0.05em 0.6em; margin-left: -0.6em;">
-<p>We have much better techniques for training AI systems to do well on verifiable tasks. As a result, progress on performing such tasks has been much faster than for judgment tasks.</p>
-</div>
-</blockquote>
-</div>
-<p><span class="eyebrow">Andrew Ng, co-founder and former head of Google Brain, co-founder of Coursera and DeepLearning.AI · The Batch, October 16, 2026</span></p>
-</section></section>
-<section>
-<section id="automating-work-with-ai" class="title-slide slide level1 photo-left circle-top center" data-background-image="utah-abs-little-cottonwood-mint.jpg" data-background-size="40.625% 100%" data-background-position="left">
-<h1>Automating work with AI</h1>
-
-</section>
-<section id="eliminating-repetitive-work" class="slide level2 compare">
-<h2>Eliminating repetitive work</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<blockquote>
-<p>[Alfred] removed about 90% of the manual effort that once went into preparing our weekly financial review. We used to spend hundreds of hours preparing 100+ slides for a Monday meeting.</p>
-</blockquote>
-<p><span class="eyebrow">Marie Myers, CFO, Hewlett Packard Enterprise, <a href="https://fortune.com/2026/02/12/hpe-cfo-used-ai-transform-100-slide-monday-meeting/">Fortune</a>, February 12, 2026</span></p>
-</div><div class="column" style="width:50%;">
-<blockquote>
-<p>The goal is to remove the repetitive, administrative work so our people can focus on what they do best—we’re not replacing critical thinking and judgment, we’re removing the tedious, time-consuming work that gets in the way of it.</p>
-</blockquote>
-<p><span class="eyebrow">Customers Bank CEO Sam Sidhu, statement to <a href="https://fortune.com/2026/04/28/ceo-of-customers-bank-sam-sidhu-ai-clone-lead-earnings-call-mark-zuckerberg-building-digital-twin/">Fortune</a>, April 28, 2026</span></p>
-</div></div>
-</section>
-<section id="different-routes" class="slide level2">
-<h2>Different routes</h2>
-<div style="font-size: 1.45em; margin-top: 0.6em; line-height: 1.8;">
-<ul>
-<li>Software apps built by AI</li>
-<li>Instructions and scripts for general agents (Claude, ChatGPT, …)</li>
-<li>Custom agents</li>
-</ul>
-</div>
-</section></section>
-<section>
-<section id="vibe-coding-software" class="title-slide slide level1 circle-top center" data-background-image="utah-abs-snowbird-gray.jpg" data-background-size="40.625% 100%" data-background-position="right">
-<h1>Vibe-coding software</h1>
-
-</section>
-<section id="artifacts" class="slide level2">
-<h2>Artifacts</h2>
-<p>Claude calls a single-page HTML app (no separate backend) an artifact.</p>
-<ol type="1">
-<li>In Claude Desktop, choose Artifact in the left pane.</li>
-<li>Choose New. Prompt Claude to create the app.</li>
-<li>You should get options to deploy the app online or to download it.</li>
-</ol>
-<div class="note">
-<p>You can also just prompt Claude “Create a single-page HTML app …”</p>
-</div>
-</section>
-<section id="more-complex-software-has-two-parts" class="slide level2">
-<h2>More complex software has two parts</h2>
-<div class="cards cards-2">
-<div class="card card-blue">
-<p><span class="card-title">Backend</span></p>
-<p>A service running somewhere. It listens for input and does the actual work.</p>
-</div>
-<div class="card">
-<p><span class="card-title">Frontend</span></p>
-<p>Your browser. It sends instructions to the backend:</p>
-<ul>
-<li>GET: get a page</li>
-<li>POST: send information and get a response</li>
-</ul>
-</div>
-</div>
-<div class="note">
-<p>Your own computer can be both the frontend and the backend: it serves the app, and you interact with it in your browser.</p>
-</div>
-</section>
-<section id="demos" class="slide level2">
-<h2>Demos</h2>
-<div class="cards cards-2">
-<div class="card card-blue">
-<p><span class="card-title">Refinery blending</span></p>
-<p><a href="https://kerryback.com/refinery.html">kerryback.com/refinery.html</a></p>
-<p>An artifact. Classic linear programming problem. App shows the optimal blend, which constraints bind, and what relaxing each one is worth. Every input can be edited.</p>
-</div>
-<div class="card">
-<p><span class="card-title">Tangency portfolio</span></p>
-<p><a href="https://tangency.kerryback.com">tangency.kerryback.com</a></p>
-<p>Backend to pull data. Calculate sample statistics. Compute tangency portfolio by matrix algebra. Put everything in an Excel workbook.</p>
-</div>
-</div>
-</section></section>
-<section>
-<section id="skills" class="title-slide slide level1 photo-left circle-top center" data-background-image="utah-abs-little-cottonwood-gray.jpg" data-background-size="40.625% 100%" data-background-position="left">
-<h1>Skills</h1>
-
-</section>
-<section id="skills-1" class="slide level2">
-<h2>Skills</h2>
-<div class="cards cards-2">
-<div class="card card-blue">
-<p><span class="card-title">What a skill is</span></p>
-<p>A folder with a <code>SKILL.md</code> file in it — the instructions for one task, plus any scripts, templates or reference files those instructions call for</p>
-</div>
-<div class="card">
-<p><span class="card-title">What is read, and when</span></p>
-<p>The name and description at the start of every conversation, about 100 tokens each. The rest of the file only when a task matches the description</p>
-</div>
-</div>
-<div class="note">
-<p>An alternative is “custom instructions” (<code>CLAUDE.md</code> or <code>AGENTS.md</code> on CLI tools). Put rules you want AI to follow in every conversation there (e.g., avoid boldface, bulleted lists, and undue emphasis).</p>
-</div>
-</section>
-<section id="some-anthropic-skills" class="slide level2">
-<h2>Some Anthropic skills</h2>
-<p>Published at <a href="https://github.com/anthropics/skills">github.com/anthropics/skills</a> and available on paid plans in Claude.ai.</p>
-<div class="cards cards-3">
-<div class="card card-blue">
-<p><span class="card-title">Office documents</span></p>
-<ul>
-<li>xlsx — Excel workbooks</li>
-<li>docx — Word documents</li>
-<li>pptx — PowerPoint decks</li>
-<li>pdf — PDF files</li>
-</ul>
-</div>
-<div class="card">
-<p><span class="card-title">Building things</span></p>
-<ul>
-<li>skill-creator — write and improve skills</li>
-<li>frontend-design — polished web pages and apps</li>
-<li>web-artifacts-builder — larger artifacts</li>
-<li>mcp-builder — MCP servers (connectors)</li>
-</ul>
-</div>
-<div class="card card-blue">
-<p><span class="card-title">Other</span></p>
-<ul>
-<li>doc-coauthoring — co-write a document</li>
-<li>webapp-testing — test a web app in a browser</li>
-<li>canvas-design — posters and visual art</li>
-<li>brand-guidelines — Anthropic’s colors and type; a model for your own</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="creating-skills" class="slide level2">
-<h2>Creating skills</h2>
-<div class="cards cards-3">
-<div class="card card-blue">
-<p><span class="card-title">1</span></p>
-<p>The usual process: you work on something, iterating until you get what you want.</p>
-</div>
-<div class="card">
-<p><span class="card-title">2</span></p>
-<p>You realize you may want the same thing again, and you don’t want to go through the iteration again.</p>
-</div>
-<div class="card card-blue">
-<p><span class="card-title">3</span></p>
-<p>Solution: tell AI to package the final version as a skill.</p>
-</div>
-</div>
-</section>
-<section id="demo" class="slide level2">
-<h2>Demo</h2>
-<p>In a Claude Code session on my laptop, I enter the prompt <code>/mydcf {ticker}</code>. Claude should:</p>
-<ol type="1">
-<li>Pull 10-Ks for the ticker from SEC EDGAR.</li>
-<li>Get earnings call transcripts from The Motley Fool.</li>
-<li>Build a two-stage DCF valuation.</li>
-<li>Lay out its assumptions and their grounding in its sources.</li>
-<li>Create an editable HTML document and an Excel workbook.</li>
-<li>Post the document at {ticker}.kerryback.com.</li>
-</ol>
-</section></section>
-<section>
-<section id="connecting-ai-to-your-data" class="title-slide slide level1 circle-top center" data-background-image="utah-abs-big-cottonwood-mint.jpg" data-background-size="40.625% 100%" data-background-position="right">
-<h1>Connecting AI to your data</h1>
-
-</section>
-<section id="connectors-mcp-servers" class="slide level2">
-<h2>Connectors (MCP servers)</h2>
-<p>An MCP server is a bridge between an AI agent and a data source or service. Thousands exist already.</p>
-<div class="cards cards-3">
-<div class="card card-blue">
-<p><span class="card-title">What you add</span></p>
-<p>A URL, in the agent’s settings</p>
-</div>
-<div class="card">
-<p><span class="card-title">What the agent gets</span></p>
-<p>A name, a description and an input schema for each tool the server offers</p>
-</div>
-<div class="card card-blue">
-<p><span class="card-title">What stays on the server</span></p>
-<p>The code, and the credentials it uses to reach the data</p>
-</div>
-</div>
-<div class="note">
-<p>Examples: Snowflake, Databricks, BigQuery, Salesforce, HubSpot, Workday, SAP, Slack, Gmail, Microsoft 365 (SharePoint, Outlook, Teams), Notion, GitHub, Stripe, Shopify</p>
-</div>
-</section>
-<section id="retrieval-augmented-generation" class="slide level2">
-<h2>Retrieval augmented generation</h2>
-<p>RAG is for documents: contracts, mail, board papers, policies, reports. They were not in the training data, and they are too large to paste into every prompt.</p>
-<div class="cards cards-4">
-<div class="card card-blue">
-<p><span class="card-title">1. Chunk</span></p>
-<p>Split the documents into passages of a few hundred words.</p>
-</div>
-<div class="card">
-<p><span class="card-title">2. Embed</span></p>
-<p>Turn each passage into a vector.</p>
-</div>
-<div class="card card-blue">
-<p><span class="card-title">3. Retrieve</span></p>
-<p>Embed the question and find the passages closest to it.</p>
-</div>
-<div class="card">
-<p><span class="card-title">4. Paste</span></p>
-<p>Put those passages in the prompt, with the question.</p>
-</div>
-</div>
-<div class="note">
-<p>The model never reads your whole document store. It reads the excerpts that a similarity search chooses. Demo: <a href="https://rag.kerryback.com">rag.kerryback.com</a></p>
-</div>
-</section></section>
-<section>
-<section id="custom-agents" class="title-slide slide level1 photo-left circle-top center" data-background-image="utah-abs-little-cottonwood-gray.jpg" data-background-size="40.625% 100%" data-background-position="left">
+<section id="custom-agents" class="title-slide slide level1 circle-top center" data-background-image="utah-abs-snowbird-mint.jpg" data-background-size="40.625% 100%" data-background-position="right">
 <h1>Custom agents</h1>
 
+</section>
+<section id="custom-agents-you-build-the-whole-loop" class="slide level2">
+<h2>Custom agents: you build the whole loop</h2>
+<div class="agent-map hl-all">
+<svg viewbox="0 0 1040 470" role="img" aria-label="The agent loop: user, messages, LLM, and tools, inside a harness." style="display:block;margin:0 auto;width:900px;max-width:100%" font-family="'Avenir Next LT Pro','Avenir Next','Nunito Sans',system-ui,sans-serif">
+  <g class="part m-harness">
+    <rect x="10" y="10" width="1020" height="450" fill="none" stroke="#6b6e71" stroke-width="2" stroke-dasharray="10 7"></rect>
+    <text x="34" y="44" font-size="15" font-weight="700" letter-spacing="1.5" fill="#6b6e71">HARNESS · Claude, ChatGPT, Claude Code, or a custom agent you build</text>
+  </g>
+  <g fill="#6b6e71">
+    <line x1="244" y1="195" x2="306" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="232,195 244,189 244,201"></polygon><polygon points="318,195 306,189 306,201"></polygon>
+    <line x1="734" y1="195" x2="796" y2="195" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="722,195 734,189 734,201"></polygon><polygon points="808,195 796,189 796,201"></polygon>
+    <line x1="520" y1="269" x2="520" y2="306" stroke="#6b6e71" stroke-width="3"></line>
+    <polygon points="520,257 514,269 526,269"></polygon><polygon points="520,318 514,306 526,306"></polygon>
+  </g>
+  <g class="part m-user">
+    <rect x="60" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="145" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">User</text>
+    <text x="145" y="274" text-anchor="middle" font-size="16" fill="#36393B">checking · judgment</text>
+  </g>
+  <g class="part m-msgs">
+    <text x="520" y="118" text-anchor="middle" font-size="16" fill="#36393B">prompting · skills · RAG · cost</text>
+    <rect x="320" y="135" width="400" height="120" fill="#f4f3f4"></rect>
+    <rect x="320" y="135" width="6" height="120" fill="#3AEFCC"></rect>
+    <text x="520" y="185" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#36393B" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">messages[]</text>
+    <text x="520" y="218" text-anchor="middle" font-size="14" fill="#36393B">system prompt + skills + history + tool results</text>
+  </g>
+  <g class="part m-llm">
+    <rect x="810" y="150" width="170" height="90" fill="#36393B"></rect>
+    <text x="895" y="203" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">LLM</text>
+    <text x="895" y="274" text-anchor="middle" font-size="16" fill="#36393B">tokens · model choice · cost</text>
+  </g>
+  <g class="part m-tools">
+    <rect x="320" y="320" width="400" height="90" fill="#36393B"></rect>
+    <text x="520" y="360" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#3AEFCC">Tools</text>
+    <text x="520" y="390" text-anchor="middle" font-size="15" fill="#ffffff">run code · connectors · web search and fetch</text>
+    <text x="520" y="440" text-anchor="middle" font-size="16" fill="#36393B">doing work · connectors · security</text>
+  </g>
+</svg>
+</div>
 </section>
 <section id="customer-service-agent" class="slide level2 compare">
 <h2>Customer service agent</h2>
@@ -1039,7 +1437,7 @@ Kerry Back, Rice University
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><span class="eyebrow">Why a custom agent</span></p>
-<p>Each agent reads only its own material, and each job can use a smaller model. The web agent reads untrusted pages and never touches company data, so an instruction hidden in a web page cannot reach that data.</p>
+<p>Each agent reads only its own material, and each job can use a smaller model. The web agent reads untrusted pages and never touches company data, so an instruction hidden in a web page cannot reach that data, as it did in the Copilot case.</p>
 </div><div class="column" style="width:50%;">
 <p><span class="eyebrow">Why not</span></p>
 <p>More agents means more calls and more tokens, and three agents to build and test instead of one.</p>
@@ -1078,49 +1476,6 @@ Kerry Back, Rice University
 </div>
 </section></section>
 <section>
-<section id="effective-prompting" class="title-slide slide level1 circle-top center" data-background-image="utah-abs-snowbird-mint.jpg" data-background-size="40.625% 100%" data-background-position="right">
-<h1>Effective prompting</h1>
-
-</section>
-<section id="prompting-today" class="slide level2">
-<h2>Prompting today</h2>
-<div class="cards cards-3">
-<div class="card">
-<p><span class="card-title">Drop old techniques</span></p>
-<p>Most ‘prompt engineering’ techniques from a few years ago are now either useless or actually counterproductive. Don’t tell it “you are an expert data scientist” or “think step by step.”</p>
-</div>
-<div class="card card-blue">
-<p><span class="card-title">Say what you want</span></p>
-<p>Tell it what you want, not what not to do.</p>
-</div>
-<div class="card">
-<p><span class="card-title">Ask for the best way first</span></p>
-<p>Ask it to do something, and it does what it has seen most often in its training data.</p>
-<p>Ask for the best way, and it repeats evaluations of methods it has seen. Then ask it to proceed: it reads “the best way is …” in the conversation and follows that.</p>
-</div>
-</div>
-</section>
-<section id="three-habits" class="slide level2">
-<h2>Three habits</h2>
-<div class="cards cards-3">
-<div class="card">
-<p><span class="card-title">Beware of tunnel vision</span></p>
-<p>Once AI starts down a path, continuing is the likeliest next step. At a roadblock it tries one workaround after another and rarely asks whether a <span class="accent">different path</span> is better.</p>
-<p>Periodically ask: are there other approaches that might work better for reaching the end goal?</p>
-</div>
-<div class="card card-blue">
-<p><span class="card-title">Steelman</span></p>
-<p>Training on human feedback rewards agreement. Ask “is my plan sound?” and AI finds reasons it is.</p>
-<p>Instead ask: “What is the strongest argument against this?” Have it play a skeptical board member, a regulator, a competitor.</p>
-</div>
-<div class="card">
-<p><span class="card-title">Numbers need code</span></p>
-<p>If no code produced a number, the number was predicted. AI predicts <code>sum([83, 16, 104])</code> better than what follows <code>83 + 16 + 104 =</code>.</p>
-<p>Prompt: “Compute this in Python. Do not report a number you did not compute with code.”</p>
-</div>
-</div>
-</section></section>
-<section>
 <section id="why-has-the-impact-been-muted-so-far" class="title-slide slide level1 photo-left circle-top center" data-background-image="utah-abs-big-cottonwood-gray.jpg" data-background-size="40.625% 100%" data-background-position="left">
 <h1>Why has the impact been muted so far?</h1>
 
@@ -1143,6 +1498,23 @@ Kerry Back, Rice University
 </blockquote>
 </div></div>
 <p><span class="eyebrow">Yale Budget Lab, <a href="https://budgetlab.yale.edu/research/tracking-impact-ai-labor-market">Tracking the Impact of AI on the Labor Market</a>, updated October 14, 2026 · <a href="https://budgetlab.yale.edu/research/ai-probably-not-yet-reason-labor-market-weakening">AI Is Probably Not (Yet) the Reason for Labor Market Weakening</a>, May 7, 2026</span></p>
+</section>
+<section id="three-brakes-on-adoption" class="slide level2">
+<h2>Three brakes on adoption</h2>
+<div class="cards cards-3">
+<div class="card card-blue">
+<p><span class="card-title">Security</span></p>
+<p>59% of tech leaders cite security and compliance as a top barrier to scaling AI agents.</p>
+</div>
+<div class="card">
+<p><span class="card-title">Cost</span></p>
+<p>Uber used up its 2026 AI budget by April.</p>
+</div>
+<div class="card card-blue">
+<p><span class="card-title">Fluency</span></p>
+<p>50% of finance HR professionals say the share of underqualified candidates they interview has increased over the past year.</p>
+</div>
+</div>
 </section>
 <section id="section" class="slide level2 no-title">
 <h2></h2>
@@ -1216,6 +1588,21 @@ Kerry Back, Rice University
 <p><span class="eyebrow">AMD CEO Lisa Su, <a href="https://news.mit.edu/2026/commencement-address-lisa-su-0528">MIT Commencement address</a>, May 28, 2026</span></p>
 </div></div>
 </section>
+<section id="whats-left-for-people" class="slide level2">
+<h2>What’s left for people</h2>
+<svg viewbox="0 0 1080 410" style="width:953px; max-width:100%; display:block; margin:0 auto; font-family:inherit;" xmlns="http://www.w3.org/2000/svg">
+<rect x="120" y="10" width="420" height="130" fill="#36393B"></rect>
+<text x="330" y="87" font-size="34" font-weight="700" fill="#ffffff" text-anchor="middle">Manage AI</text>
+<rect x="540" y="10" width="420" height="130" fill="#dafbf4"></rect>
+<text x="750" y="87" font-size="34" font-weight="700" fill="#36393B" text-anchor="middle">Choose the problems</text>
+<rect x="120" y="140" width="420" height="130" fill="#3AEFCC"></rect>
+<text x="330" y="217" font-size="34" font-weight="700" fill="#36393B" text-anchor="middle">Manage people</text>
+<rect x="540" y="140" width="420" height="130" fill="#E7E4E6"></rect>
+<text x="750" y="217" font-size="34" font-weight="700" fill="#36393B" text-anchor="middle">Make judgment calls</text>
+<rect x="120" y="270" width="840" height="130" fill="#36393B"></rect>
+<text x="540" y="347" font-size="34" font-weight="700" fill="#ffffff" text-anchor="middle">Client/customer relationships</text>
+</svg>
+</section>
 <section id="visicalc-on-apple-ii-1979" class="slide level2 no-strip">
 <h2>VisiCalc on Apple II, 1979</h2>
 <div class="quarto-figure quarto-figure-center">
@@ -1264,24 +1651,9 @@ Kerry Back, Rice University
 <p>The goal is to remove the repetitive, administrative work so our people can focus on what they do best—we’re not replacing critical thinking and judgment, we’re removing the tedious, time-consuming work that gets in the way of it.</p>
 </blockquote>
 <p><span class="eyebrow">Customers Bank CEO Sam Sidhu, statement to <a href="https://fortune.com/2026/04/28/ceo-of-customers-bank-sam-sidhu-ai-clone-lead-earnings-call-mark-zuckerberg-building-digital-twin/">Fortune</a>, April 28, 2026</span></p>
-</section>
-<section id="whats-left-for-people" class="slide level2">
-<h2>What’s left for people</h2>
-<svg viewbox="0 0 1080 410" style="width:953px; max-width:100%; display:block; margin:0 auto; font-family:inherit;" xmlns="http://www.w3.org/2000/svg">
-<rect x="120" y="10" width="420" height="130" fill="#36393B"></rect>
-<text x="330" y="87" font-size="34" font-weight="700" fill="#ffffff" text-anchor="middle">Manage AI</text>
-<rect x="540" y="10" width="420" height="130" fill="#dafbf4"></rect>
-<text x="750" y="87" font-size="34" font-weight="700" fill="#36393B" text-anchor="middle">Choose the problems</text>
-<rect x="120" y="140" width="420" height="130" fill="#3AEFCC"></rect>
-<text x="330" y="217" font-size="34" font-weight="700" fill="#36393B" text-anchor="middle">Manage people</text>
-<rect x="540" y="140" width="420" height="130" fill="#E7E4E6"></rect>
-<text x="750" y="217" font-size="34" font-weight="700" fill="#36393B" text-anchor="middle">Make judgment calls</text>
-<rect x="120" y="270" width="840" height="130" fill="#36393B"></rect>
-<text x="540" y="347" font-size="34" font-weight="700" fill="#ffffff" text-anchor="middle">Client/customer relationships</text>
-</svg>
 </section></section>
 <section>
-<section id="a-tool-for-claude-code-cli" class="title-slide slide level1 photo-left circle-top center" data-background-image="utah-abs-snowbird-gray.jpg" data-background-size="40.625% 100%" data-background-position="left">
+<section id="a-tool-for-claude-code-cli" class="title-slide slide level1 circle-top center" data-background-image="utah-abs-big-cottonwood-mint.jpg" data-background-size="40.625% 100%" data-background-position="right">
 <h1>A tool for Claude Code CLI</h1>
 
 </section>
