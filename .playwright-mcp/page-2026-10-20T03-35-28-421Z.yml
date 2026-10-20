@@ -1,0 +1,63 @@
+- generic [active] [ref=f6e1]:
+  - heading "Basin Ridge FP&A agent" [level=1] [ref=f6e2]
+  - paragraph [ref=f6e3]: Ask how your department or the company is doing against the 2026 budget.
+  - generic [ref=f6e7]:
+    - generic [ref=f6e8]: Show me freight actual vs budget by month this year as a chart.
+    - generic [ref=f6e9]:
+      - paragraph [ref=f6e11]:
+        - text: YTD freight is
+        - strong [ref=f6e12]: $2.93M against a $2.52M budget, which is $406K (16.1%) over.
+        - text: Almost all of the overage is a higher cost per unit shipped, and it started in April.
+      - paragraph [ref=f6e13]:
+        - img "Freight actual vs budget by month, 2026" [ref=f6e14]
+      - table [ref=f6e15]:
+        - rowgroup [ref=f6e16]:
+          - row [ref=f6e17]:
+            - columnheader [ref=f6e18]
+            - columnheader "Actual" [ref=f6e19]
+            - columnheader "Budget" [ref=f6e20]
+            - columnheader "Variance" [ref=f6e21]
+            - columnheader "%" [ref=f6e22]
+        - rowgroup [ref=f6e23]:
+          - row [ref=f6e24]:
+            - cell "Freight, Jan–Sep" [ref=f6e25]
+            - cell "$2.93M" [ref=f6e26]
+            - cell "$2.52M" [ref=f6e27]
+            - cell "+$406K" [ref=f6e28]
+            - cell "+16.1%" [ref=f6e29]
+          - row [ref=f6e30]:
+            - cell "Rate (cost per unit)" [ref=f6e31]
+            - cell [ref=f6e32]
+            - cell [ref=f6e33]
+            - cell "+$453K" [ref=f6e34]
+            - cell [ref=f6e35]
+          - row [ref=f6e36]:
+            - cell "Volume (fewer units sold)" [ref=f6e37]
+            - cell [ref=f6e38]
+            - cell [ref=f6e39]
+            - cell "–$47K" [ref=f6e40]
+            - cell [ref=f6e41]
+      - paragraph [ref=f6e42]: The rate and volume parts add up to the $406K total.
+      - paragraph [ref=f6e43]:
+        - strong [ref=f6e44]: Drivers
+      - list [ref=f6e45]:
+        - listitem [ref=f6e46]:
+          - strong [ref=f6e47]: "Jan–Mar:"
+          - text: freight was on budget, within about 1.4% each month. Cost per unit was about $4.22–4.24, against a budget of $4.22–4.26.
+        - listitem [ref=f6e48]:
+          - strong [ref=f6e49]: "Apr–Jun:"
+          - text: this is the problem. Cost per unit jumped to about $5.75–5.80, against a budget of about $4.30. Those three months were $309K over budget, roughly 31% each month.
+        - listitem [ref=f6e50]:
+          - strong [ref=f6e51]: "Jul–Sep:"
+          - text: cost per unit eased to about $4.93, against a budget of $4.34. Freight was still $100K over, about 10–11% each month.
+        - listitem [ref=f6e52]:
+          - strong [ref=f6e53]: "Volume:"
+          - text: units sold ran 1–3% below budget every month except January. That saved about $47K, which offsets only a small part of the rate overage.
+      - paragraph [ref=f6e54]:
+        - strong [ref=f6e55]: "What the data can't tell me:"
+        - text: the cause of the rate jump, such as carrier price increases, expedited shipping, a change in product mix, or a one-off charge. The GL shows only monthly freight totals by department, with no detail on carriers or shipments. Someone in Operations would need to confirm the cause and whether the Jul–Sep rate of about $4.93 will continue.
+      - group [ref=f6e56]:
+        - generic "Tool calls (3 · $0.024)" [ref=f6e57]
+  - generic [ref=f6e4]:
+    - 'textbox "For example: How is revenue tracking against budget through September?" [ref=f6e5]'
+    - button "Send" [ref=f6e6]

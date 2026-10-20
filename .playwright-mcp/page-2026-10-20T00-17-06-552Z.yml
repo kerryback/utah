@@ -1,0 +1,79 @@
+- generic [active] [ref=e1]:
+  - application [ref=e2]:
+    - generic:
+      - generic [ref=e3]:
+        - heading "6. Skills, agents, and document databases" [level=1] [ref=e4]
+        - generic [ref=e7]:
+          - generic [ref=e8]: From BI to AI:Making Data-Driven Decisions with Agentic AI
+          - text: Kerry BackRice Business Executive Education
+      - generic [aria-hidden]:
+        - heading [level=2]: Retrieval-augmented generation
+      - generic [aria-hidden]:
+        - heading [level=2]: Structured and unstructured
+        - generic:
+          - generic:
+            - paragraph:
+              - generic: Structured data
+            - paragraph: Rows, columns, joins.
+          - generic:
+            - paragraph:
+              - generic: Everything else a firm holds
+            - paragraph: Contracts, mail, board papers, policies, reports, decks, notes.
+        - generic:
+          - paragraph: 65% of data leaders call their structured data ready for AI. 39% say the same of the unstructured kind, which is most of the volume.
+      - generic [aria-hidden]:
+        - heading [level=2]: Gemini Notebook
+      - generic [aria-hidden]:
+        - heading [level=2]: Agents a company might run
+      - generic [aria-hidden]:
+        - heading [level=2]: Building agents
+      - generic [aria-hidden]:
+        - heading [level=2]: FP&A at Basin Ridge
+    - link [ref=e10] [cursor=pointer]:
+      - /url: "#"
+    - link "1 / 37" [ref=e16] [cursor=pointer]:
+      - /url: "#/title-slide"
+    - text: Speaker notes
+  - navigation [ref=e19]:
+    - list [ref=e20]:
+      - listitem [ref=e21] [cursor=pointer]: Slides
+      - listitem [ref=e23] [cursor=pointer]: Tools
+      - listitem [ref=e25] [cursor=pointer]: Close
+    - list [ref=e28]:
+      - listitem [ref=e29] [cursor=pointer]: 6. Skills, agents, and document databases
+      - listitem [ref=e30] [cursor=pointer]: Retrieval-augmented generation
+      - listitem [ref=e31] [cursor=pointer]: Structured and unstructured
+      - listitem [ref=e32] [cursor=pointer]: Why not just paste it in
+      - listitem [ref=e33] [cursor=pointer]: Four steps
+      - listitem [ref=e34] [cursor=pointer]: A passage becomes a vector
+      - listitem [ref=e35] [cursor=pointer]: Cosine, in two dimensions
+      - listitem [ref=e36] [cursor=pointer]: "Example: A passage becomes 384 numbers"
+      - listitem [ref=e37] [cursor=pointer]: Demo
+      - listitem [ref=e38] [cursor=pointer]: Gemini Notebook
+      - listitem [ref=e39] [cursor=pointer]: Formerly NotebookLM
+      - listitem [ref=e40] [cursor=pointer]: What goes in, and how much
+      - listitem [ref=e41] [cursor=pointer]: Citations in the answer
+      - listitem [ref=e42] [cursor=pointer]: Outputs
+      - listitem [ref=e43] [cursor=pointer]: Agents a company might run
+      - listitem [ref=e44] [cursor=pointer]: Customer service agent
+      - listitem [ref=e45] [cursor=pointer]: Admissions assistant
+      - listitem [ref=e46] [cursor=pointer]: Contract review agent
+      - listitem [ref=e47] [cursor=pointer]: Sales-call prep agent
+      - listitem [ref=e48] [cursor=pointer]: Research team
+      - listitem [ref=e49] [cursor=pointer]: Model router
+      - listitem [ref=e50] [cursor=pointer]: Building agents
+      - listitem [ref=e51] [cursor=pointer]: The Claude Agent SDK
+      - listitem [ref=e52] [cursor=pointer]: Corporate services with MCP servers
+      - listitem [ref=e53] [cursor=pointer]: What we have
+      - listitem [ref=e54] [cursor=pointer]: Connecting
+      - listitem [ref=e55] [cursor=pointer]: Connecting
+      - listitem [ref=e56] [cursor=pointer]: Skills
+      - listitem [ref=e57] [cursor=pointer]: Build a skill
+      - listitem [ref=e58] [cursor=pointer]: Build an agent
+      - listitem [ref=e59] [cursor=pointer]: FP&A at Basin Ridge
+      - listitem [ref=e60] [cursor=pointer]: Basin Ridge Outfitters
+      - listitem [ref=e61] [cursor=pointer]: "Example: an FP&A agent"
+      - listitem [ref=e62] [cursor=pointer]: The agent and three other versions
+      - listitem [ref=e63] [cursor=pointer]: Issues for wide deployment
+      - listitem [ref=e64] [cursor=pointer]: Apps
+      - listitem [ref=e65] [cursor=pointer]: Upcoming schedule

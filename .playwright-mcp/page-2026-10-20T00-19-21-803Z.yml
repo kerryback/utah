@@ -1,0 +1,156 @@
+- generic [active] [ref=f4e1]:
+  - application [ref=f4e2]:
+    - generic:
+      - generic [aria-hidden]:
+        - heading [level=1]: 6. Skills, agents, and document databases
+        - generic:
+          - generic:
+            - generic:
+              - generic: "From BI to AI: Making Data-Driven Decisions with Agentic AI"
+              - text: Kerry Back Rice Business Executive Education
+      - generic [aria-hidden]:
+        - heading [level=2]: Retrieval-augmented generation
+      - generic [aria-hidden]:
+        - heading [level=2]: Gemini Notebook
+      - generic [aria-hidden]:
+        - heading [level=2]: Agents a company might run
+      - generic [aria-hidden]:
+        - heading [level=2]: Model router
+        - paragraph: Sits in front of AI requests. Claude Haiku reads each prompt and sends it to the cheapest model in an approved list that can do the job, from Haiku up to Claude Fable.
+        - generic:
+          - generic:
+            - paragraph:
+              - generic: Why a custom agent
+            - paragraph: The company sets the approved list and pays the lowest price that does the job. All AI spending passes through one place.
+          - generic:
+            - paragraph:
+              - generic: Why not
+            - paragraph: "Amazon Bedrock and OpenRouter offer routing as a service. A wrong route gives a weaker answer, or none: on a long contract, Haiku and Sonnet used every output token thinking."
+        - generic:
+          - paragraph:
+            - text: "Data:"
+            - code: files/session6/model_router
+            - text: ", 41 prompts. Routed, the set cost $1.42; sent to Claude Fable, about $3.68."
+      - generic [aria-hidden]:
+        - heading [level=2]: Building agents
+      - generic [ref=f4e3]:
+        - heading "The Claude Agent SDK" [level=2] [ref=f4e4]
+        - paragraph [ref=f4e5]:
+          - text: Every agent in this session is configured with a
+          - code [ref=f4e6]: ClaudeAgentOptions
+          - text: like this one. The examples differ in the system prompt, the tools and the model; the research team adds an
+          - code [ref=f4e7]: AgentDefinition
+          - text: for each subagent.
+        - code [ref=f4e9]: "options = ClaudeAgentOptions( model=\"claude-sonnet-5-5\", system_prompt=\"You are an FP&A analyst for Basin Ridge Outfitters ...\", tools=[], # no built-in tools mcp_servers={\"basinridge\": McpHttpServerConfig(type=\"http\", url=URL), \"local\": local_server}, # connectors and custom tools allowed_tools=[\"mcp__basinridge__run_query\", \"mcp__local__run_python\"], permission_mode=\"dontAsk\", # anything else is denied setting_sources=[], # ignore ~/.claude settings max_turns=15, )"
+        - paragraph [ref=f4e11]:
+          - text: Use
+          - code [ref=f4e12]: claude-agent-sdk
+          - text: 0.2.168 or later; 0.2.95 fails on subagents and on custom tools with
+          - code [ref=f4e13]: mcp
+          - text: "2."
+      - generic [aria-hidden]:
+        - heading [level=2]: Corporate services with MCP servers
+        - generic:
+          - generic:
+            - paragraph:
+              - generic: Warehouses
+            - list:
+              - listitem: Snowflake — Cortex Analyst and Cortex Search
+              - listitem: Databricks — Unity Catalog, Delta, MLflow
+              - listitem: BigQuery, dbt, MongoDB
+          - generic:
+            - paragraph:
+              - generic: Business systems
+            - list:
+              - listitem: Salesforce, HubSpot
+              - listitem: Workday, SAP, Dynamics 365
+              - listitem: ServiceNow
+          - generic:
+            - paragraph:
+              - generic: Work and code
+            - list:
+              - listitem: Slack, Notion, Atlassian, Linear
+              - listitem: GitHub, Sentry, Figma
+              - listitem: Cloudflare, Zapier
+          - generic:
+            - paragraph:
+              - generic: Money
+            - list:
+              - listitem: Stripe, Shopify
+              - listitem: PayPal, Plaid
+        - generic:
+          - paragraph: Snowflake, Databricks, Stripe, Slack, Notion, Linear, Atlassian, and others ship their own servers. SAP, Workday, and Dynamics are usually reached through a managed aggregator such as CData, which puts hundreds of systems behind one endpoint. A company connects several at once.
+      - generic [aria-hidden]:
+        - heading [level=2]: What we have
+        - generic:
+          - generic:
+            - paragraph:
+              - generic: EIA
+            - paragraph:
+              - code: eia.kerryback.com/mcp
+            - paragraph: Energy prices and volumes by state and sector
+          - generic:
+            - paragraph:
+              - generic: FRED
+            - paragraph:
+              - code: fred.kerryback.com/mcp
+            - paragraph: Macroeconomic variables — inflation, GDP, interest rates, …
+          - generic:
+            - paragraph:
+              - generic: Basin Ridge
+            - paragraph:
+              - code: basinridge.kerryback.com/mcp
+            - paragraph: Sales, general ledger, headcount and budget for a fictional company
+        - generic:
+          - paragraph: Treat these as MCP servers for corporate data.
+      - generic [aria-hidden]:
+        - heading [level=2]: FP&A at Basin Ridge
+    - link [ref=f4e15] [cursor=pointer]:
+      - /url: "#"
+    - link "23 / 37" [ref=f4e21] [cursor=pointer]:
+      - /url: "#/the-claude-agent-sdk"
+    - text: Speaker notes
+    - generic [ref=f4e24]: "The Claude Agent SDK Every agent in this session is configured with a ClaudeAgentOptions like this one. The examples differ in the system prompt, the tools and the model; the research team adds an AgentDefinition for each subagent. options = ClaudeAgentOptions( model=\"claude-sonnet-5-5\", system_prompt=\"You are an FP&A analyst for Basin Ridge Outfitters ...\", tools=[], # no built-in tools mcp_servers={\"basinridge\": McpHttpServerConfig(type=\"http\", url=URL), \"local\": local_server}, # connectors and custom tools allowed_tools=[\"mcp__basinridge__run_query\", \"mcp__local__run_python\"], permission_mode=\"dontAsk\", # anything else is denied setting_sources=[], # ignore ~/.claude settings max_turns=15, ) Use claude-agent-sdk 0.2.168 or later; 0.2.95 fails on subagents and on custom tools with mcp 2."
+  - navigation [ref=f4e25]:
+    - list [ref=f4e26]:
+      - listitem [ref=f4e27] [cursor=pointer]: Slides
+      - listitem [ref=f4e29] [cursor=pointer]: Tools
+      - listitem [ref=f4e31] [cursor=pointer]: Close
+    - list [ref=f4e34]:
+      - listitem [ref=f4e35] [cursor=pointer]: 6. Skills, agents, and document databases
+      - listitem [ref=f4e36] [cursor=pointer]: Retrieval-augmented generation
+      - listitem [ref=f4e37] [cursor=pointer]: Structured and unstructured
+      - listitem [ref=f4e38] [cursor=pointer]: Why not just paste it in
+      - listitem [ref=f4e39] [cursor=pointer]: Four steps
+      - listitem [ref=f4e40] [cursor=pointer]: A passage becomes a vector
+      - listitem [ref=f4e41] [cursor=pointer]: Cosine, in two dimensions
+      - listitem [ref=f4e42] [cursor=pointer]: "Example: A passage becomes 384 numbers"
+      - listitem [ref=f4e43] [cursor=pointer]: Demo
+      - listitem [ref=f4e44] [cursor=pointer]: Gemini Notebook
+      - listitem [ref=f4e45] [cursor=pointer]: Formerly NotebookLM
+      - listitem [ref=f4e46] [cursor=pointer]: What goes in, and how much
+      - listitem [ref=f4e47] [cursor=pointer]: Citations in the answer
+      - listitem [ref=f4e48] [cursor=pointer]: Outputs
+      - listitem [ref=f4e49] [cursor=pointer]: Agents a company might run
+      - listitem [ref=f4e50] [cursor=pointer]: Customer service agent
+      - listitem [ref=f4e51] [cursor=pointer]: Admissions assistant
+      - listitem [ref=f4e52] [cursor=pointer]: Contract review agent
+      - listitem [ref=f4e53] [cursor=pointer]: Sales-call prep agent
+      - listitem [ref=f4e54] [cursor=pointer]: Research team
+      - listitem [ref=f4e55] [cursor=pointer]: Model router
+      - listitem [ref=f4e56] [cursor=pointer]: Building agents
+      - listitem [ref=f4e57] [cursor=pointer]: The Claude Agent SDK
+      - listitem [ref=f4e58] [cursor=pointer]: Corporate services with MCP servers
+      - listitem [ref=f4e59] [cursor=pointer]: What we have
+      - listitem [ref=f4e60] [cursor=pointer]: Connecting
+      - listitem [ref=f4e61] [cursor=pointer]: Connecting
+      - listitem [ref=f4e62] [cursor=pointer]: Skills
+      - listitem [ref=f4e63] [cursor=pointer]: Build a skill
+      - listitem [ref=f4e64] [cursor=pointer]: Build an agent
+      - listitem [ref=f4e65] [cursor=pointer]: FP&A at Basin Ridge
+      - listitem [ref=f4e66] [cursor=pointer]: Basin Ridge Outfitters
+      - listitem [ref=f4e67] [cursor=pointer]: "Example: an FP&A agent"
+      - listitem [ref=f4e68] [cursor=pointer]: The agent and three other versions
+      - listitem [ref=f4e69] [cursor=pointer]: Issues for wide deployment
+      - listitem [ref=f4e70] [cursor=pointer]: Apps
+      - listitem [ref=f4e71] [cursor=pointer]: Upcoming schedule

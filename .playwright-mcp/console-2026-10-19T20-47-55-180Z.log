@@ -1,0 +1,4 @@
+[     242ms] TypeError: Cannot read properties of undefined (reading 'Config')
+    at http://127.0.0.1:8931/utah-mint_files/libs/revealjs/plugin/math/math.js:1:970
+    at HTMLScriptElement.i (http://127.0.0.1:8931/utah-mint_files/libs/revealjs/plugin/math/math.js:1:840)
+[     253ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://127.0.0.1:8931/utah-mint.html?v=2#/cost:0

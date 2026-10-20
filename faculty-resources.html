@@ -1,0 +1,494 @@
+<title>Teaching with AI Resources</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --plum: #595460;
+    --plum-dark: #443f4c;
+    --blue: #6f8497;
+    --blue-soft: #97A7B8;
+    --ink: #3b3842;
+    --ink-muted: #6f6b77;
+    --ground: #EBEDEB;
+    --panel: #fbfbfa;
+    --rule: #cfd2cf;
+    --hair: #dfe1df;
+    --sage: #6f8459;
+    --sage-bg: #e4ead9;
+    --sand: #8a7636;
+    --sand-bg: #f0e9d2;
+
+    --sans: 'Zen Kaku Gothic New', Meiryo, 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', Consolas, ui-monospace, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --plum: #b9b2c4;
+      --plum-dark: #d4cedd;
+      --blue: #9fb3c6;
+      --blue-soft: #7d8fa1;
+      --ink: #e4e2e8;
+      --ink-muted: #a39fac;
+      --ground: #26232c;
+      --panel: #2e2a35;
+      --rule: #433e4c;
+      --hair: #3a3542;
+      --sage: #a9bd8d;
+      --sage-bg: #333b2c;
+      --sand: #cfb974;
+      --sand-bg: #3b3426;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --plum: #b9b2c4;
+    --plum-dark: #d4cedd;
+    --blue: #9fb3c6;
+    --blue-soft: #7d8fa1;
+    --ink: #e4e2e8;
+    --ink-muted: #a39fac;
+    --ground: #26232c;
+    --panel: #2e2a35;
+    --rule: #433e4c;
+    --hair: #3a3542;
+    --sage: #a9bd8d;
+    --sage-bg: #333b2c;
+    --sand: #cfb974;
+    --sand-bg: #3b3426;
+  }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15.5px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .sheet {
+    max-width: 50rem;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 48px 72px;
+  }
+
+  /* ---- masthead ---- */
+
+  header.mast { margin-bottom: 40px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 0 0 14px;
+  }
+
+  h1 {
+    font-size: clamp(1.75rem, 5vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.18;
+    color: var(--plum);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .mast-rule {
+    height: 4px;
+    background: var(--plum);
+    margin: 18px 0 20px;
+  }
+
+  .standfirst {
+    max-width: 62ch;
+    margin: 0;
+    color: var(--ink-muted);
+  }
+
+  .standfirst + .standfirst { margin-top: 12px; }
+
+  /* ---- sections ---- */
+
+  section { margin-top: 44px; }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--plum);
+    margin: 0;
+  }
+
+  .sec-note {
+    font-size: 13.5px;
+    color: var(--ink-muted);
+    max-width: 62ch;
+    margin: 12px 0 0;
+  }
+
+  /* ---- entries ---- */
+
+  .entry {
+    padding: 20px 0 18px;
+    border-bottom: 1px solid var(--hair);
+  }
+
+  .entry:last-child { border-bottom: none; }
+
+  .entry-name {
+    font-size: 1.02rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 0 0 2px;
+    color: var(--ink);
+  }
+
+  .entry-name a { color: var(--ink); text-decoration-color: var(--blue-soft); text-underline-offset: 3px; }
+  .entry-name a:hover { color: var(--plum); }
+
+  .by {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin: 0 0 10px;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 10px;
+  }
+
+  .chip {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .chip.free { background: var(--sage-bg); color: var(--sage); }
+  .chip.fee  { background: var(--sand-bg); color: var(--sand); }
+  .chip.note { background: transparent; color: var(--ink-muted); border: 1px solid var(--rule); }
+
+  .entry p {
+    margin: 0 0 10px;
+    max-width: 68ch;
+  }
+
+  .entry p:last-child { margin-bottom: 0; }
+
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 10px;
+  }
+
+  .links a {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--blue);
+    overflow-wrap: anywhere;
+    text-decoration-color: color-mix(in srgb, var(--blue) 40%, transparent);
+    text-underline-offset: 3px;
+  }
+
+  .links a:hover { color: var(--plum); }
+
+  a:focus-visible,
+  .entry-name a:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+  }
+
+  /* ---- closing panel ---- */
+
+  .gap {
+    margin-top: 48px;
+    background: var(--panel);
+    border-left: 4px solid var(--blue-soft);
+    padding: 22px 24px;
+  }
+
+  .gap h2 { margin-bottom: 10px; }
+  .gap p { max-width: 66ch; margin: 0 0 12px; }
+  .gap p:last-child { margin-bottom: 0; }
+
+  footer {
+    margin-top: 44px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    font-size: 12.5px;
+    color: var(--ink-muted);
+  }
+
+  footer p { margin: 0 0 6px; max-width: 66ch; }
+</style>
+
+<div class="sheet">
+
+  <header class="mast">
+    <p class="eyebrow">David Eccles School of Business · Faculty Seminar · 22 October 2026</p>
+    <h1>Teaching with AI: materials, courses, and where they come from</h1>
+    <div class="mast-rule"></div>
+    <p class="standfirst">A companion list to the seminar, for faculty in any discipline who want a next step. Sections run from what is free and usable this week to programs that cost money and take a cohort. Compiled 11 October 2026; AI resources move quickly, so confirm dates and fees at the source.</p>
+    <p class="standfirst">Kerry Back · Rice University</p>
+  </header>
+
+  <section>
+    <div class="sec-head">
+      <h2>Free and open, usable this week</h2>
+    </div>
+    <p class="sec-note">These cost nothing, require no institutional agreement, and can be opened in a browser now.</p>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://gail.wharton.upenn.edu/practical-ai/">Wharton Generative AI Labs — Resources for Instructors</a></p>
+      <p class="by">Ethan Mollick and Lilach Mollick, University of Pennsylvania</p>
+      <div class="chips"><span class="chip free">Free</span><span class="chip note">CC BY 4.0</span></div>
+      <p>The closest thing to a drop-in kit. A prompt library of tested templates organized by purpose — instructor aids, student exercises, and general use — each with instructions, suggested uses, and model recommendations. Licensed CC BY 4.0, so you can adapt a prompt and hand it to students under your own name. The library carries its own warning that outputs may be wrong, which is the right posture.</p>
+      <p>The same page links a five-part crash course on practical AI for instructors and students.</p>
+      <div class="links">
+        <a href="https://gail.wharton.upenn.edu/prompt-library/">gail.wharton.upenn.edu/prompt-library/</a>
+      </div>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name">Instructors as Innovators: a future-focused approach to new AI learning opportunities, with prompts</p>
+      <p class="by">Mollick and Mollick, April 2024</p>
+      <div class="chips"><span class="chip free">Free</span><span class="chip note">Paper with prompts</span></div>
+      <p>The single most directly usable paper on this list. It walks through four exercise types AI makes cheap — simulation, mentoring, coaching, co-creation — and for each gives a customizable prompt, guidance on running it in class, notes on assessment, and the risks. It also includes blueprints: prompts whose job is to help you write your own.</p>
+      <p>Posted on SSRN; search the title. A copy is also hosted by the University of Warwick's teaching-development fund.</p>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://mitsloanedtech.mit.edu/ai/teach/">MIT Sloan Teaching &amp; Learning Technologies — AI for Teaching</a></p>
+      <div class="chips"><span class="chip free">Free</span><span class="chip note">Business school specific</span></div>
+      <p>The only openly published set of teaching-with-AI guides written inside a business school. Five of them: getting started with AI-enhanced teaching; practical classroom strategies; four steps to design an AI-resilient learning experience; why AI detectors do not work and what to do instead; and using AI to build and analyze pre- and post-class surveys.</p>
+      <p>GMAC published a companion case on how Sloan built this — a central AI hub, a peer-to-peer faculty program, regular town halls, and a funded pilot group — which is the more useful document if you are thinking about the school rather than your own course.</p>
+      <div class="links">
+        <a href="https://www.gmac.com/-/media/files/gmac/research/curriculum-insight/mit-sloan_ai-in-business-education.pdf">gmac.com — MIT Sloan, AI in Business Education (PDF)</a>
+      </div>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://hbsp.harvard.edu/inspiring-minds/">Harvard Business Publishing — Inspiring Minds</a></p>
+      <div class="chips"><span class="chip free">Free to read</span><span class="chip note">Short articles</span></div>
+      <p>A standing generative-AI section of short practitioner articles, and the lowest-barrier thing to send a skeptical colleague. Three worth starting with: how to use AI to create role-play scenarios for your students; an in-class AI exercise to help your students get hired; and AI as feedback generator. There is also a beginner's guide for educators and a set of student guidelines you can adapt.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Assignment and policy collections</h2>
+    </div>
+    <p class="sec-note">Shared teaching artifacts rather than advice. All four are open; all four are weighted toward writing and the humanities, which is the gap noted at the end of this sheet.</p>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://aipedagogy.org/">The AI Pedagogy Project</a></p>
+      <p class="by">metaLAB at Harvard, Berkman Klein Center for Internet &amp; Society</p>
+      <div class="chips"><span class="chip free">Free</span><span class="chip note">No login</span></div>
+      <p>Two halves: an AI guide that introduces large language models through tutorials and key concepts, and a curated, growing collection of assignments contributed by educators. Aimed at post-secondary instructors in non-technical fields, so it is a better pointer for colleagues in management, ethics, and communication than for finance or operations.</p>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://stars.library.ucf.edu/traiil/">TRAIIL — Teaching Repository for AI-Infused Learning</a></p>
+      <p class="by">University of Central Florida</p>
+      <div class="chips"><span class="chip free">Free</span><span class="chip note">Peer reviewed</span></div>
+      <p>Openly licensed teaching strategies, peer reviewed, submissions accepted year-round. Entries are grouped by how much of the task the AI does: ideation and structuring, editing, task execution with human oversight, and full integration. That is also the answer to &ldquo;where do I publish the thing I built,&rdquo; which matters if a school wants credit for its own work.</p>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name">Syllabi Policies for Generative AI</p>
+      <p class="by">Lance Eaton, Northeastern University</p>
+      <div class="chips"><span class="chip free">Free</span><span class="chip note">Crowdsourced</span></div>
+      <p>A collection of real syllabus language from instructors across institutions, assembled so you can see the range before writing your own. The standard answer to &ldquo;what should my syllabus say.&rdquo;</p>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://wac.colostate.edu/repository/collections/textgened/">TextGenEd</a></p>
+      <p class="by">WAC Clearinghouse, Colorado State University</p>
+      <div class="chips"><span class="chip free">Free</span><span class="chip note">Open access, peer reviewed</span></div>
+      <p>Thirty-four undergraduate assignments on AI literacy, rhetorical and ethical engagement, and professional writing. Composition-oriented, but the assignment write-ups are detailed enough to adapt.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Courses you can take for nothing</h2>
+    </div>
+    <p class="sec-note">Self-paced, no institutional purchase, certificates optional. Useful if you want structure rather than a page of links.</p>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://anthropic.skilljar.com/">Anthropic Academy</a></p>
+      <div class="chips"><span class="chip free">Free</span><span class="chip note">Self-paced</span></div>
+      <p>Four tracks are relevant. AI Fluency: Framework and Foundations is the base. AI Fluency for Educators applies it to course design, materials, and assessment. Teaching AI Fluency is built for faculty who will train other faculty, which is the one to know about if your school runs peer workshops. There is a student version you can assign. The framework behind them was developed with Rick Dakan and Joseph Feller.</p>
+      <p>The same courses are also on Coursera, free with optional certificates.</p>
+      <div class="links">
+        <a href="https://blog.coursera.org/anthropic-launches-five-free-courses-on-coursera-to-help-build-ai-fluency/">blog.coursera.org — Anthropic's five free courses</a>
+      </div>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://academy.openai.com/">OpenAI Academy — ChatGPT for Higher Ed Faculty</a></p>
+      <div class="chips"><span class="chip free">Free</span><span class="chip note">Free account required</span></div>
+      <p>A recorded series for university instructors covering AI literacy, syllabus design, and student-AI policy. Needs only a free ChatGPT account, not a subscription. Badges are awarded at 80 percent on a course assessment, and a full pathway yields a certificate.</p>
+      <div class="links">
+        <a href="https://help.openai.com/en/articles/20001270-openai-academy-courses">help.openai.com — course index</a>
+      </div>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://www.coursera.org/learn/wharton-ai-in-education-leveraging-chatgpt-for-teaching">AI in Education: Leveraging ChatGPT for Teaching</a></p>
+      <p class="by">Wharton, on Coursera</p>
+      <div class="chips"><span class="chip free">Free to audit</span></div>
+      <p>The Mollick material in course form, if you prefer video and a sequence to a prompt library.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Programs with a cohort and a fee</h2>
+    </div>
+    <p class="sec-note">Worth it mainly for the room: you are buying contact with faculty at other schools solving the same problem. Confirm current dates and prices at registration.</p>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://hbsp.harvard.edu/educator-training/teaching-with-ai/">Teaching with AI</a></p>
+      <p class="by">Harvard Business Publishing Education</p>
+      <div class="chips"><span class="chip fee">Registration fee</span><span class="chip note">Degree-granting faculty only</span></div>
+      <p>Runs in two formats: an in-person seminar at Harvard Business School, most recently 9–10 October 2026, led by Mitchell Weiss with Dan Levy; and a virtual seminar, next listed for 14 January 2027. Content is general classroom approaches, hands-on exercises for students, student guidelines, and student perspectives. Fees vary by seminar — earlier editions were listed at $1,195 in person and $495 virtual, so treat those as indicative only. Registration is restricted to teaching faculty at degree-granting institutions.</p>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://www.aacsb.edu/events/2026/04/sm-2026-april-ai-workshop-for-business-school-faculty-staff-and-administrators">AI Workshop for Business School Teams</a></p>
+      <p class="by">AACSB</p>
+      <div class="chips"><span class="chip fee">Registration fee</span><span class="chip note">Teams of faculty, staff, administrators</span></div>
+      <p>Two days, built for a mixed team from one school rather than an individual. The earlier three-part series — embedding AI into the curriculum, teaching and learning with AI, and using AI tools for your own efficiency — covered hands-on labs across several models, prompting, ethics, and the practical barriers. AACSB also ran a related curriculum workshop in Amsterdam in March 2026 and a free webinar, AI-Ready Business Schools, in August 2026.</p>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://www.aacu.org/event/2026-27-institute-ai-pedagogy-curriculum">Institute on AI, Pedagogy, and the Curriculum, 2026–27</a></p>
+      <p class="by">American Association of Colleges and Universities</p>
+      <div class="chips"><span class="chip fee">Application and fee</span><span class="chip note">Institutional teams</span></div>
+      <p>Application-driven and team-based, directed by C. Edward Watson, with institute faculty including José Antonio Bowen and Bryan Alexander. This is the one a school sends a cross-disciplinary delegation to when the question is curriculum rather than a single course.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Frameworks and benchmarking</h2>
+    </div>
+    <p class="sec-note">For the question &ldquo;what are comparable schools actually doing.&rdquo; Read these as self-reports from participating schools, not as accreditation requirements.</p>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://www.aacsb.edu/insights/reports/2026/a-framework-for-artificial-intelligence-july-2026-update">A Framework for Artificial Intelligence in Business Education — July 2026 update</a></p>
+      <p class="by">Inspire Higher Ed, with AACSB, the Graduate Business Curriculum Roundtable, and GMAC</p>
+      <div class="chips"><span class="chip free">Free download</span><span class="chip note">84 schools</span></div>
+      <p>The benchmarking document for this sector. It now covers 84 business schools, up from 48 in January 2026 and 26 at the first edition in July 2025 — 75 percent growth in six months. Eight themes organize the exemplars, one of which is faculty development as the critical success factor.</p>
+      <div class="links">
+        <a href="https://inspirehighered.com/report">inspirehighered.com/report</a>
+        <a href="https://gbcroundtable.org/2026aiframerworkreport">gbcroundtable.org/2026aiframerworkreport</a>
+      </div>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://www.digitaleducationcouncil.com/resource-library">Digital Education Council resource library</a></p>
+      <div class="chips"><span class="chip free">Free</span><span class="chip note">Frameworks and case studies</span></div>
+      <p>Two items are worth the visit. The AI Literacy Framework defines five dimensions with three competency levels each, which is a workable vocabulary for a program-level conversation. The Faculty Support and Resource Basket collects more than fifty practices and case studies specifically on building faculty capability in business schools — incentives, workload, microgrants, showcases.</p>
+      <div class="links">
+        <a href="https://www.digitaleducationcouncil.com/ressource-library-items/digital-education-council-ai-literacy-framework">AI Literacy Framework</a>
+        <a href="https://www.digitaleducationcouncil.com/resource-library-items/faculty-support-and-resource-basket-responding-to-global-challenges-in-business-schools">Faculty Support and Resource Basket</a>
+      </div>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://www.aacsb.edu/insights">AACSB Insights</a></p>
+      <div class="chips"><span class="chip free">Free</span></div>
+      <p>Recent pieces worth reading: Closing the AI Gap in Business Education (July 2026), Leading the AI Transition (March 2026), and How AI Is Evolving in Business Schools (February 2026). The 2025 report GenAI Adoption in Business Schools surveyed 236 deans in 56 countries and 429 faculty in 61; 47 percent reported having an AI policy, 45 percent reported none, and 29 percent of faculty did not know whether their school had one.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Books</h2>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://www.hfsbooks.com/books/teaching-with-ai-2nd-edition-bowen-watson/">Teaching with AI: A Practical Guide to a New Era of Human Learning</a></p>
+      <p class="by">José Antonio Bowen and C. Edward Watson · Johns Hopkins University Press · 2nd edition, 2025</p>
+      <div class="chips"><span class="chip fee">Purchase</span></div>
+      <p>The standard recommendation. Long stretches of sample prompts with responses, frameworks for building your own tools, and low-effort interventions on academic integrity. Its central move is to treat prompting as a liberal-arts skill — forming a question, judging an answer — rather than a technical one.</p>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name">Co-Existence: The Next Phase of AI</p>
+      <p class="by">Ethan Mollick · Portfolio · 20 October 2026</p>
+      <div class="chips"><span class="chip fee">Purchase</span><span class="chip note">Published two days before this seminar</span></div>
+      <p>The successor to Co-Intelligence. Its argument is that the model of a human at the center with AI as assistant is being overtaken by autonomous systems, and it asks what you do when AI is also your reader, your critic, and the gatekeeper between your work and its audience.</p>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://link.springer.com/book/9789819546671">Handbook of Generative Artificial Intelligence in Accounting and Business Education</a></p>
+      <p class="by">Springer</p>
+      <div class="chips"><span class="chip fee">Purchase or library access</span><span class="chip note">Discipline specific</span></div>
+      <p>Edited chapters on integrating generative AI in accounting and business teaching, with the pedagogical and ethical arguments laid out at length. Closer to the disciplines in this room than most of the general literature.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Keeping up without a subscription budget</h2>
+    </div>
+    <p class="sec-note">The honest answer to &ldquo;how do I not fall behind&rdquo; is a short reading habit rather than a course.</p>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://www.oneusefulthing.org/">One Useful Thing</a></p>
+      <p class="by">Ethan Mollick</p>
+      <div class="chips"><span class="chip free">Free</span></div>
+      <p>The one to subscribe to if you subscribe to one. Mollick tests things himself and writes up what changed, and he teaches, so the classroom implications are usually in the post.</p>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name"><a href="https://marcwatkins.substack.com/">Rhetorica</a></p>
+      <p class="by">Marc Watkins, University of Mississippi</p>
+      <div class="chips"><span class="chip free">Free</span></div>
+      <p>The most useful skeptical voice, and he founded the Mississippi AI Institute for Teachers. His standing caution is worth keeping in view: faculty cannot be expected to carry out large-scale course redesign without funding and a community of practice alongside the guides.</p>
+    </div>
+
+    <div class="entry">
+      <p class="entry-name">Podcasts and other newsletters</p>
+      <div class="chips"><span class="chip free">Free</span></div>
+      <p>Teaching in Higher Ed and Tea for Teaching both ran AI episodes through 2026. Stanford publishes an AI x Education newsletter. Among newsletters Watkins recommends: Jason Gulya's The AI Edventure, Anna Mills on AI and writing pedagogy, Annette Vee, and John Warner's The Biblioracle Recommends.</p>
+    </div>
+  </section>
+
+  <div class="gap">
+    <div class="sec-head">
+      <h2>What is not on this list, and why that matters</h2>
+    </div>
+    <p>There is no open repository of business-discipline AI assignments. The collections that exist are weighted toward writing and the humanities. For finance, accounting, and operations, what is available is journal articles and paid courses, not teaching artifacts you can pick up and run. A colleague who wants a worked example in their own field has to build it.</p>
+    <p>Nor does the published faculty-facing material cover much beyond the chat window. Almost all of it assumes a conversation with a model in a browser tab. The workflows demonstrated in this seminar — having the model write and run code, generating the slides as source, packaging a tutor as a reusable skill — are not described anywhere a faculty member would stumble onto them.</p>
+    <p>Both gaps are an opening. A school that publishes what it builds, to TRAIIL or to the Inspire framework, gets credit for work it is doing anyway.</p>
+  </div>
+
+  <footer>
+    <p>Compiled 11 October 2026 for the Eccles faculty seminar. Links and figures were current that day; seminar dates, fees, and program details change, so confirm at the source before relying on them.</p>
+    <p>Kerry Back · Jones Graduate School of Business, Rice University</p>
+  </footer>
+
+</div>

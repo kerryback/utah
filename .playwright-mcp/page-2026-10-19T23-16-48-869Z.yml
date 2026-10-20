@@ -1,0 +1,83 @@
+- generic [active] [ref=f12e1]:
+  - application [ref=f12e2]:
+    - generic:
+      - generic [ref=f12e3]:
+        - heading "6. Skills, agents, and document databases" [level=1] [ref=f12e4]
+        - generic [ref=f12e7]:
+          - generic [ref=f12e8]: From BI to AI:Making Data-Driven Decisions with Agentic AI
+          - text: Kerry BackRice Business Executive Education
+      - generic [aria-hidden]:
+        - heading [level=2]: FP&A examples
+      - generic [aria-hidden]:
+        - heading [level=2]: Basin Ridge Outfitters
+        - paragraph: A fictional maker of packs, tents and apparel selling in four US regions. Actuals from January 2024 through September 2026, and the 2026 budget.
+        - generic:
+          - table:
+            - rowgroup:
+              - row:
+                - columnheader: Workbook
+                - columnheader: Contents
+            - rowgroup:
+              - row:
+                - cell:
+                  - code: sales_detail.xlsx
+                - cell: Units, price and revenue by month, region and product
+              - row:
+                - cell:
+                  - code: gl_actuals.xlsx
+                - cell: General ledger by month, department and account
+              - row:
+                - cell:
+                  - code: headcount.xlsx
+                - cell: Employee roster with start date, end date and salary
+              - row:
+                - cell:
+                  - code: budget_2026.xlsx
+                - cell: "Budget: GL, sales and headcount"
+        - generic:
+          - paragraph:
+            - text: In
+            - code: files/session6.zip
+            - text: ", with a data dictionary. The same data is on an MCP server at"
+            - code: https://basinridge.kerryback.com/mcp
+            - text: .
+      - generic [aria-hidden]:
+        - heading [level=2]: A simulation
+      - generic [aria-hidden]:
+        - heading [level=2]: AI-assisted data analysis
+      - generic [aria-hidden]:
+        - heading [level=2]: Retrieval-augmented generation
+    - link [ref=f12e10] [cursor=pointer]:
+      - /url: "#"
+    - link "1 / 22" [ref=f12e16] [cursor=pointer]:
+      - /url: "#/title-slide"
+    - text: Speaker notes
+    - generic [ref=f12e18]: "6. Skills, agents, and document databases From BI to AI: Making Data-Driven Decisions with Agentic AI Kerry Back Rice Business Executive Education"
+  - navigation [ref=f12e19]:
+    - list [ref=f12e20]:
+      - listitem [ref=f12e21] [cursor=pointer]: Slides
+      - listitem [ref=f12e23] [cursor=pointer]: Tools
+      - listitem [ref=f12e25] [cursor=pointer]: Close
+    - list [ref=f12e28]:
+      - listitem [ref=f12e29] [cursor=pointer]: 6. Skills, agents, and document databases
+      - listitem [ref=f12e30] [cursor=pointer]: FP&A examples
+      - listitem [ref=f12e31] [cursor=pointer]: Basin Ridge Outfitters
+      - listitem [ref=f12e32] [cursor=pointer]: "Example: an FP&A dashboard"
+      - listitem [ref=f12e33] [cursor=pointer]: "Example: a FastAPI app"
+      - listitem [ref=f12e34] [cursor=pointer]: "Example: a Basin Ridge analysis skill"
+      - listitem [ref=f12e35] [cursor=pointer]: "Example: an FP&A agent"
+      - listitem [ref=f12e36] [cursor=pointer]: A simulation
+      - listitem [ref=f12e37] [cursor=pointer]: Corporate services with MCP servers
+      - listitem [ref=f12e38] [cursor=pointer]: What we have
+      - listitem [ref=f12e39] [cursor=pointer]: Connecting
+      - listitem [ref=f12e40] [cursor=pointer]: Connecting
+      - listitem [ref=f12e41] [cursor=pointer]: AI-assisted data analysis
+      - listitem [ref=f12e42] [cursor=pointer]: Issues for wide deployment
+      - listitem [ref=f12e43] [cursor=pointer]: Apps
+      - listitem [ref=f12e44] [cursor=pointer]: Skills
+      - listitem [ref=f12e45] [cursor=pointer]: Build a skill
+      - listitem [ref=f12e46] [cursor=pointer]: Build an agent
+      - listitem [ref=f12e47] [cursor=pointer]: Retrieval-augmented generation
+      - listitem [ref=f12e48] [cursor=pointer]: RAG (retrieval augmented generation) chatbot
+      - listitem [ref=f12e49] [cursor=pointer]: "Example: A passage becomes 384 numbers"
+      - listitem [ref=f12e50] [cursor=pointer]: Upcoming schedule

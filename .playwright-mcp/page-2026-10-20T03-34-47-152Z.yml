@@ -1,0 +1,6 @@
+- generic [active] [ref=f6e1]:
+  - heading "Basin Ridge FP&A agent" [level=1] [ref=f6e2]
+  - paragraph [ref=f6e3]: Ask how your department or the company is doing against the 2026 budget.
+  - generic [ref=f6e4]:
+    - 'textbox "For example: How is revenue tracking against budget through September?" [ref=f6e5]'
+    - button "Send" [ref=f6e6]

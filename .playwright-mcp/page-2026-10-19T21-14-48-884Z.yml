@@ -1,0 +1,232 @@
+- generic [active] [ref=f7e1]:
+  - application [ref=f7e2]:
+    - generic:
+      - generic [aria-hidden]:
+        - heading [level=1]: AI and Business Schools
+        - paragraph: What changes for our students, and for us
+        - generic:
+          - generic:
+            - generic: Kerry Back, Rice University
+            - paragraph: at University of Utah Eccles School of Business
+        - paragraph: October 22, 2026
+      - generic [aria-hidden]:
+        - heading [level=2]: AI cannot make the judgment calls
+        - blockquote:
+          - paragraph: Technology itself does not decide what the future looks like. People do. For all the promise of AI … AI cannot decide which problems are worth solving. It cannot make the hard judgment calls with imperfect information. It cannot take responsibility for the outcome. These are our responsibilities. And they matter more now than ever.
+        - paragraph:
+          - generic:
+            - text: AMD CEO Lisa Su,
+            - link:
+              - /url: https://news.mit.edu/2026/commencement-address-lisa-su-0528
+              - text: MIT Commencement address
+            - text: ", May 28, 2026"
+      - generic [aria-hidden]:
+        - heading [level=2]: Verifiable tasks vs judgment
+        - generic:
+          - blockquote:
+            - paragraph: The gulf between LLM performance on verifiable tasks vs. unverifiable tasks that require judgment is larger than most people realize. Verifiable tasks, like coding or solving math problems, have a right answer that can be checked automatically. Judgment tasks don’t have unambiguous, ground-truth, correct answers. But they do have better and worse answers.
+            - generic:
+              - paragraph: We have much better techniques for training AI systems to do well on verifiable tasks. As a result, progress on performing such tasks has been much faster than for judgment tasks.
+        - paragraph:
+          - generic: Andrew Ng, co-founder and former head of Google Brain, co-founder of Coursera and DeepLearning.AI · The Batch, October 16, 2026
+      - generic [aria-hidden]:
+        - generic:
+          - heading [level=1]: AI fluency
+        - generic [aria-hidden]:
+          - heading [level=2]: AI fluency at Eccles
+          - generic:
+            - paragraph:
+              - generic: "Photo: Jeff Hitchcock, CC BY 2.0"
+          - blockquote:
+            - paragraph: At the David Eccles School of Business, an AI education vision set by Dean Kurt Dirks, that students are not only AI fluent but also fundamentally strong, is now being implemented.
+          - paragraph:
+            - generic:
+              - text: Callie Reed,
+              - link:
+                - /url: https://ai.utah.edu/blog/posts/2026/ai-fluent-education.php
+                - text: AI-Fluent Education at the Eccles School of Business
+              - text: ", University of Utah AI blog, January 23, 2026"
+      - generic:
+        - generic [aria-hidden]:
+          - heading [level=1]: Tokens and parameters
+        - generic [aria-hidden]:
+          - heading [level=2]: Tokenization
+          - paragraph: Text is cut into pieces from a fixed vocabulary before the model sees any of it.
+          - generic:
+            - code: "\"The cat sat on the mat\" -> [\"The\", \" cat\", \" sat\", \" on\", \" the\", \" mat\"] \"Unbelievable\" -> [\"Un\", \"believ\", \"able\"]"
+          - paragraph: Common words stay whole; rare and long words break into pieces. A typical vocabulary runs to about 100,000 tokens.
+          - generic:
+            - paragraph:
+              - text: Numbers break on the same rules, which have nothing to do with arithmetic.
+              - code: 13,963,378.65
+              - text: reaches the model as a handful of unrelated pieces.
+        - generic [aria-hidden]:
+          - heading [level=2]: The prediction pipeline
+          - generic:
+            - generic:
+              - paragraph:
+                - generic: Words
+              - paragraph: Input text
+            - generic:
+              - paragraph:
+                - generic: Tokens
+              - paragraph: Text split into units
+            - generic:
+              - paragraph:
+                - generic: Neural network
+              - paragraph: Billions+ of parameters
+            - generic:
+              - paragraph:
+                - generic: Token
+              - paragraph: Predicted next token
+          - generic:
+            - paragraph: The predicted token is added to the text, and the loop runs again.
+        - generic [ref=f7e3]:
+          - heading "A neural network is a function" [level=2] [ref=f7e4]
+          - generic [ref=f7e5]:
+            - generic [ref=f7e6]:
+              - paragraph [ref=f7e7]:
+                - generic [ref=f7e8]: The idea
+              - paragraph [ref=f7e9]:
+                - generic [ref=f7e11]:
+                  - generic [aria-hidden] [ref=f7e12]:
+                    - generic [ref=f7e13]: "y"
+                    - generic [ref=f7e15]: =
+                    - generic [ref=f7e17]: "4"
+                    - generic [ref=f7e19]: x
+                  - math [ref=f7e22]:
+                    - generic [ref=f7e23]: "y"
+                    - generic [ref=f7e24]: =
+                    - generic [ref=f7e25]: "4"
+                    - generic [ref=f7e26]: x
+                - text: is a function. The 4 is a parameter.
+              - paragraph [ref=f7e27]: Change it to 3 and you have the same structure with different behavior.
+            - generic [ref=f7e28]:
+              - paragraph [ref=f7e29]:
+                - generic [ref=f7e30]: The scale
+              - paragraph [ref=f7e31]: Same idea with perhaps trillions of parameters, arranged as a transformer — the architecture published by Google researchers in 2017.
+      - generic [aria-hidden]:
+        - generic:
+          - heading [level=1]: Security and compliance
+        - generic [aria-hidden]:
+          - heading [level=2]: Basic requirements
+          - generic:
+            - generic:
+              - paragraph:
+                - generic: Zero data retention
+              - paragraph: The provider deletes prompts and responses once the response is returned. Anthropic and OpenAI offer it on API agreements, by approval.
+            - generic:
+              - paragraph:
+                - generic: No training on your data
+              - paragraph: Business and enterprise plans and the APIs exclude your data from training by default. On consumer plans, it is a setting you turn off.
+            - generic:
+              - paragraph:
+                - generic: Logging and monitoring
+              - paragraph: Enterprise plans provide audit logs and compliance APIs, so you can see who sent what to which model.
+          - generic:
+            - paragraph: "Zero retention and logging work together: the provider keeps nothing, and your firm keeps the record."
+      - generic [aria-hidden]:
+        - generic:
+          - heading [level=1]: Cost-effective AI
+        - text: n 0 . 5 n + 0 . 5 n 2 1 . 2 n + 0 . 0 5 n 2
+    - link [ref=f7e33] [cursor=pointer]:
+      - /url: "#"
+    - link "12 / 76" [ref=f7e47] [cursor=pointer]:
+      - /url: "#/a-neural-network-is-a-function"
+    - text: Speaker notes
+    - generic [ref=f7e50]:
+      - text: A neural network is a function The idea
+      - generic [ref=f7e51]:
+        - generic [aria-hidden] [ref=f7e52]:
+          - generic [ref=f7e53]: "y"
+          - generic [ref=f7e55]: =
+          - generic [ref=f7e57]: "4"
+          - generic [ref=f7e59]: x
+        - math [ref=f7e62]:
+          - generic [ref=f7e63]: "y"
+          - generic [ref=f7e64]: =
+          - generic [ref=f7e65]: "4"
+          - generic [ref=f7e66]: x
+      - text: is a function. The 4 is a parameter. Change it to 3 and you have the same structure with different behavior. The scale Same idea with perhaps trillions of parameters, arranged as a transformer — the architecture published by Google researchers in 2017.
+  - navigation [ref=f7e67]:
+    - list [ref=f7e68]:
+      - listitem [ref=f7e69] [cursor=pointer]: Slides
+      - listitem [ref=f7e71] [cursor=pointer]: Tools
+      - listitem [ref=f7e73] [cursor=pointer]: Close
+    - list [ref=f7e76]:
+      - listitem [ref=f7e77] [cursor=pointer]: AI and Business Schools
+      - listitem [ref=f7e78] [cursor=pointer]: VisiCalc on Apple II, 1979
+      - listitem [ref=f7e79] [cursor=pointer]: What we teach in business schools
+      - listitem [ref=f7e80] [cursor=pointer]: AI cannot make the judgment calls
+      - listitem [ref=f7e81] [cursor=pointer]: Verifiable tasks vs judgment
+      - listitem [ref=f7e82] [cursor=pointer]: AI fluency
+      - listitem [ref=f7e83] [cursor=pointer]: AI fluency at Eccles
+      - listitem [ref=f7e84] [cursor=pointer]: What is AI fluency?
+      - listitem [ref=f7e85] [cursor=pointer]: Tokens and parameters
+      - listitem [ref=f7e86] [cursor=pointer]: Tokenization
+      - listitem [ref=f7e87] [cursor=pointer]: The prediction pipeline
+      - listitem [ref=f7e88] [cursor=pointer]: A neural network is a function
+      - listitem [ref=f7e89] [cursor=pointer]: Security and compliance
+      - listitem [ref=f7e90] [cursor=pointer]: Basic requirements
+      - listitem [ref=f7e91] [cursor=pointer]: HIPAA and SEC
+      - listitem [ref=f7e92] [cursor=pointer]: "Prompt injection and data exfiltration: the Copilot case"
+      - listitem [ref=f7e93] [cursor=pointer]: Security concerns have throttled adoption
+      - listitem [ref=f7e94] [cursor=pointer]: "Sandboxes: limiting egress"
+      - listitem [ref=f7e95] [cursor=pointer]: Cost-effective AI
+      - listitem [ref=f7e96] [cursor=pointer]: API billing
+      - listitem [ref=f7e97] [cursor=pointer]: Cost
+      - listitem [ref=f7e98] [cursor=pointer]: Input cost is quadratic in conversation length
+      - listitem [ref=f7e99] [cursor=pointer]: Size the model to the task
+      - listitem [ref=f7e100] [cursor=pointer]: Open weight models
+      - listitem [ref=f7e101] [cursor=pointer]: Doing workwith AI
+      - listitem [ref=f7e102] [cursor=pointer]: What AI can make with code
+      - listitem [ref=f7e103] [cursor=pointer]: Student deliverables
+      - listitem [ref=f7e104] [cursor=pointer]: Why is AI so good at coding tasks?
+      - listitem [ref=f7e105] [cursor=pointer]: Code is predictable...
+      - listitem [ref=f7e106] [cursor=pointer]: Anatomy of an agent
+      - listitem [ref=f7e107] [cursor=pointer]: How Claude checks Office documents
+      - listitem [ref=f7e108] [cursor=pointer]: Quality increased recently
+      - listitem [ref=f7e109] [cursor=pointer]: Better coding harnesses became ubiquitous
+      - listitem [ref=f7e110] [cursor=pointer]: Checking AI work
+      - listitem [ref=f7e111] [cursor=pointer]: From makers to checkers
+      - listitem [ref=f7e112] [cursor=pointer]: How to check AI work
+      - listitem [ref=f7e113] [cursor=pointer]: Poor reasoning with confidence
+      - listitem [ref=f7e114] [cursor=pointer]: Newer models are better
+      - listitem [ref=f7e115] [cursor=pointer]: Web search reduces hallucinations
+      - listitem [ref=f7e116] [cursor=pointer]: Automating work with AI
+      - listitem [ref=f7e117] [cursor=pointer]: HPE’s experience with AI agents
+      - listitem [ref=f7e118] [cursor=pointer]: Skills
+      - listitem [ref=f7e119] [cursor=pointer]: Some Anthropic skills
+      - listitem [ref=f7e120] [cursor=pointer]: Creating skills
+      - listitem [ref=f7e121] [cursor=pointer]: Human judgment at the core
+      - listitem [ref=f7e122] [cursor=pointer]: Demo
+      - listitem [ref=f7e123] [cursor=pointer]: Vibe-coding software
+      - listitem [ref=f7e124] [cursor=pointer]: Artifacts
+      - listitem [ref=f7e125] [cursor=pointer]: More complex software has two parts
+      - listitem [ref=f7e126] [cursor=pointer]: Demos
+      - listitem [ref=f7e127] [cursor=pointer]: Connecting AI to your data
+      - listitem [ref=f7e128] [cursor=pointer]: Connectors (MCP servers)
+      - listitem [ref=f7e129] [cursor=pointer]: Retrieval augmented generation
+      - listitem [ref=f7e130] [cursor=pointer]: Custom agents
+      - listitem [ref=f7e131] [cursor=pointer]: Why custom agents?
+      - listitem [ref=f7e132] [cursor=pointer]: API calls
+      - listitem [ref=f7e133] [cursor=pointer]: "Example: a three-agent team"
+      - listitem [ref=f7e134] [cursor=pointer]: Effective prompting
+      - listitem [ref=f7e135] [cursor=pointer]: Prompting now
+      - listitem [ref=f7e136] [cursor=pointer]: Three habits
+      - listitem [ref=f7e137] [cursor=pointer]: Why has the impact been muted so far?
+      - listitem [ref=f7e138] [cursor=pointer]: Predicted job losses are not showing up yet
+      - listitem [ref=f7e139] [cursor=pointer]: "Selby Jennings: The..."
+      - listitem [ref=f7e140] [cursor=pointer]: "Selby Jennings: The..."
+      - listitem [ref=f7e141] [cursor=pointer]: Teaching with AI
+      - listitem [ref=f7e142] [cursor=pointer]: Two jobs
+      - listitem [ref=f7e143] [cursor=pointer]: Chatting with AI in the classroom
+      - listitem [ref=f7e144] [cursor=pointer]: A tool for Claude Code CLI
+      - listitem [ref=f7e145] [cursor=pointer]: Academic Studio
+      - listitem [ref=f7e146] [cursor=pointer]: Thanks!
+      - listitem [ref=f7e147] [cursor=pointer]: Extras
+      - listitem [ref=f7e148] [cursor=pointer]: The future of work
+      - listitem [ref=f7e149] [cursor=pointer]: The future of work
+      - listitem [ref=f7e150] [cursor=pointer]: "Selby Jennings: The..."
+      - listitem [ref=f7e151] [cursor=pointer]: Not replacing judgment
+      - listitem [ref=f7e152] [cursor=pointer]: What’s left for people

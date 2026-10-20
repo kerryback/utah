@@ -1,0 +1,57 @@
+- generic [active] [ref=f11e1]:
+  - application [ref=f11e2]:
+    - generic:
+      - generic [ref=f11e3]:
+        - heading "6. Skills, agents, and document databases" [level=1] [ref=f11e4]
+        - generic [ref=f11e7]:
+          - generic [ref=f11e8]: From BI to AI:Making Data-Driven Decisions with Agentic AI
+          - text: Kerry BackRice Business Executive Education
+      - generic [aria-hidden]:
+        - heading [level=2]: FP&A examples
+      - generic [aria-hidden]:
+        - heading [level=2]: "Example: an FP&A dashboard"
+        - generic:
+          - generic:
+            - paragraph: Tell Claude
+          - paragraph: Create an artifact that lets the user upload the five Northwind workbooks. Use 2022 as the base year. For each product category, add sliders for the 2023 price change and volume change, and build the 2023 plan from 2022 revenue and the sliders. Show plan against actual for the first three quarters of 2023, and a table of the variance by category, split into price and volume. Everything updates when a slider moves.
+        - generic:
+          - paragraph: Price variance = (actual price − plan price) × actual volume. Volume variance = (actual volume − plan volume) × plan price.
+      - generic [aria-hidden]:
+        - heading [level=2]: A simulation
+      - generic [aria-hidden]:
+        - heading [level=2]: AI-assisted data analysis
+      - generic [aria-hidden]:
+        - heading [level=2]: Retrieval-augmented generation
+    - link [ref=f11e10] [cursor=pointer]:
+      - /url: "#"
+    - link "1 / 21" [ref=f11e16] [cursor=pointer]:
+      - /url: "#/title-slide"
+    - text: Speaker notes
+    - generic [ref=f11e18]: "6. Skills, agents, and document databases From BI to AI: Making Data-Driven Decisions with Agentic AI Kerry Back Rice Business Executive Education"
+  - navigation [ref=f11e19]:
+    - list [ref=f11e20]:
+      - listitem [ref=f11e21] [cursor=pointer]: Slides
+      - listitem [ref=f11e23] [cursor=pointer]: Tools
+      - listitem [ref=f11e25] [cursor=pointer]: Close
+    - list [ref=f11e28]:
+      - listitem [ref=f11e29] [cursor=pointer]: 6. Skills, agents, and document databases
+      - listitem [ref=f11e30] [cursor=pointer]: FP&A examples
+      - listitem [ref=f11e31] [cursor=pointer]: "Example: an FP&A dashboard"
+      - listitem [ref=f11e32] [cursor=pointer]: "Example: a FastAPI app"
+      - listitem [ref=f11e33] [cursor=pointer]: "Example: a Northwind analysis skill"
+      - listitem [ref=f11e34] [cursor=pointer]: "Example: an FP&A agent"
+      - listitem [ref=f11e35] [cursor=pointer]: A simulation
+      - listitem [ref=f11e36] [cursor=pointer]: Corporate services with MCP servers
+      - listitem [ref=f11e37] [cursor=pointer]: What we have
+      - listitem [ref=f11e38] [cursor=pointer]: Connecting
+      - listitem [ref=f11e39] [cursor=pointer]: Connecting
+      - listitem [ref=f11e40] [cursor=pointer]: AI-assisted data analysis
+      - listitem [ref=f11e41] [cursor=pointer]: Issues for wide deployment
+      - listitem [ref=f11e42] [cursor=pointer]: Apps
+      - listitem [ref=f11e43] [cursor=pointer]: Skills
+      - listitem [ref=f11e44] [cursor=pointer]: Build a skill
+      - listitem [ref=f11e45] [cursor=pointer]: Build an agent
+      - listitem [ref=f11e46] [cursor=pointer]: Retrieval-augmented generation
+      - listitem [ref=f11e47] [cursor=pointer]: RAG (retrieval augmented generation) chatbot
+      - listitem [ref=f11e48] [cursor=pointer]: "Example: A passage becomes 384 numbers"
+      - listitem [ref=f11e49] [cursor=pointer]: Upcoming schedule

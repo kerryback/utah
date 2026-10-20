@@ -1,0 +1,225 @@
+---
+title: "Effective Prompting"
+author: "Kerry Back"
+institute: "Rice University"
+date: "2026-10-01"
+date-format: "MMMM YYYY"
+format:
+  revealjs:
+    theme: shoji.scss
+    width: 1280
+    height: 720
+    margin: 0
+    max-scale: 5
+    center: false
+    slide-number: c/t
+    highlight-style: github
+    html-math-method: mathjax
+---
+
+## Managing conversations {.band-bottom}
+
+::: {.cards .cards-2}
+::: {.card}
+[Start a new conversation for a new task]{.card-title}
+
+AI reads the entire conversation (the context window) each time you prompt. Irrelevant stuff consumes tokens and may be confusing.
+:::
+
+::: {.card .card-blue}
+[When a conversation gets long]{.card-title}
+
+Tell AI to write a handoff document so you can start a fresh conversation.  How long? There is a tradeoff; it depends on how much is irrelevant.
+:::
+:::
+
+## Good enough prompting
+
+::: {.lead}
+Most 'prompt engineering' techniques from a few years ago are now either useless or actually counterproductive.  Don't tell it "you are an expert data scientist" or "think step by step."
+:::
+
+::: {.cards .cards-3}
+::: {.card}
+[Tell it what you want, not what to do]{.card-title}
+
+I want ... How can we do it?
+:::
+
+::: {.card .card-blue}
+[Ask AI for help in prompting]{.card-title}
+
+If you are unsure how to ask something, ask AI how to ask it.
+:::
+
+::: {.card .card-sand}
+[If something doesn't work]{.card-title}
+
+Try again.
+:::
+:::
+
+::: {.note}
+Treat AI as an infinitely patient colleague with a poor memory.
+:::
+
+## Plan, evaluate, critique {.band-bottom}
+
+::: {.cards .cards-3}
+::: {.card}
+[Your go-to prompt]{.card-title}
+
+Think about the best way to do this, and let's develop a plan together.
+:::
+
+::: {.card .card-blue}
+[Ex-post diagnosis]{.card-title}
+
+Prompt: Explain what you did step by step. Did you make any decisions that we have not discussed? Write this as an HTML doc.
+:::
+
+::: {.card}
+[Use AI to evaluate]{.card-title}
+
+Start a new conversation or ask for a subagent.  Ask it to evaluate the first agent's work, summarized in the HTML doc, relative to your goals.
+:::
+
+:::
+
+## What this buys
+
+1.  AI is a prediction machine.  Ask it to do something, and it will probably do what it has seen most often in its training data.
+
+2.  Ask it the best way to do something, and it will regurgitate evaluations of methods it has seen.
+
+3. Ask it to proceed after explaining the best way, it will read the "the best way is ..." in the conversation history and follow that.
+
+## {.no-title}
+
+4.  Misunderstandings and unstated assumptions are the most common sources of errors.  Discuss before and after to surface those.
+
+5.  AI is not good at critiquing itself in the same conversation, because it reads its reasoning in the conversation history and predicts the same thing.  You need a fresh context window to get a reliable critique.
+
+
+
+## Try it {.band-bottom}
+
+::: {.steps}
+1. Ask AI to write a report on something (for example, effective prompting techniques).  Have it save the report as an HTML file.
+
+2. Start a new conversation (logout and log back in is the easiest way on the AI lab).  Ask AI to read the file created in step #1 and to evaluate the report. 
+:::
+
+## Beware of tunnel vision
+
+Prediction also means momentum. Once Claude has started down a path, continuing it is the likeliest next step.
+
+::: {.cards .cards-2}
+::: {.card .card-blue}
+[What you will see]{.card-title}
+
+- It hits a roadblock and tries to get around it
+- Then another way around, and another --- exhaustively, tenaciously
+- What it rarely does is return to the start and ask whether a [different path]{.accent} was the better one all along
+:::
+::: {.card .card-sand}
+[What helps]{.card-title}
+
+- Periodically ask: are there other approaches that might work better for reaching the end goal?
+- Restate the goal, not just the obstacle --- that gives it permission to abandon the path instead of defending it
+:::
+:::
+
+## Steelmanning {.band-bottom}
+
+Don't ask AI whether your idea is good. Ask it to make the strongest possible case that your idea is [wrong]{.accent}.
+
+::: {.cards .cards-3}
+::: {.card .card-blue}
+[Sycophancy]{.card-title}
+
+Training on human feedback teaches that agreement gets high ratings. Ask "is my plan sound?" and Claude finds reasons it is.
+:::
+::: {.card .card-sand}
+[The fix]{.card-title}
+
+"What is the strongest argument against this acquisition?"
+:::
+::: {.card}
+[One step further]{.card-title}
+
+Have it play a skeptical board member, a regulator, a competitor.
+:::
+:::
+
+## Numbers need code {.plain-title}
+
+
+If a number appears and no code produced it, it was predicted.  Do this instead.
+
+
+::: {.prompt-box}
+::: {.box-title}
+Prompt
+:::
+Compute this in Python. Do not report a number you did not compute with code.
+:::
+
+
+Asked to sum three numbers 83, 16, 104, AI is much better at predicting the code `sum([83, 16, 104])` than it is at predicting what should follow `83 + 16 + 104 = `
+
+
+## Re-use tested code {.band-bottom}
+
+Once code runs correctly, save it. Re-use it rather than rewrite it.
+
+::: {.card .card-sand}
+[The practice]{.card-title}
+
+- Save working scripts as `.py` files
+- "Use `my_script.py` --- don't rewrite the code"
+- Tested code is known-good; new code is new risk
+:::
+
+Later, we will save code in conjunction with skills.
+
+::: {.note}
+The principle behind software libraries: write once, test, reuse.
+:::
+
+## Hallucinations
+
+::: {.lead}
+AI predicts text. It does not check what it produces against a source.
+:::
+
+Hallucinations are most likely when it is asked to recall something specific that is not in front of it:
+
+- Citations, quotes
+- Numbers about a particular company, year, or dataset
+
+::: {.card}
+[Verify the facts]{.card-title}
+
+Ask for a source and look it up.
+:::
+
+## Hallucinations in code {.band-bottom}
+
+::: {.cards .cards-2}
+::: {.card .card-blue}
+[Caught by running it]{.card-title}
+
+A made-up function or argument raises an error as soon as the code runs. The agent reads the traceback and fixes it.
+:::
+
+::: {.card}
+[Not caught by running it]{.card-title}
+
+The wrong column, a join that drops rows, a filter on the wrong year. The code runs and returns a number.
+:::
+:::
+
+::: {.note}
+The second kind usually results from a misunderstanding or an unstated assumption, not a hallucination. Discussing the plan beforehand and the decisions afterwards is what surfaces it.
+:::

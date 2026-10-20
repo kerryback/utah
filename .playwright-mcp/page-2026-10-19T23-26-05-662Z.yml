@@ -1,0 +1,167 @@
+- generic [active] [ref=f13e1]:
+  - application [ref=f13e2]:
+    - generic:
+      - generic [aria-hidden]:
+        - heading [level=1]: 6. Skills, agents, and document databases
+        - generic:
+          - generic:
+            - generic:
+              - generic: "From BI to AI: Making Data-Driven Decisions with Agentic AI"
+              - text: Kerry Back Rice Business Executive Education
+      - generic [aria-hidden]:
+        - heading [level=2]: FP&A examples
+      - generic [aria-hidden]:
+        - heading [level=2]: "Example: a Basin Ridge analysis skill"
+        - generic:
+          - generic:
+            - paragraph: Tell Claude
+          - paragraph: Create a /basin-ridge skill. It merges the four Basin Ridge workbooks into monthly tables of actual and budget by department and account, and by region and product, with monthly salaries computed from the roster. It checks that GL revenue equals the sales detail and that GL salaries match the roster, and saves the merged tables as a workbook. Then it answers my question about variance against budget by month, department, account, region or product, with a chart and a short summary, and adds the result to the workbook as a new sheet.
+        - generic:
+          - paragraph: The merge and the checks are the same every time and are saved as a script in the skill.
+      - generic [aria-hidden]:
+        - heading [level=2]: "Example: an FP&A agent"
+        - generic:
+          - generic:
+            - paragraph: Tell Claude
+          - paragraph:
+            - text: Use the
+            - code: claude_agent_sdk
+            - text: to create a FastAPI agent app that is an FP&A agent for Basin Ridge Outfitters. It connects to the Basin Ridge MCP server at
+            - code: https://basinridge.kerryback.com/mcp
+            - text: and has a
+            - code: run_python
+            - text: tool for calculations and charts. The system prompt should say it is an FP&A analyst who explains variances against budget by price, volume, rate and headcount, and declines unrelated questions. Set
+            - code: tools=[]
+            - text: ","
+            - code: permission_mode
+            - text: to
+            - code: dontAsk
+            - text: ", and"
+            - code: max_turns
+            - text: to 15, and include the Basin Ridge MCP server’s tools and
+            - code: run_python
+            - text: in
+            - code: allowed_tools
+            - text: .
+        - generic:
+          - paragraph: "Questions to ask it: Which departments and accounts are furthest from budget through September, and why? What full-year revenue does the run rate imply?"
+      - generic [ref=f13e3]:
+        - heading "Four versions compared" [level=2] [ref=f13e4]
+        - table [ref=f13e6]:
+          - rowgroup [ref=f13e13]:
+            - row [ref=f13e14]:
+              - columnheader [ref=f13e15]
+              - columnheader "Dashboard" [ref=f13e16]
+              - columnheader "FastAPI app" [ref=f13e17]
+              - columnheader "Skill" [ref=f13e18]
+              - columnheader "Agent" [ref=f13e19]
+          - rowgroup [ref=f13e20]:
+            - row [ref=f13e21]:
+              - cell "Who can use it" [ref=f13e22]
+              - cell "Anyone with the file and the workbooks" [ref=f13e23]
+              - cell "Anyone with the URL" [ref=f13e24]
+              - cell "Claude users with the workbooks" [ref=f13e25]
+              - cell "Anyone with the URL" [ref=f13e26]
+            - row [ref=f13e27]:
+              - cell "Questions" [ref=f13e28]
+              - cell "The sliders and charts built in" [ref=f13e29]
+              - cell "The sliders and charts built in" [ref=f13e30]
+              - cell "Any, with follow-ups" [ref=f13e31]
+              - cell "Any, within its tools" [ref=f13e32]
+            - row [ref=f13e33]:
+              - cell "Where the data goes" [ref=f13e34]
+              - cell "Stays in the browser" [ref=f13e35]
+              - cell "Stays on the server" [ref=f13e36]
+              - cell "To the model provider" [ref=f13e37]
+              - cell "Server and model provider" [ref=f13e38]
+            - row [ref=f13e39]:
+              - cell "Cost per use" [ref=f13e40]
+              - cell "None" [ref=f13e41]
+              - cell "None" [ref=f13e42]
+              - cell "Claude subscription" [ref=f13e43]
+              - cell "API tokens per question" [ref=f13e44]
+            - row [ref=f13e45]:
+              - cell "Same answer every time" [ref=f13e46]
+              - cell "Yes" [ref=f13e47]
+              - cell "Yes" [ref=f13e48]
+              - cell "No" [ref=f13e49]
+              - cell "No" [ref=f13e50]
+            - row [ref=f13e51]:
+              - cell "To build and run" [ref=f13e52]
+              - cell "Minutes, nothing to host" [ref=f13e53]
+              - cell "A server, sign-in, upkeep" [ref=f13e54]
+              - cell "Minutes, nothing to host" [ref=f13e55]
+              - cell "A server, sign-in, upkeep, a log" [ref=f13e56]
+      - generic [aria-hidden]:
+        - heading [level=2]: A simulation
+      - generic [aria-hidden]:
+        - heading [level=2]: Corporate services with MCP servers
+        - generic:
+          - generic:
+            - paragraph:
+              - generic: Warehouses
+            - list:
+              - listitem: Snowflake — Cortex Analyst and Cortex Search
+              - listitem: Databricks — Unity Catalog, Delta, MLflow
+              - listitem: BigQuery, dbt, MongoDB
+          - generic:
+            - paragraph:
+              - generic: Business systems
+            - list:
+              - listitem: Salesforce, HubSpot
+              - listitem: Workday, SAP, Dynamics 365
+              - listitem: ServiceNow
+          - generic:
+            - paragraph:
+              - generic: Work and code
+            - list:
+              - listitem: Slack, Notion, Atlassian, Linear
+              - listitem: GitHub, Sentry, Figma
+              - listitem: Cloudflare, Zapier
+          - generic:
+            - paragraph:
+              - generic: Money
+            - list:
+              - listitem: Stripe, Shopify
+              - listitem: PayPal, Plaid
+        - generic:
+          - paragraph: Snowflake, Databricks, Stripe, Slack, Notion, Linear, Atlassian, and others ship their own servers. SAP, Workday, and Dynamics are usually reached through a managed aggregator such as CData, which puts hundreds of systems behind one endpoint. A company connects several at once.
+      - generic [aria-hidden]:
+        - heading [level=2]: AI-assisted data analysis
+      - generic [aria-hidden]:
+        - heading [level=2]: Retrieval-augmented generation
+    - link [ref=f13e58] [cursor=pointer]:
+      - /url: "#"
+    - link "8 / 23" [ref=f13e64] [cursor=pointer]:
+      - /url: "#/four-versions-compared"
+    - text: Speaker notes
+    - generic [ref=f13e67]: Four versions compared Dashboard FastAPI app Skill Agent Who can use it Anyone with the file and the workbooks Anyone with the URL Claude users with the workbooks Anyone with the URL Questions The sliders and charts built in The sliders and charts built in Any, with follow-ups Any, within its tools Where the data goes Stays in the browser Stays on the server To the model provider Server and model provider Cost per use None None Claude subscription API tokens per question Same answer every time Yes Yes No No To build and run Minutes, nothing to host A server, sign-in, upkeep Minutes, nothing to host A server, sign-in, upkeep, a log
+  - navigation [ref=f13e68]:
+    - list [ref=f13e69]:
+      - listitem [ref=f13e70] [cursor=pointer]: Slides
+      - listitem [ref=f13e72] [cursor=pointer]: Tools
+      - listitem [ref=f13e74] [cursor=pointer]: Close
+    - list [ref=f13e77]:
+      - listitem [ref=f13e78] [cursor=pointer]: 6. Skills, agents, and document databases
+      - listitem [ref=f13e79] [cursor=pointer]: FP&A examples
+      - listitem [ref=f13e80] [cursor=pointer]: Basin Ridge Outfitters
+      - listitem [ref=f13e81] [cursor=pointer]: "Example: an FP&A dashboard"
+      - listitem [ref=f13e82] [cursor=pointer]: "Example: a FastAPI app"
+      - listitem [ref=f13e83] [cursor=pointer]: "Example: a Basin Ridge analysis skill"
+      - listitem [ref=f13e84] [cursor=pointer]: "Example: an FP&A agent"
+      - listitem [ref=f13e85] [cursor=pointer]: Four versions compared
+      - listitem [ref=f13e86] [cursor=pointer]: A simulation
+      - listitem [ref=f13e87] [cursor=pointer]: Corporate services with MCP servers
+      - listitem [ref=f13e88] [cursor=pointer]: What we have
+      - listitem [ref=f13e89] [cursor=pointer]: Connecting
+      - listitem [ref=f13e90] [cursor=pointer]: Connecting
+      - listitem [ref=f13e91] [cursor=pointer]: AI-assisted data analysis
+      - listitem [ref=f13e92] [cursor=pointer]: Issues for wide deployment
+      - listitem [ref=f13e93] [cursor=pointer]: Apps
+      - listitem [ref=f13e94] [cursor=pointer]: Skills
+      - listitem [ref=f13e95] [cursor=pointer]: Build a skill
+      - listitem [ref=f13e96] [cursor=pointer]: Build an agent
+      - listitem [ref=f13e97] [cursor=pointer]: Retrieval-augmented generation
+      - listitem [ref=f13e98] [cursor=pointer]: RAG (retrieval augmented generation) chatbot
+      - listitem [ref=f13e99] [cursor=pointer]: "Example: A passage becomes 384 numbers"
+      - listitem [ref=f13e100] [cursor=pointer]: Upcoming schedule

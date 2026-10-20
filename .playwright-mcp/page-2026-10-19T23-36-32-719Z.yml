@@ -1,0 +1,238 @@
+- generic [active] [ref=f15e1]:
+  - application [ref=f15e2]:
+    - generic:
+      - generic [aria-hidden]:
+        - heading [level=1]: AI and Business Schools
+        - paragraph: What changes for our students, and for us
+        - generic:
+          - generic:
+            - generic: Kerry Back, Rice University
+            - paragraph: at University of Utah Eccles School of Business
+        - paragraph: October 22, 2026
+      - generic [aria-hidden]:
+        - heading [level=2]: From makers to checkers
+        - blockquote:
+          - paragraph: You’ll still have people at the top who are managing and have relationships with clients, but many, many of the processes underneath are now being done by AI systems.
+          - paragraph: Workers would shift from being creators of reports or software updates, or ‘makers’ … to ‘checkers’ or managers of AI agents doing that work.
+        - paragraph:
+          - generic:
+            - text: JP Morgan Chief Analytics Officer Derek Waldron,
+            - link:
+              - /url: https://www.cnbc.com/2025/09/30/jpmorgan-chase-fully-ai-connected-megabank.html
+              - text: CNBC interview, September 30, 2025
+      - generic [aria-hidden]:
+        - generic:
+          - heading [level=1]: Vibe-coding software
+      - generic [aria-hidden]:
+        - generic:
+          - heading [level=1]: Connecting AI to your data
+        - generic [aria-hidden]:
+          - heading [level=2]: Connectors (MCP servers)
+          - paragraph: An MCP server is a bridge between an AI agent and a data source or service. Thousands exist already.
+          - generic:
+            - generic:
+              - paragraph:
+                - generic: What you add
+              - paragraph: A URL, in the agent’s settings
+            - generic:
+              - paragraph:
+                - generic: What the agent gets
+              - paragraph: A name, a description and an input schema for each tool the server offers
+            - generic:
+              - paragraph:
+                - generic: What stays on the server
+              - paragraph: The code, and the credentials it uses to reach the data
+          - generic:
+            - paragraph: "Examples: Snowflake, Databricks, BigQuery, Salesforce, HubSpot, Workday, SAP, Slack, Gmail, Microsoft 365 (SharePoint, Outlook, Teams), Notion, GitHub, Stripe, Shopify"
+      - generic:
+        - generic [aria-hidden]:
+          - heading [level=1]: Custom agents
+        - generic [aria-hidden]:
+          - heading [level=2]: Agents a company might run
+          - generic:
+            - generic:
+              - paragraph:
+                - generic: Customer service
+              - paragraph: Looks up the order, drafts the reply, and issues refunds up to $100. Larger refunds go to a person.
+            - generic:
+              - paragraph:
+                - generic: Admissions assistant
+              - paragraph: Answers applicants’ questions from the program’s own documents. Anything else goes to staff.
+            - generic:
+              - paragraph:
+                - generic: Sales-call prep
+              - paragraph: Before a client meeting, pulls the CRM history, open tickets, recent invoices and news about the client, and writes a one-page brief.
+            - generic:
+              - paragraph:
+                - generic: Model router
+              - paragraph: Reads each prompt and sends it to the cheapest model in an approved list that can do the job, from an open-weight model up to Claude Fable.
+        - generic [ref=f15e129]:
+          - heading "Why custom agents?" [level=2] [ref=f15e130]
+          - table [ref=f15e132]:
+            - rowgroup [ref=f15e137]:
+              - row [ref=f15e138]:
+                - columnheader [ref=f15e139]
+                - columnheader "Why a custom agent" [ref=f15e140]
+                - columnheader "Why not" [ref=f15e141]
+            - rowgroup [ref=f15e142]:
+              - row [ref=f15e143]:
+                - cell "Customer service" [ref=f15e144]
+                - cell "Customers do not have Claude. The refund limit is enforced in code, not requested in a prompt." [ref=f15e145]
+                - cell "Built, hosted and secured by the company. API cost on every question." [ref=f15e146]
+              - row [ref=f15e147]:
+                - cell "Admissions assistant" [ref=f15e148]
+                - cell "Applicants do not have Claude. It can reach only the program’s documents." [ref=f15e149]
+                - cell "Vendors sell this as a product." [ref=f15e150]
+              - row [ref=f15e151]:
+                - cell "Sales-call prep" [ref=f15e152]
+                - cell "The web agent and the data agent are separate, so a web page cannot reach company data." [ref=f15e153]
+                - cell "Staff who have Claude, a CRM connector and a skill can do it without building anything." [ref=f15e154]
+              - row [ref=f15e155]:
+                - cell "Model router" [ref=f15e156]
+                - cell "The company sets the approved list and pays the lowest price that does the job." [ref=f15e157]
+                - cell "Amazon Bedrock and OpenRouter offer routing as a service. A wrong route gives a weaker answer." [ref=f15e158]
+        - generic [aria-hidden]:
+          - heading [level=2]: Things you choose
+          - generic:
+            - generic:
+              - paragraph:
+                - generic: Your interface
+              - paragraph: A chat page or a button inside your own software, for customers or staff who do not use Claude or ChatGPT.
+            - generic:
+              - paragraph:
+                - generic: Your tools and data
+              - paragraph: "Only the tools you choose: your database, your functions, the MCP servers you trust. Nothing else."
+            - generic:
+              - paragraph:
+                - generic: Your rules
+              - paragraph: A fixed system prompt, the model you choose for each job, a spending limit, and a log of every call.
+          - generic:
+            - paragraph: Agent SDKs (Claude Agent SDK, OpenAI Agents SDK) supply the harness and the built-in tools. The Claude Agent SDK gives you the Claude Code harness.
+        - generic [aria-hidden]:
+          - heading [level=2]: "Example: a three-agent team"
+          - generic:
+            - generic:
+              - paragraph:
+                - generic: Orchestrator
+              - paragraph: The one you chat with. Splits the question, then combines the two answers.
+            - generic:
+              - paragraph:
+                - generic: Data agent
+              - paragraph: Reaches the data warehouse. Returns data and analysis.
+            - generic:
+              - paragraph:
+                - generic: Web agent
+              - paragraph: Reaches the web. Returns information.
+          - generic:
+            - paragraph: "Why more than one agent: each reads only its own material, each job can use a smaller model, and an agent that reads untrusted web pages never touches the company’s data."
+      - generic [aria-hidden]:
+        - generic:
+          - heading [level=1]: Effective prompting
+        - generic [aria-hidden]:
+          - heading [level=2]: Prompting today
+          - paragraph: Most ‘prompt engineering’ techniques from a few years ago are now either useless or actually counterproductive. Don’t tell it “you are an expert data scientist” or “think step by step.”
+          - paragraph: Tell it what you want, not what not to do.
+          - generic:
+            - generic:
+              - paragraph:
+                - generic: Ask it to do something
+              - paragraph: It does what it has seen most often in its training data.
+            - generic:
+              - paragraph:
+                - generic: Ask for the best way
+              - paragraph: It repeats evaluations of methods it has seen.
+            - generic:
+              - paragraph:
+                - generic: Then ask it to proceed
+              - paragraph: It reads “the best way is …” in the conversation and follows that.
+      - generic [aria-hidden]:
+        - generic:
+          - heading [level=1]: Why has the impact been muted so far?
+    - link [ref=f15e23] [cursor=pointer]:
+      - /url: "#"
+    - link "52 / 76" [ref=f15e161] [cursor=pointer]:
+      - /url: "#/why-custom-agents"
+    - text: Speaker notes
+    - generic [ref=f15e42]: Agents a company might run Customer service Looks up the order, drafts the reply, and issues refunds up to $100. Larger refunds go to a person. Admissions assistant Answers applicants’ questions from the program’s own documents. Anything else goes to staff. Sales-call prep Before a client meeting, pulls the CRM history, open tickets, recent invoices and news about the client, and writes a one-page brief. Model router Reads each prompt and sends it to the cheapest model in an approved list that can do the job, from an open-weight model up to Claude Fable.
+  - navigation [ref=f15e43]:
+    - list [ref=f15e44]:
+      - listitem [ref=f15e45] [cursor=pointer]: Slides
+      - listitem [ref=f15e47] [cursor=pointer]: Tools
+      - listitem [ref=f15e49] [cursor=pointer]: Close
+    - list [ref=f15e52]:
+      - listitem [ref=f15e53] [cursor=pointer]: AI and Business Schools
+      - listitem [ref=f15e54] [cursor=pointer]: What we teach in business schools
+      - listitem [ref=f15e55] [cursor=pointer]: From makers to checkers
+      - listitem [ref=f15e56] [cursor=pointer]: AI fluency
+      - listitem [ref=f15e57] [cursor=pointer]: AI fluency at Eccles
+      - listitem [ref=f15e58] [cursor=pointer]: What is AI fluency?
+      - listitem [ref=f15e59] [cursor=pointer]: Tokens and parameters
+      - listitem [ref=f15e60] [cursor=pointer]: Tokenization
+      - listitem [ref=f15e61] [cursor=pointer]: The prediction pipeline
+      - listitem [ref=f15e62] [cursor=pointer]: A neural network is a function
+      - listitem [ref=f15e63] [cursor=pointer]: Security and compliance
+      - listitem [ref=f15e64] [cursor=pointer]: Basic requirements
+      - listitem [ref=f15e65] [cursor=pointer]: HIPAA and SEC
+      - listitem [ref=f15e66] [cursor=pointer]: "Prompt injection and data exfiltration: the Copilot case"
+      - listitem [ref=f15e67] [cursor=pointer]: Security concerns have throttled adoption
+      - listitem [ref=f15e68] [cursor=pointer]: "Sandboxes: limiting egress"
+      - listitem [ref=f15e69] [cursor=pointer]: Cost-effective AI
+      - listitem [ref=f15e70] [cursor=pointer]: API billing
+      - listitem [ref=f15e71] [cursor=pointer]: Cost
+      - listitem [ref=f15e72] [cursor=pointer]: Input cost is quadratic in conversation length
+      - listitem [ref=f15e73] [cursor=pointer]: Size the model to the task
+      - listitem [ref=f15e74] [cursor=pointer]: Open weight models
+      - listitem [ref=f15e75] [cursor=pointer]: Doing workwith AI
+      - listitem [ref=f15e76] [cursor=pointer]: What AI can make with code
+      - listitem [ref=f15e77] [cursor=pointer]: Student deliverables
+      - listitem [ref=f15e78] [cursor=pointer]: Why is AI so good at coding tasks?
+      - listitem [ref=f15e79] [cursor=pointer]: Code is predictable...
+      - listitem [ref=f15e80] [cursor=pointer]: Anatomy of an agent
+      - listitem [ref=f15e81] [cursor=pointer]: How Claude checks Office documents
+      - listitem [ref=f15e82] [cursor=pointer]: Quality increased recently
+      - listitem [ref=f15e83] [cursor=pointer]: Better coding harnesses became ubiquitous
+      - listitem [ref=f15e84] [cursor=pointer]: Checking AI work
+      - listitem [ref=f15e85] [cursor=pointer]: How to check AI work
+      - listitem [ref=f15e86] [cursor=pointer]: Poor reasoning with confidence
+      - listitem [ref=f15e87] [cursor=pointer]: Newer models are better
+      - listitem [ref=f15e88] [cursor=pointer]: Web search reduces hallucinations
+      - listitem [ref=f15e89] [cursor=pointer]: Automating work with AI
+      - listitem [ref=f15e90] [cursor=pointer]: AI agents and human judgment
+      - listitem [ref=f15e91] [cursor=pointer]: Skills
+      - listitem [ref=f15e92] [cursor=pointer]: Some Anthropic skills
+      - listitem [ref=f15e93] [cursor=pointer]: Creating skills
+      - listitem [ref=f15e94] [cursor=pointer]: Demo
+      - listitem [ref=f15e95] [cursor=pointer]: Vibe-coding software
+      - listitem [ref=f15e96] [cursor=pointer]: Artifacts
+      - listitem [ref=f15e97] [cursor=pointer]: More complex software has two parts
+      - listitem [ref=f15e98] [cursor=pointer]: Demos
+      - listitem [ref=f15e99] [cursor=pointer]: Connecting AI to your data
+      - listitem [ref=f15e100] [cursor=pointer]: Connectors (MCP servers)
+      - listitem [ref=f15e101] [cursor=pointer]: Retrieval augmented generation
+      - listitem [ref=f15e102] [cursor=pointer]: Custom agents
+      - listitem [ref=f15e103] [cursor=pointer]: Agents a company might run
+      - listitem [ref=f15e104] [cursor=pointer]: Why custom agents?
+      - listitem [ref=f15e105] [cursor=pointer]: Things you choose
+      - listitem [ref=f15e106] [cursor=pointer]: "Example: a three-agent team"
+      - listitem [ref=f15e107] [cursor=pointer]: Effective prompting
+      - listitem [ref=f15e108] [cursor=pointer]: Prompting today
+      - listitem [ref=f15e109] [cursor=pointer]: Three habits
+      - listitem [ref=f15e110] [cursor=pointer]: Why has the impact been muted so far?
+      - listitem [ref=f15e111] [cursor=pointer]: Predicted job losses are not showing up yet
+      - listitem [ref=f15e112] [cursor=pointer]: "Selby Jennings: The..."
+      - listitem [ref=f15e113] [cursor=pointer]: "Selby Jennings: The..."
+      - listitem [ref=f15e114] [cursor=pointer]: Teaching with AI
+      - listitem [ref=f15e115] [cursor=pointer]: Two jobs
+      - listitem [ref=f15e116] [cursor=pointer]: Chatting with AI in the classroom
+      - listitem [ref=f15e117] [cursor=pointer]: A tool for Claude Code CLI
+      - listitem [ref=f15e118] [cursor=pointer]: Academic Studio
+      - listitem [ref=f15e119] [cursor=pointer]: AI cannot make the judgment calls
+      - listitem [ref=f15e120] [cursor=pointer]: Verifiable tasks vs judgment
+      - listitem [ref=f15e121] [cursor=pointer]: VisiCalc on Apple II, 1979
+      - listitem [ref=f15e122] [cursor=pointer]: Thanks!
+      - listitem [ref=f15e123] [cursor=pointer]: Extras
+      - listitem [ref=f15e124] [cursor=pointer]: The future of work
+      - listitem [ref=f15e125] [cursor=pointer]: The future of work
+      - listitem [ref=f15e126] [cursor=pointer]: "Selby Jennings: The..."
+      - listitem [ref=f15e127] [cursor=pointer]: Not replacing judgment
+      - listitem [ref=f15e128] [cursor=pointer]: What’s left for people

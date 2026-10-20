@@ -1,0 +1,390 @@
+- generic [active] [ref=f1e1]:
+  - application [ref=f1e2]:
+    - generic:
+      - generic [aria-hidden]:
+        - heading [level=1]: AI and Business Schools
+        - paragraph: What changes for our students, and for us
+        - generic:
+          - generic:
+            - generic: Kerry Back, Rice University
+            - paragraph: at University of Utah Eccles School of Business
+        - paragraph: October 22, 2026
+      - generic [aria-hidden]:
+        - heading [level=2]: AI cannot make the judgment calls
+        - blockquote:
+          - paragraph: Technology itself does not decide what the future looks like. People do. For all the promise of AI … AI cannot decide which problems are worth solving. It cannot make the hard judgment calls with imperfect information. It cannot take responsibility for the outcome. These are our responsibilities. And they matter more now than ever.
+        - paragraph:
+          - generic:
+            - text: AMD CEO Lisa Su,
+            - link:
+              - /url: https://news.mit.edu/2026/commencement-address-lisa-su-0528
+              - text: MIT Commencement address
+            - text: ", May 28, 2026"
+      - generic [aria-hidden]:
+        - generic:
+          - heading [level=1]: Tokens and parameters
+        - text: y = 4 x
+      - generic [aria-hidden]:
+        - generic:
+          - heading [level=1]: Security and compliance
+        - generic [aria-hidden]:
+          - heading [level=2]: Basic requirements
+          - generic:
+            - generic:
+              - paragraph:
+                - generic: Zero data retention
+              - paragraph: The provider deletes prompts and responses once the response is returned. Anthropic and OpenAI offer it on API agreements, by approval.
+            - generic:
+              - paragraph:
+                - generic: No training on your data
+              - paragraph: Business and enterprise plans and the APIs exclude your data from training by default. On consumer plans, it is a setting you turn off.
+            - generic:
+              - paragraph:
+                - generic: Logging and monitoring
+              - paragraph: Enterprise plans provide audit logs and compliance APIs, so you can see who sent what to which model.
+          - generic:
+            - paragraph: "Zero retention and logging work together: the provider keeps nothing, and your firm keeps the record."
+      - generic:
+        - generic [aria-hidden]:
+          - heading [level=1]: Cost-effective AI
+        - generic [ref=f1e346]:
+          - heading "Cost" [level=2] [ref=f1e347]
+          - blockquote [ref=f1e348]:
+            - paragraph [ref=f1e349]: My token cost … is shooting through the roof. … Clients are ready to scale AI, but then they hit this unexpected cost wall.
+          - paragraph [ref=f1e350]:
+            - generic [ref=f1e351]:
+              - text: Lan Guan, Chief AI and Data Officer, Accenture,
+              - link "Fortune" [ref=f1e352] [cursor=pointer]:
+                - /url: https://fortune.com/2026/07/29/cfo-hitting-cost-wall-ai-tokens-accenture/
+              - text: ", July 29, 2026"
+          - list [ref=f1e353]:
+            - listitem [ref=f1e354]: Uber used up its 2026 AI budget by April, four months after rolling out Claude Code to engineers.
+            - listitem [ref=f1e355]: Microsoft’s Experiences + Devices group is moving engineers off Claude Code to GitHub Copilot CLI. Microsoft calls it “toolchain unification.” Press reports point to cost.
+          - paragraph [ref=f1e356]:
+            - generic [ref=f1e357]:
+              - link "Forbes" [ref=f1e358] [cursor=pointer]:
+                - /url: https://www.forbes.com/sites/janakirammsv/2026/05/17/uber-burns-its-2026-ai-budget-in-four-months-on-claude-code/
+              - text: ", May 17, 2026, citing The Information ·"
+              - link "The Next Web" [ref=f1e359] [cursor=pointer]:
+                - /url: https://thenextweb.com/news/microsoft-claude-code-retreat-ai-cost
+              - text: ", May 25, 2026, citing Windows Central and The Verge"
+        - generic [aria-hidden]:
+          - heading [level=2]: Input cost is quadratic in conversation length
+          - paragraph:
+            - text: "Each turn re-sends the whole conversation: every standing instruction, memory note, tool definition, tool call, tool response, and the AI’s reasoning output. If each of"
+            - generic:
+              - generic:
+                - generic [aria-hidden]:
+                  - generic: "n"
+                - generic:
+                  - math:
+                    - generic: "n"
+            - text: turns adds one unit of text, input cost is
+            - generic:
+              - generic:
+                - generic [aria-hidden]:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic: "n"
+                          - generic: (
+                          - generic: "n"
+                          - generic: +
+                          - generic: "1"
+                          - generic: )
+                      - generic: "2"
+                - generic:
+                  - math:
+                    - generic:
+                      - generic:
+                        - generic: "n"
+                        - generic: (
+                        - generic: "n"
+                        - generic: +
+                        - generic: "1"
+                        - generic: )
+                      - generic: "2"
+            - text: with no caching and
+            - generic:
+              - generic:
+                - generic [aria-hidden]:
+                  - generic:
+                    - generic: "1"
+                    - generic: .
+                    - generic: "2"
+                    - generic: "5"
+                  - generic: "n"
+                  - generic: +
+                  - generic:
+                    - generic: "0"
+                    - generic: .
+                    - generic: "1"
+                  - generic: ⋅
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic: "n"
+                          - generic: (
+                          - generic: "n"
+                          - generic: −
+                          - generic: "1"
+                          - generic: )
+                      - generic: "2"
+                - generic:
+                  - math:
+                    - generic: "1.25"
+                    - generic: "n"
+                    - generic: +
+                    - generic: "0.1"
+                    - generic: ⋅
+                    - generic:
+                      - generic:
+                        - generic: "n"
+                        - generic: (
+                        - generic: "n"
+                        - generic: −
+                        - generic: "1"
+                        - generic: )
+                      - generic: "2"
+            - text: with caching. Output is generated once per turn, so output cost grows linearly.
+          - generic:
+            - generic:
+              - paragraph:
+                - generic: Input cost, if each turn adds one unit of text
+              - generic:
+                - table:
+                  - rowgroup:
+                    - row:
+                      - columnheader: Turns
+                      - columnheader: No caching
+                      - columnheader: With caching
+                  - rowgroup:
+                    - row:
+                      - cell: "10"
+                      - cell: "55"
+                      - cell: "17"
+                    - row:
+                      - cell: "20"
+                      - cell: "210"
+                      - cell: "44"
+                    - row:
+                      - cell: "40"
+                      - cell: "820"
+                      - cell: "128"
+              - paragraph: "Caching: new text costs 1.25, re-sent text 0.1."
+            - generic:
+              - paragraph:
+                - generic: What saves money
+              - list:
+                - listitem: Many short conversations instead of one long one
+                - listitem: Break tasks into subtasks done in separate conversations or by subagents
+                - listitem: Reuse saved code instead of having AI rewrite it.
+                - listitem: Ask AI for a summary document often and continue from it in a new conversation
+        - generic [aria-hidden]:
+          - heading [level=2]: Size the model to the task
+          - paragraph: Most tasks can be done with less expensive models. Claude Sonnet is very capable and is only 1/5 the cost of Claude Fable.
+          - generic:
+            - generic:
+              - paragraph:
+                - generic: Expensive models
+              - paragraph: Nuanced writing tasks
+            - generic:
+              - paragraph:
+                - generic: Smaller, cheaper models
+              - paragraph: Most coding tasks
+            - generic:
+              - paragraph:
+                - generic: No model at all
+              - paragraph: Reuse saved code instead of rewriting it.
+          - generic:
+            - paragraph: Companies are increasingly using open-weight models (DeepSeek, etc.) to reduce costs.
+      - generic [aria-hidden]:
+        - generic:
+          - heading [level=1]: Doing work with AI
+        - generic [aria-hidden]:
+          - heading [level=2]: What AI can make with code
+          - generic:
+            - generic:
+              - paragraph:
+                - generic: Excel workbooks
+              - paragraph: Fully functioning with formulas and formatting
+            - generic:
+              - paragraph:
+                - generic: PowerPoint decks
+              - paragraph: Editable, following whatever template
+            - generic:
+              - paragraph:
+                - generic: Word docs
+              - paragraph: Formatted, with images and tables
+            - generic:
+              - paragraph:
+                - generic: Charts
+              - paragraph: All types, fully customizable, annotations, interactive
+            - generic:
+              - paragraph:
+                - generic: Data analysis
+              - paragraph: Merge, filter, aggregate, transform, statistics
+            - generic:
+              - paragraph:
+                - generic: Advanced data analysis
+              - paragraph: Optimization, prediction (machine learning)
+          - generic:
+            - paragraph: All from code or code + text.
+      - generic [aria-hidden]:
+        - generic:
+          - heading [level=1]: Why is AI so good at coding tasks?
+    - link [ref=f1e142] [cursor=pointer]:
+      - /url: "#"
+    - link "21 / 75" [ref=f1e362] [cursor=pointer]:
+      - /url: "#/cost"
+    - text: Speaker notes
+    - generic [ref=f1e161]:
+      - text: "Input cost is quadratic in conversation length Each turn re-sends the whole conversation: every standing instruction, memory note, tool definition, tool call, tool response, and the AI’s reasoning output. If each of"
+      - generic [ref=f1e162]:
+        - generic [ref=f1e164]: "n"
+        - math [ref=f1e167]:
+          - generic [ref=f1e168]: "n"
+      - text: turns adds one unit of text, input cost is
+      - generic [ref=f1e169]:
+        - generic [ref=f1e172]:
+          - generic [ref=f1e174]:
+            - generic [ref=f1e175]: "n"
+            - generic [ref=f1e177]: (
+            - generic [ref=f1e179]: "n"
+            - generic [ref=f1e181]: +
+            - generic [ref=f1e183]: "1"
+            - generic [ref=f1e185]: )
+          - generic [ref=f1e187]: "2"
+        - math [ref=f1e195]:
+          - generic [ref=f1e196]:
+            - generic [ref=f1e197]:
+              - generic [ref=f1e198]: "n"
+              - generic [ref=f1e199]: (
+              - generic [ref=f1e200]: "n"
+              - generic [ref=f1e201]: +
+              - generic [ref=f1e202]: "1"
+              - generic [ref=f1e203]: )
+            - generic [ref=f1e204]: "2"
+      - text: with no caching and
+      - generic [ref=f1e205]:
+        - generic [aria-hidden] [ref=f1e206]:
+          - generic [ref=f1e207]:
+            - generic [ref=f1e208]: "1"
+            - generic [ref=f1e209]: .
+            - generic [ref=f1e210]: "2"
+            - generic [ref=f1e211]: "5"
+          - generic [ref=f1e212]: "n"
+          - generic [ref=f1e214]: +
+          - generic [ref=f1e216]:
+            - generic [ref=f1e217]: "0"
+            - generic [ref=f1e218]: .
+            - generic [ref=f1e219]: "1"
+          - generic [ref=f1e220]: ⋅
+          - generic [ref=f1e223]:
+            - generic [ref=f1e225]:
+              - generic [ref=f1e226]: "n"
+              - generic [ref=f1e228]: (
+              - generic [ref=f1e230]: "n"
+              - generic [ref=f1e232]: −
+              - generic [ref=f1e234]: "1"
+              - generic [ref=f1e236]: )
+            - generic [ref=f1e238]: "2"
+        - math [ref=f1e246]:
+          - generic [ref=f1e247]: "1.25"
+          - generic [ref=f1e248]: "n"
+          - generic [ref=f1e249]: +
+          - generic [ref=f1e250]: "0.1"
+          - generic [ref=f1e251]: ⋅
+          - generic [ref=f1e252]:
+            - generic [ref=f1e253]:
+              - generic [ref=f1e254]: "n"
+              - generic [ref=f1e255]: (
+              - generic [ref=f1e256]: "n"
+              - generic [ref=f1e257]: −
+              - generic [ref=f1e258]: "1"
+              - generic [ref=f1e259]: )
+            - generic [ref=f1e260]: "2"
+      - text: "with caching. Output is generated once per turn, so output cost grows linearly. Input cost, if each turn adds one unit of text Turns No caching With caching 10 55 17 20 210 44 40 820 128 Caching: new text costs 1.25, re-sent text 0.1. What saves money Many short conversations instead of one long one Break tasks into subtasks done in separate conversations or by subagents Reuse saved code instead of having AI rewrite it. Ask AI for a summary document often and continue from it in a new conversation"
+  - navigation [ref=f1e261]:
+    - list [ref=f1e262]:
+      - listitem [ref=f1e263] [cursor=pointer]: Slides
+      - listitem [ref=f1e265] [cursor=pointer]: Tools
+      - listitem [ref=f1e267] [cursor=pointer]: Close
+    - list [ref=f1e270]:
+      - listitem [ref=f1e271] [cursor=pointer]: AI and Business Schools
+      - listitem [ref=f1e272] [cursor=pointer]: VisiCalc on Apple II, 1979
+      - listitem [ref=f1e273] [cursor=pointer]: What we teach in business schools
+      - listitem [ref=f1e274] [cursor=pointer]: AI cannot make the judgment calls
+      - listitem [ref=f1e275] [cursor=pointer]: Verifiable tasks vs judgment
+      - listitem [ref=f1e276] [cursor=pointer]: AI fluency
+      - listitem [ref=f1e277] [cursor=pointer]: AI fluency at Eccles
+      - listitem [ref=f1e278] [cursor=pointer]: What is AI fluency?
+      - listitem [ref=f1e279] [cursor=pointer]: Tokens and parameters
+      - listitem [ref=f1e280] [cursor=pointer]: Tokenization
+      - listitem [ref=f1e281] [cursor=pointer]: The prediction pipeline
+      - listitem [ref=f1e282] [cursor=pointer]: A neural network is a function
+      - listitem [ref=f1e283] [cursor=pointer]: Security and compliance
+      - listitem [ref=f1e284] [cursor=pointer]: Basic requirements
+      - listitem [ref=f1e285] [cursor=pointer]: HIPAA and SEC
+      - listitem [ref=f1e286] [cursor=pointer]: "Prompt injection and data exfiltration: the Copilot case"
+      - listitem [ref=f1e287] [cursor=pointer]: Security concerns have throttled adoption
+      - listitem [ref=f1e288] [cursor=pointer]: AI agent incidents
+      - listitem [ref=f1e289] [cursor=pointer]: "Sandboxes: limiting egress"
+      - listitem [ref=f1e290] [cursor=pointer]: Cost-effective AI
+      - listitem [ref=f1e291] [cursor=pointer]: Cost
+      - listitem [ref=f1e292] [cursor=pointer]: Input cost is quadratic in conversation length
+      - listitem [ref=f1e293] [cursor=pointer]: Size the model to the task
+      - listitem [ref=f1e294] [cursor=pointer]: Doing workwith AI
+      - listitem [ref=f1e295] [cursor=pointer]: What AI can make with code
+      - listitem [ref=f1e296] [cursor=pointer]: Student deliverables
+      - listitem [ref=f1e297] [cursor=pointer]: Why is AI so good at coding tasks?
+      - listitem [ref=f1e298] [cursor=pointer]: Code is predictable...
+      - listitem [ref=f1e299] [cursor=pointer]: Anatomy of an agent
+      - listitem [ref=f1e300] [cursor=pointer]: How Claude checks Office documents
+      - listitem [ref=f1e301] [cursor=pointer]: Quality increased recently
+      - listitem [ref=f1e302] [cursor=pointer]: Better coding harnesses became ubiquitous
+      - listitem [ref=f1e303] [cursor=pointer]: Checking AI work
+      - listitem [ref=f1e304] [cursor=pointer]: From makers to checkers
+      - listitem [ref=f1e305] [cursor=pointer]: How to check AI work
+      - listitem [ref=f1e306] [cursor=pointer]: Poor reasoning with confidence
+      - listitem [ref=f1e307] [cursor=pointer]: Newer models are better
+      - listitem [ref=f1e308] [cursor=pointer]: Web search reduces hallucinations
+      - listitem [ref=f1e309] [cursor=pointer]: Automating work with AI
+      - listitem [ref=f1e310] [cursor=pointer]: HPE’s experience with AI agents
+      - listitem [ref=f1e311] [cursor=pointer]: Skills
+      - listitem [ref=f1e312] [cursor=pointer]: Some Anthropic skills
+      - listitem [ref=f1e313] [cursor=pointer]: Creating skills
+      - listitem [ref=f1e314] [cursor=pointer]: Human judgment at the core
+      - listitem [ref=f1e315] [cursor=pointer]: Demo
+      - listitem [ref=f1e316] [cursor=pointer]: Vibe-coding software
+      - listitem [ref=f1e317] [cursor=pointer]: Artifacts
+      - listitem [ref=f1e318] [cursor=pointer]: More complex software has two parts
+      - listitem [ref=f1e319] [cursor=pointer]: Demos
+      - listitem [ref=f1e320] [cursor=pointer]: Connecting AI to your data
+      - listitem [ref=f1e321] [cursor=pointer]: Connectors (MCP servers)
+      - listitem [ref=f1e322] [cursor=pointer]: Retrieval augmented generation
+      - listitem [ref=f1e323] [cursor=pointer]: Custom agents
+      - listitem [ref=f1e324] [cursor=pointer]: Why custom agents?
+      - listitem [ref=f1e325] [cursor=pointer]: API calls
+      - listitem [ref=f1e326] [cursor=pointer]: "Example: a three-agent team"
+      - listitem [ref=f1e327] [cursor=pointer]: Effective prompting
+      - listitem [ref=f1e328] [cursor=pointer]: Prompting now
+      - listitem [ref=f1e329] [cursor=pointer]: Three habits
+      - listitem [ref=f1e330] [cursor=pointer]: Why has the impact been muted so far?
+      - listitem [ref=f1e331] [cursor=pointer]: Predicted job losses are not showing up yet
+      - listitem [ref=f1e332] [cursor=pointer]: "Selby Jennings: The..."
+      - listitem [ref=f1e333] [cursor=pointer]: "Selby Jennings: The..."
+      - listitem [ref=f1e334] [cursor=pointer]: Teaching with AI
+      - listitem [ref=f1e335] [cursor=pointer]: Two jobs
+      - listitem [ref=f1e336] [cursor=pointer]: Chatting with AI in the classroom
+      - listitem [ref=f1e337] [cursor=pointer]: A tool for Claude Code CLI
+      - listitem [ref=f1e338] [cursor=pointer]: Academic Studio
+      - listitem [ref=f1e339] [cursor=pointer]: Thanks!
+      - listitem [ref=f1e340] [cursor=pointer]: Extras
+      - listitem [ref=f1e341] [cursor=pointer]: The future of work
+      - listitem [ref=f1e342] [cursor=pointer]: The future of work
+      - listitem [ref=f1e343] [cursor=pointer]: "Selby Jennings: The..."
+      - listitem [ref=f1e344] [cursor=pointer]: Not replacing judgment
+      - listitem [ref=f1e345] [cursor=pointer]: What’s left for people

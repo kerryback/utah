@@ -1,0 +1,80 @@
+---
+title: "Anatomy of an agent"
+format:
+  revealjs:
+    theme: mint.scss
+    width: 1280
+    height: 720
+    margin: 0
+    max-scale: 5
+    center: false
+    slide-number: c/t
+---
+
+## Anatomy of an agent
+
+```{=html}
+<svg viewBox="0 0 1040 580" role="img" aria-label="The agent loop: the same circuit as a chatbot, with a tool call branching down to the tools the harness executes."
+     style="display:block;margin:0 auto;width:900px;max-width:100%"
+     font-family="'Avenir Next LT Pro','Avenir Next','Nunito Sans',system-ui,sans-serif">
+  <defs>
+    <marker id="ag-out" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="9" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 4 L0 8 Z" fill="#6b6e71"/>
+    </marker>
+    <marker id="ag-back" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="9" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 4 L0 8 Z" fill="#36393B"/>
+    </marker>
+    <marker id="ag-tool" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="9" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 4 L0 8 Z" fill="#12a88b"/>
+    </marker>
+  </defs>
+
+  <path d="M145 210 V100 H895 V200" fill="none" stroke="#6b6e71" stroke-width="3" marker-end="url(#ag-out)"/>
+  <path d="M895 300 V400 H145 V310" fill="none" stroke="#36393B" stroke-width="3" marker-end="url(#ag-back)"/>
+
+  <rect x="60" y="210" width="170" height="90" fill="#36393B"/>
+  <text x="145" y="263" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">User</text>
+  <rect x="810" y="210" width="170" height="90" fill="#36393B"/>
+  <text x="895" y="263" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="2" fill="#ffffff">LLM</text>
+
+  <rect x="320" y="195" width="400" height="120" fill="#f4f3f4"/>
+  <rect x="320" y="195" width="6" height="120" fill="#3AEFCC"/>
+  <text x="520" y="235" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1" fill="#36393B" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">messages[]</text>
+  <text x="520" y="265" text-anchor="middle" font-size="14" fill="#36393B">system + tools + user + assistant + tool_result + …</text>
+  <text x="520" y="291" text-anchor="middle" font-size="14" font-style="italic" fill="#6b6e71">grows each turn; includes tool calls and results</text>
+
+  <g font-size="17" font-weight="700" fill="#36393B" text-anchor="middle">
+    <text x="235" y="62">User types prompt</text>
+    <text x="560" y="50">Send system prompt</text>
+    <text x="800" y="436">LLM returns</text>
+    <text x="520" y="436">If tool call → execute tool</text>
+    <text x="235" y="436">If final answer → display to user</text>
+  </g>
+  <g font-size="15" fill="#6b6e71" text-anchor="middle">
+    <text x="560" y="70">+ tool definitions + history</text>
+    <text x="800" y="456">text OR tool call</text>
+    <text x="520" y="456">send result back, loop to step 2</text>
+  </g>
+
+  <g text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">
+    <circle cx="235" cy="100" r="17" fill="#6b6e71"/><text x="235" y="107">1</text>
+    <circle cx="560" cy="100" r="17" fill="#6b6e71"/><text x="560" y="107">2</text>
+    <circle cx="800" cy="400" r="17" fill="#36393B"/><text x="800" y="407">3</text>
+    <circle cx="520" cy="400" r="17" fill="#36393B"/><text x="520" y="407">4</text>
+    <circle cx="235" cy="400" r="17" fill="#36393B"/><text x="235" y="407">5</text>
+  </g>
+
+  <!-- the branch out of the loop: the harness, not the model, runs these -->
+  <path d="M960 300 V470" fill="none" stroke="#12a88b" stroke-width="3" stroke-dasharray="9 7" marker-end="url(#ag-tool)"/>
+  <text x="948" y="385" text-anchor="middle" font-size="15" font-weight="700" fill="#12a88b" transform="rotate(-90 948 385)">tool call</text>
+
+  <rect x="60" y="480" width="920" height="90" fill="#36393B"/>
+  <text x="520" y="508" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="1" fill="#3AEFCC">Tools (defined as JSON, executed by the harness)</text>
+  <g font-size="16" font-weight="700" fill="#36393B" text-anchor="middle" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">
+    <rect x="100" y="522" width="190" height="34" fill="#f4f3f4"/><text x="195" y="545">run_sql</text>
+    <rect x="310" y="522" width="190" height="34" fill="#f4f3f4"/><text x="405" y="545">list_tables</text>
+    <rect x="520" y="522" width="200" height="34" fill="#f4f3f4"/><text x="620" y="545">describe_table</text>
+    <rect x="740" y="522" width="200" height="34" fill="#f4f3f4"/><text x="840" y="545">run_python</text>
+  </g>
+</svg>
+```

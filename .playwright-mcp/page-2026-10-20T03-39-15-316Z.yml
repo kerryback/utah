@@ -1,0 +1,199 @@
+- generic [active] [ref=f7e1]:
+  - application [ref=f7e2]:
+    - generic:
+      - generic [aria-hidden]:
+        - heading [level=1]: 6. Skills, agents, and document databases
+        - generic:
+          - generic:
+            - generic:
+              - generic: "From BI to AI: Making Data-Driven Decisions with Agentic AI"
+              - text: Kerry Back Rice Business Executive Education
+      - generic [aria-hidden]:
+        - heading [level=2]: Retrieval-augmented generation
+      - generic [aria-hidden]:
+        - heading [level=2]: Gemini Notebook
+      - generic [aria-hidden]:
+        - heading [level=2]: Agents a company might run
+      - generic [aria-hidden]:
+        - heading [level=2]: Building agents
+      - generic [aria-hidden]:
+        - heading [level=2]: FP&A at Basin Ridge
+      - generic [aria-hidden]:
+        - heading [level=2]: Basin Ridge Outfitters
+        - paragraph: A fictional maker of packs, tents and apparel selling in four US regions. Actuals from January 2024 through September 2026, and the 2026 budget.
+        - generic:
+          - table:
+            - rowgroup:
+              - row:
+                - columnheader: Workbook
+                - columnheader: Contents
+            - rowgroup:
+              - row:
+                - cell:
+                  - code: sales_detail.xlsx
+                - cell: Units, price and revenue by month, region and product
+              - row:
+                - cell:
+                  - code: gl_actuals.xlsx
+                - cell: General ledger by month, department and account
+              - row:
+                - cell:
+                  - code: headcount.xlsx
+                - cell: Employee roster with start date, end date and salary
+              - row:
+                - cell:
+                  - code: budget_2026.xlsx
+                - cell: "Budget: GL, sales and headcount"
+        - generic:
+          - paragraph:
+            - text: In
+            - code: files/session6.zip
+            - text: ", with a data dictionary. The same data is on an MCP server at"
+            - code: https://basinridge.kerryback.com/mcp
+            - text: .
+      - generic [ref=f7e3]:
+        - 'heading "Example: an FP&A agent" [level=2] [ref=f7e4]'
+        - generic [ref=f7e5]:
+          - paragraph [ref=f7e7]: Tell Claude
+          - paragraph [ref=f7e8]:
+            - text: Using the
+            - code [ref=f7e9]: claude_agent_sdk
+            - text: (version 0.2.168 or later), create a FastAPI agent app called
+            - code [ref=f7e10]: app.py
+            - text: with a simple chat page where managers ask how their department or Basin Ridge Outfitters is doing against budget. Connect it to the Basin Ridge MCP server at
+            - code [ref=f7e11]: https://basinridge.kerryback.com/mcp
+            - text: . Create an internal MCP server with one tool,
+            - code [ref=f7e12]: run_python
+            - text: ", that runs Python with only data-analysis imports, gives the code a"
+            - code [ref=f7e13]: sql()
+            - text: function that queries the Basin Ridge server, and shows matplotlib charts in the chat. Do all arithmetic in
+            - code [ref=f7e14]: run_python
+            - text: . Explain each variance by price, volume, rate and headcount, and decline unrelated questions. Set
+            - code [ref=f7e15]: tools=[]
+            - text: ","
+            - code [ref=f7e16]: permission_mode
+            - text: to
+            - code [ref=f7e17]: dontAsk
+            - text: ", and"
+            - code [ref=f7e18]: max_turns
+            - text: to 15, and include all the tools in
+            - code [ref=f7e19]: allowed_tools
+            - text: .
+        - paragraph [ref=f7e21]:
+          - text: "Questions to ask it: Which departments and accounts are furthest from budget through September, and why? What full-year revenue does the run rate imply? “Do all arithmetic in"
+          - code [ref=f7e22]: run_python
+          - text: ” was added after the agent computed a percentage in its head and got it wrong.
+      - generic [aria-hidden]:
+        - heading [level=2]: The agent and three other versions
+        - generic:
+          - table:
+            - rowgroup:
+              - row:
+                - columnheader
+                - columnheader: Dashboard
+                - columnheader: FastAPI app
+                - columnheader: Skill
+                - columnheader: Agent
+            - rowgroup:
+              - row:
+                - cell: What it is
+                - cell: An artifact with sliders and charts
+                - cell: The dashboard with a Python backend
+                - cell:
+                  - code: /basin-ridge
+                  - text: ": merge, check, answer in Claude"
+                - cell: A chat app on the MCP server
+              - row:
+                - cell: Who can use it
+                - cell: Anyone with the file and the workbooks
+                - cell: Anyone with the URL
+                - cell: Claude users with the workbooks
+                - cell: Anyone with the URL
+              - row:
+                - cell: Questions
+                - cell: The sliders and charts built in
+                - cell: The sliders and charts built in
+                - cell: Any, with follow-ups
+                - cell: Any, within its tools
+              - row:
+                - cell: Where the data goes
+                - cell: Stays in the browser
+                - cell: Stays on the server
+                - cell: To the model provider
+                - cell: Server and model provider
+              - row:
+                - cell: Cost per use
+                - cell: None
+                - cell: None
+                - cell: Claude subscription
+                - cell: API tokens per question
+              - row:
+                - cell: Same answer every time
+                - cell: "Yes"
+                - cell: "Yes"
+                - cell: "No"
+                - cell: "No"
+              - row:
+                - cell: To build and run
+                - cell: Minutes, nothing to host
+                - cell: A server, sign-in, upkeep
+                - cell: Minutes, nothing to host
+                - cell: A server, sign-in, upkeep, a log
+      - generic [aria-hidden]:
+        - heading [level=2]: Issues for wide deployment
+        - paragraph: Any service built for large groups has a number of issues to deal with. It may or may not be worthwhile to deal with them to develop company-wide data agents.
+        - generic:
+          - list:
+            - listitem: Sign-in, and rules for who sees what
+            - listitem: One agreed definition behind each number
+            - listitem: Performance at full data volume
+            - listitem: Deployment, monitoring, backup, and someone on call
+    - link [ref=f7e24] [cursor=pointer]:
+      - /url: "#"
+    - link "33 / 37" [ref=f7e30] [cursor=pointer]:
+      - /url: "#/example-an-fpa-agent"
+    - text: Speaker notes
+    - generic [ref=f7e33]: "Example: an FP&A agent Tell Claude Using the claude_agent_sdk (version 0.2.168 or later), create a FastAPI agent app called app.py with a simple chat page where managers ask how their department or Basin Ridge Outfitters is doing against budget. Connect it to the Basin Ridge MCP server at https://basinridge.kerryback.com/mcp . Create an internal MCP server with one tool, run_python , that runs Python with only data-analysis imports, gives the code a sql() function that queries the Basin Ridge server, and shows matplotlib charts in the chat. Do all arithmetic in run_python . Explain each variance by price, volume, rate and headcount, and decline unrelated questions. Set tools=[] , permission_mode to dontAsk , and max_turns to 15, and include all the tools in allowed_tools . Questions to ask it: Which departments and accounts are furthest from budget through September, and why? What full-year revenue does the run rate imply? “Do all arithmetic in run_python ” was added after the agent computed a percentage in its head and got it wrong."
+  - navigation [ref=f7e34]:
+    - list [ref=f7e35]:
+      - listitem [ref=f7e36] [cursor=pointer]: Slides
+      - listitem [ref=f7e38] [cursor=pointer]: Tools
+      - listitem [ref=f7e40] [cursor=pointer]: Close
+    - list [ref=f7e43]:
+      - listitem [ref=f7e44] [cursor=pointer]: 6. Skills, agents, and document databases
+      - listitem [ref=f7e45] [cursor=pointer]: Retrieval-augmented generation
+      - listitem [ref=f7e46] [cursor=pointer]: Structured and unstructured
+      - listitem [ref=f7e47] [cursor=pointer]: Why not just paste it in
+      - listitem [ref=f7e48] [cursor=pointer]: Four steps
+      - listitem [ref=f7e49] [cursor=pointer]: A passage becomes a vector
+      - listitem [ref=f7e50] [cursor=pointer]: Cosine, in two dimensions
+      - listitem [ref=f7e51] [cursor=pointer]: "Example: A passage becomes 384 numbers"
+      - listitem [ref=f7e52] [cursor=pointer]: Demo
+      - listitem [ref=f7e53] [cursor=pointer]: Gemini Notebook
+      - listitem [ref=f7e54] [cursor=pointer]: Formerly NotebookLM
+      - listitem [ref=f7e55] [cursor=pointer]: What goes in, and how much
+      - listitem [ref=f7e56] [cursor=pointer]: Citations in the answer
+      - listitem [ref=f7e57] [cursor=pointer]: Outputs
+      - listitem [ref=f7e58] [cursor=pointer]: Agents a company might run
+      - listitem [ref=f7e59] [cursor=pointer]: Customer service agent
+      - listitem [ref=f7e60] [cursor=pointer]: Admissions assistant
+      - listitem [ref=f7e61] [cursor=pointer]: Contract review agent
+      - listitem [ref=f7e62] [cursor=pointer]: Sales-call prep agent
+      - listitem [ref=f7e63] [cursor=pointer]: Research team
+      - listitem [ref=f7e64] [cursor=pointer]: Model router
+      - listitem [ref=f7e65] [cursor=pointer]: Building agents
+      - listitem [ref=f7e66] [cursor=pointer]: The Claude Agent SDK
+      - listitem [ref=f7e67] [cursor=pointer]: Corporate services with MCP servers
+      - listitem [ref=f7e68] [cursor=pointer]: What we have
+      - listitem [ref=f7e69] [cursor=pointer]: Connecting
+      - listitem [ref=f7e70] [cursor=pointer]: Connecting
+      - listitem [ref=f7e71] [cursor=pointer]: Skills
+      - listitem [ref=f7e72] [cursor=pointer]: Build a skill
+      - listitem [ref=f7e73] [cursor=pointer]: Build an agent
+      - listitem [ref=f7e74] [cursor=pointer]: FP&A at Basin Ridge
+      - listitem [ref=f7e75] [cursor=pointer]: Basin Ridge Outfitters
+      - listitem [ref=f7e76] [cursor=pointer]: "Example: an FP&A agent"
+      - listitem [ref=f7e77] [cursor=pointer]: The agent and three other versions
+      - listitem [ref=f7e78] [cursor=pointer]: Issues for wide deployment
+      - listitem [ref=f7e79] [cursor=pointer]: Apps
+      - listitem [ref=f7e80] [cursor=pointer]: Upcoming schedule

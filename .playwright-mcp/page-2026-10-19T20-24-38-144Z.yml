@@ -1,0 +1,120 @@
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - paragraph [ref=e4]: Two-stage enterprise valuation
+    - heading "Walmart Inc. (WMT)" [level=1] [ref=e5]
+    - paragraph [ref=e6]: Fiscal 2026 ended 2026-01-31 is year 0. All figures in USD millions.
+  - group [ref=e7]:
+    - generic "15 judgment calls made without review. Each is flagged where it was made; open to see them all." [ref=e8] [cursor=pointer]
+  - tablist [ref=e9]:
+    - tab "Line items" [selected] [ref=e10] [cursor=pointer]
+    - tab "Forecasts" [ref=e11] [cursor=pointer]
+    - tab "Baseline" [ref=e12] [cursor=pointer]
+    - tab "DCF" [ref=e13] [cursor=pointer]
+  - tabpanel "Line items" [ref=e14]:
+    - heading "Classification of every reported balance-sheet line" [level=2] [ref=e15]
+    - paragraph [ref=e16]: Which lines consume cash as the business grows (operating assets, operating liabilities, net PP&E), which are claims on what it produces or are added in the bridge (debt claims, equity claims, nonoperating assets), and which do neither (excluded). Everything downstream inherits this, so it is worth disagreeing with here rather than later.
+    - table [ref=e18]:
+      - rowgroup [ref=e19]:
+        - row [ref=e20]:
+          - columnheader "Reported line" [ref=e21]
+          - columnheader "Bucket" [ref=e22]
+          - columnheader "Why" [ref=e23]
+      - rowgroup [ref=e24]:
+        - row [ref=e25]:
+          - cell "Cash and cash equivalents" [ref=e26]
+          - cell "nonoperating_asset" [ref=e27]
+          - cell "Cash and equivalents; held at book in the bridge." [ref=e28]
+        - row [ref=e29]:
+          - cell "Receivables, net" [ref=e30]
+          - cell "operating_asset" [ref=e31]
+          - cell "Trade, pharmacy, supplier and card receivables; scale with revenue." [ref=e32]
+        - row [ref=e33]:
+          - cell "Inventories" [ref=e34]
+          - cell "operating_asset" [ref=e35]
+          - cell "Merchandise inventories (LIFO in Walmart U.S.); scale with sales." [ref=e36]
+        - row [ref=e37]:
+          - cell "Prepaid expenses and other" [ref=e38]
+          - cell "operating_asset" [ref=e39]
+          - cell "Prepaid expenses and other current assets; small and sales-linked." [ref=e40]
+        - row [ref=e41]:
+          - cell "Property and equipment, net" [ref=e42]
+          - cell "net_ppe" [ref=e43]
+          - cell "Owned stores, clubs, distribution and fulfillment centers, fixtures and equipment." [ref=e44]
+        - row [ref=e45]:
+          - cell "Operating lease right-of-use assets" [ref=e46]
+          - cell "excluded" [ref=e47]
+          - cell [ref=e48]:
+            - text: Right-of-use assets move with the lease liability, not with sales.
+            - paragraph [ref=e49]: Judgment call Excluded with the operating lease liability, because rent of about $2.4 billion a year is inside OSG&A and so already inside EBITDA. Treating the liability as debt instead would subtract about $15.6 billion (roughly $1.94 a share) and double-count rent.
+        - row [ref=e50]:
+          - cell "Finance lease right-of-use assets, net" [ref=e51]
+          - cell "excluded" [ref=e52]
+          - cell [ref=e53]:
+            - text: Finance lease assets; their amortization ($0.9 billion in FY2026) sits inside D&A.
+            - paragraph [ref=e54]: Judgment call Excluded, with finance lease obligations treated as debt. The alternative is to fold these $6.1 billion of assets into net PP&E, which would lower the turnover and the depreciation rate together; future finance-leased assets are funded through the capex plug either way.
+        - row [ref=e55]:
+          - cell "Goodwill" [ref=e56]
+          - cell "excluded" [ref=e57]
+          - cell "Acquisition goodwill (Flipkart, VIZIO and others); its cash flows are already in EBITDA." [ref=e58]
+        - row [ref=e59]:
+          - cell "Other long-term assets" [ref=e60]
+          - cell "excluded" [ref=e61]
+          - cell [ref=e62]:
+            - text: Intangibles (about $4.3 billion indefinite-lived), $5.7 billion of equity and debt investments, $1.9 billion of deferred tax assets, and other.
+            - paragraph [ref=e63]: Judgment call Excluded as one line. About $5.7 billion of it is equity investments and the Asda debt investment, which are non-operating; classifying the whole line as non-operating would add $14.1 billion, and carving out just the investments would add about $5.7 billion (roughly $0.71 a share).
+        - row [ref=e64]:
+          - cell "Short-term borrowings" [ref=e65]
+          - cell "debt_claim" [ref=e66]
+          - cell "Commercial paper and other short-term borrowings." [ref=e67]
+        - row [ref=e68]:
+          - cell "Accounts payable" [ref=e69]
+          - cell "operating_liability" [ref=e70]
+          - cell "Trade payables to merchandise suppliers; scale with sales." [ref=e71]
+        - row [ref=e72]:
+          - cell "Accrued liabilities" [ref=e73]
+          - cell "operating_liability" [ref=e74]
+          - cell "Accrued wages, self-insurance, taxes other than income and other operating accruals." [ref=e75]
+        - row [ref=e76]:
+          - cell "Accrued income taxes" [ref=e77]
+          - cell "operating_liability" [ref=e78]
+          - cell "Income taxes payable; a small timing balance that moves with taxable income." [ref=e79]
+        - row [ref=e80]:
+          - cell "Long-term debt due within one year" [ref=e81]
+          - cell "debt_claim" [ref=e82]
+          - cell "Current maturities of long-term debt." [ref=e83]
+        - row [ref=e84]:
+          - cell "Operating lease obligations due within one year" [ref=e85]
+          - cell "excluded" [ref=e86]
+          - cell "Current operating lease liability; rent is already in EBITDA (see the right-of-use line)." [ref=e87]
+        - row [ref=e88]:
+          - cell "Finance lease obligations due within one year" [ref=e89]
+          - cell "debt_claim" [ref=e90]
+          - cell "Current finance lease obligations; finance lease costs sit in D&A and interest, below EBITDA." [ref=e91]
+        - row [ref=e92]:
+          - cell "Long-term debt" [ref=e93]
+          - cell "debt_claim" [ref=e94]
+          - cell "Senior notes and other long-term debt." [ref=e95]
+        - row [ref=e96]:
+          - cell "Long-term operating lease obligations" [ref=e97]
+          - cell "excluded" [ref=e98]
+          - cell "Long-term operating lease liability; rent is already in EBITDA (see the right-of-use line)." [ref=e99]
+        - row [ref=e100]:
+          - cell "Long-term finance lease obligations" [ref=e101]
+          - cell "debt_claim" [ref=e102]
+          - cell "Long-term finance lease obligations; finance lease costs sit below EBITDA." [ref=e103]
+        - row [ref=e104]:
+          - cell "Deferred income taxes and other" [ref=e105]
+          - cell "excluded" [ref=e106]
+          - cell [ref=e107]:
+            - text: Net deferred tax liabilities of $9.2 billion plus about $7.3 billion of other long-term liabilities, including $0.7 billion of legal indemnifications and derivative liabilities.
+            - paragraph [ref=e108]: Judgment call Excluded. The roughly $7.3 billion that is not deferred tax (long-term self-insurance, indemnifications, swap liabilities and other) is arguably a debt-like claim; subtracting it would lower value by about $0.91 a share.
+        - row [ref=e109]:
+          - cell "Redeemable noncontrolling interest" [ref=e110]
+          - cell "equity_claim" [ref=e111]
+          - cell "Redeemable minority interests in consolidated subsidiaries, at carrying value." [ref=e112]
+        - row [ref=e113]:
+          - cell "Nonredeemable noncontrolling interest" [ref=e114]
+          - cell "equity_claim" [ref=e115]
+          - cell [ref=e116]:
+            - text: Minority holders of Flipkart, PhonePe, Walmex and other subsidiaries, at book.
+            - paragraph [ref=e117]: "Judgment call Held at book value of $6.3 billion. Book is a weak proxy: minority stakes in Flipkart, PhonePe and Walmex are worth far more at market, so a market-value deduction would lower value per share, possibly by several dollars."
