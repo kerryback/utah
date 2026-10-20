@@ -1,0 +1,51 @@
+---
+title: "AI and Business Schools: Extras"
+subtitle: "What changes for our students, and for us"
+author: "Kerry Back, Rice University"
+institute: "at University of Utah Eccles School of Business"
+date: "2026-10-22"
+date-format: long
+title-slide-attributes:
+  data-background-image: data-center.jpg
+  data-background-size: auto 300px
+  data-background-position: top
+format:
+  revealjs:
+    theme: mint.scss
+    width: 1280
+    height: 720
+    margin: 0
+    max-scale: 5
+    center: false
+    slide-number: c/t
+    highlight-style: github
+    html-math-method: mathjax
+---
+
+## The future of work {.pull}
+
+> If you work in finance doing spreadsheets, or you're in a call center, or you're an entry-level programmer — those jobs are definitely going to be changed and eliminated with at least this first inning of AI.
+
+[Ford CEO Jim Farley, Accelerate the Essential Economy event, Detroit, reported by Fortune, July 2025]{.eyebrow}
+
+## The future of work {.pull}
+
+> If you work in [finance doing spreadsheets]{.hl}, or you're in a call center, or you're an entry-level programmer — those jobs are definitely going to be [changed and eliminated]{.hl} with at least this first inning of AI.
+
+[Ford CEO Jim Farley, Accelerate the Essential Economy event, Detroit, reported by Fortune, July 2025]{.eyebrow}
+
+## {.no-title}
+
+![](selby-jennings-ai-fluency-gap-3-cropped.png){height=520 fig-align="center"}
+
+[[Selby Jennings: The AI Fluency Gap](https://www.selbyjennings.com/insights/ai-talent-pulse-report/). Research conducted by Censuswide, sample of 500 US HR Professionals in the finance industry in August, 2026.]{.eyebrow}
+
+## Not replacing judgment {.pull .image-right .strip-left .circle-top}
+
+::: {.image-panel}
+![](utah-abs-big-cottonwood-mint.jpg)
+:::
+
+> The goal is to remove the repetitive, administrative work so our people can focus on what they do best—we're not replacing critical thinking and judgment, we're removing the tedious, time-consuming work that gets in the way of it.
+
+[Customers Bank CEO Sam Sidhu, statement to [Fortune](https://fortune.com/2026/04/28/ceo-of-customers-bank-sam-sidhu-ai-clone-lead-earnings-call-mark-zuckerberg-building-digital-twin/), April 28, 2026]{.eyebrow}

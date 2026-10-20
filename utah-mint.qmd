@@ -1294,43 +1294,9 @@ Students will manage AI agents that do the work, as checkers more than makers.
 
 ## Thanks! {.thanks background-image="utah-slc-skyline.jpg" background-size="100% 405px" background-position="top"}
 
-# Extras {.photo-left .circle-top background-image="utah-abs-snowbird-gray.jpg" background-size="40.625% 100%" background-position="left"}
+## Footnote: Try Academic Studio
 
-## The future of work {.pull}
-
-> If you work in finance doing spreadsheets, or you're in a call center, or you're an entry-level programmer — those jobs are definitely going to be changed and eliminated with at least this first inning of AI.
-
-[Ford CEO Jim Farley, Accelerate the Essential Economy event, Detroit, reported by Fortune, July 2025]{.eyebrow}
-
-## The future of work {.pull}
-
-> If you work in [finance doing spreadsheets]{.hl}, or you're in a call center, or you're an entry-level programmer — those jobs are definitely going to be [changed and eliminated]{.hl} with at least this first inning of AI.
-
-[Ford CEO Jim Farley, Accelerate the Essential Economy event, Detroit, reported by Fortune, July 2025]{.eyebrow}
-
-## {.no-title}
-
-![](selby-jennings-ai-fluency-gap-3-cropped.png){height=520 fig-align="center"}
-
-[[Selby Jennings: The AI Fluency Gap](https://www.selbyjennings.com/insights/ai-talent-pulse-report/). Research conducted by Censuswide, sample of 500 US HR Professionals in the finance industry in August, 2026.]{.eyebrow}
-
-## Not replacing judgment {.pull .image-right .strip-left .circle-top}
-
-::: {.image-panel}
-![](utah-abs-big-cottonwood-mint.jpg)
-:::
-
-> The goal is to remove the repetitive, administrative work so our people can focus on what they do best—we're not replacing critical thinking and judgment, we're removing the tedious, time-consuming work that gets in the way of it.
-
-[Customers Bank CEO Sam Sidhu, statement to [Fortune](https://fortune.com/2026/04/28/ceo-of-customers-bank-sam-sidhu-ai-clone-lead-earnings-call-mark-zuckerberg-building-digital-twin/), April 28, 2026]{.eyebrow}
-
-# A tool for Claude Code CLI {.circle-top background-image="utah-abs-big-cottonwood-mint.jpg" background-size="40.625% 100%" background-position="right"}
-
-## Academic Studio
-
-- Claude Desktop works: select Code at the top right of the left panel.
-- VS Code (Microsoft) is better but intimidating.
-- Academic Studio is a fork of VS Code designed for non-coding Claude Code users.
+Academic Studio is a fork of VS Code designed for non-coding Claude Code users.
 
 ::: {.note style="text-align: center; font-size: 1.3em; margin-top: 2em;"}
 [academic-studio.com](https://academic-studio.com)
