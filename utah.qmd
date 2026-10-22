@@ -35,14 +35,14 @@ format:
 
 :::: {.columns}
 ::: {.column width="48%"}
-> Artificial intelligence is going to replace [literally half of all white-collar workers]{.hl} in the U.S.
+> Artificial intelligence is going to replace literally half of all white-collar workers in the U.S.
 :::
 
 ::: {.column width="4%"}
 :::
 
 ::: {.column width="48%"}
-> If you work in [finance doing spreadsheets]{.hl}, or you're in a call center, or you're an entry-level programmer — those jobs are definitely going to be [changed and eliminated]{.hl} with at least this first inning of AI.
+> If you work in finance doing spreadsheets, or you're in a call center, or you're an entry-level programmer — those jobs are definitely going to be changed and eliminated with at least this first inning of AI.
 :::
 ::::
 
