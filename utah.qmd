@@ -27,7 +27,7 @@ format:
         .reveal .slides > section#title-slide[data-background-position="top"] h1.title { font-size: 1.15em; margin-bottom: 0.4em; line-height: 1.3; }
         .reveal .slides > section.stack > section.level1.pillar-section { justify-content: center !important; align-items: center; }
         .reveal .slides > section.stack > section.level1.pillar-section h1 { display: none; }
-        .reveal .slides > section.stack > section.level1.pillar-section svg { margin-right: 240px; }
+        .reveal .slides > section.stack > section.level1.pillar-section::after { content: ""; position: absolute; width: 220px; height: 220px; border-radius: 50%; background: #3AEFCC; pointer-events: none; top: -88px; right: 96px; }
         </style>
 ---
 
@@ -191,7 +191,7 @@ A lot of this is traditionally senior work. Juniors need to be prepared to step 
 </svg>
 ```
 
-# AI fluency {.pillar-section .photo-left .circle-top background-image="utah-abs-big-cottonwood-gray.jpg" background-size="40.625% 100%" background-position="left"}
+# AI fluency {.pillar-section}
 
 ```{=html}
 <svg viewBox="0 0 300 500" style="height:500px; display:block;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI fluency">
@@ -676,7 +676,7 @@ Models that anyone can install and run on their own hardware, if the hardware is
 Playground for my class: [lab-mimo.kerryback.com](https://lab-mimo.kerryback.com)
 :::
 
-# Strong fundamentals {.pillar-section .photo-left .circle-top background-image="utah-abs-big-cottonwood-gray.jpg" background-size="40.625% 100%" background-position="left"}
+# Strong fundamentals {.pillar-section}
 
 ```{=html}
 <svg viewBox="0 0 300 500" style="height:500px; display:block;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Strong fundamentals">
@@ -743,7 +743,7 @@ Facilitates flipping the classroom, supplementing video lectures.
 - We can heighten interest and relevance by requiring AI or AI-built deliverables: apps, skills, and agents.
 :::
 
-# Critical thinking {.pillar-section .photo-left .circle-top background-image="utah-abs-little-cottonwood-gray.jpg" background-size="40.625% 100%" background-position="left"}
+# Critical thinking {.pillar-section}
 
 ```{=html}
 <svg viewBox="0 0 300 500" style="height:500px; display:block;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Critical thinking">
