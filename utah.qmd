@@ -74,15 +74,17 @@ format:
 
 ## Accelerating the pace of work {.pull}
 
-> [Alfred] removed about 90% of the manual effort that once went into preparing our weekly financial review. We used to spend hundreds of hours preparing 100+ slides for a Monday meeting.
+::: {style="font-size: 1.4em; line-height: 1.45;"}
+HPE's finance agent, Alfred, removed about 90% of the manual work behind a weekly Monday review of more than 100 slides that took hundreds of hours to prepare.
+:::
 
-[Marie Myers, CFO, Hewlett Packard Enterprise, [Fortune](https://fortune.com/2026/02/12/hpe-cfo-used-ai-transform-100-slide-monday-meeting/), February 12, 2026]{.eyebrow}
+[Estimate by Gustav van der Westhuizen, COO, Hewlett Packard Enterprise, reported in [Fortune](https://fortune.com/2026/02/12/hpe-cfo-used-ai-transform-100-slide-monday-meeting/), February 12, 2026]{.eyebrow}
 
 ## From makers to checkers {.title-left}
 
 > You'll still have people at the top who are managing and have relationships with clients, but many, many of the processes underneath are now being done by AI systems.
->
-> Workers would shift from being creators of reports or software updates, or 'makers' ... to 'checkers' or managers of AI agents doing that work.
+
+Waldron said workers would shift from being creators of reports or software updates ("makers") to "checkers" or managers of AI agents doing that work.
 
 [JP Morgan Chief Analytics Officer Derek Waldron, [CNBC interview, September 30, 2025](https://www.cnbc.com/2025/09/30/jpmorgan-chase-fully-ai-connected-megabank.html)]{.eyebrow}
 
@@ -513,7 +515,7 @@ Published at [github.com/anthropics/skills](https://github.com/anthropics/skills
 - skill-creator --- write and improve skills
 - frontend-design --- polished web pages and apps
 - web-artifacts-builder --- larger artifacts
-- mcp-builder --- connectors to data (next section)
+- mcp-builder --- connectors to data
 :::
 
 ::: {.card .card-blue}
@@ -804,7 +806,7 @@ Facilitates flipping the classroom, supplementing video lectures.
 :::
 
 ::: {.notes}
-Check on status of `/mydcf {ticker}` at kerryback.com/{ticker}.html. If it failed, show kerryback.com/jbss/jbss-valuation.html.
+Check on status of `/mydcf {ticker}` at kerryback.com/{ticker}.html. If it failed, show kerryback.com/aapl.html. Before opening it, say that the 10% WACC is a placeholder, then change the WACC on the Baseline tab.
 :::
 
 ## We should do even more cases
@@ -878,7 +880,7 @@ Check on status of `/mydcf {ticker}` at kerryback.com/{ticker}.html. If it faile
 
 ::: {.incremental style="font-size: 1.75em; margin-top: 1.6em; line-height: 1.4;"}
 - AI fluency, fundamentals, and critical thinking are absolutely the pillars.
-- People will always be important for managing AI, managing people, taking initiative, and critical thinking.
+- People will always be important for managing AI, managing people, taking initiative, making judgment calls, and building relationships.
 - But can people acquire the needed skills directly from AI, or at least with less classroom instruction than we now provide?
 :::
 
