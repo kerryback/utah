@@ -872,11 +872,11 @@ Check on status of `/mydcf {ticker}` at kerryback.com/{ticker}.html. If it faile
 
 [Sources: Yotzov, Barrero, Bloom, Davis, et al., [NBER Working Paper 34836](https://www.nber.org/papers/w34836) · [McKinsey, The State of AI in 2026](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai)]{.eyebrow}
 
-# Big picture question for b-schools {.circle-top background-image="utah-abs-little-cottonwood-mint.jpg" background-size="40.625% 100%" background-position="right"}
+# Big picture question for [b-schools]{style="white-space: nowrap;"} {.circle-top background-image="utah-abs-little-cottonwood-mint.jpg" background-size="40.625% 100%" background-position="right"}
 
 ## {.no-title}
 
-::: {.incremental style="font-size: 1.35em; margin-top: 0.6em; line-height: 1.45;"}
+::: {.incremental style="font-size: 1.75em; margin-top: 1.6em; line-height: 1.4;"}
 - AI fluency, fundamentals, and critical thinking are absolutely the pillars.
 - People will always be important for managing AI, managing people, taking initiative, and critical thinking.
 - But can people acquire the needed skills directly from AI, or at least with less classroom instruction than we now provide?
