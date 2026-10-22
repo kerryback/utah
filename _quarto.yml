@@ -1,0 +1,29 @@
+project:
+  type: default
+  output-dir: docs
+  render:
+    - utah.qmd
+
+  resources:
+    - CNAME
+    - .nojekyll
+    # Redirects utah.kerryback.com to the deck, with a link to the PDF.
+    # Hand-written HTML, copied through verbatim to docs/.
+    - /index.html
+    # The decktape export of the deck. Quarto copies it to docs/pdf/utah.pdf.
+    - pdf/utah.pdf
+    # Slide backgrounds set in attributes (background-image=, the title slide's
+    # data-background-image), which Quarto does not pick up on its own.
+    - data-center.jpg
+    - utah-abs-big-cottonwood-gray.jpg
+    - utah-abs-big-cottonwood-mint.jpg
+    - utah-abs-little-cottonwood-gray.jpg
+    - utah-abs-little-cottonwood-mint.jpg
+    - utah-abs-snowbird-gray.jpg
+    - utah-abs-snowbird-mint.jpg
+    - utah-eccles-building.jpg
+    - utah-slc-skyline.jpg
+    - carwash-haiku-crop.png
+    - carwash-haiku55.png
+    - selby-jennings-ai-fluency-gap.png
+    - visicalc.png
